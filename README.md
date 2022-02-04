@@ -11,28 +11,28 @@ Run kubectl style commands
 
 ```
 $ sbctl get ns
-NAME                          AGE
-kube-system                   203d
-default                       203d
-kube-public                   203d
-kube-node-lease               203d
-docker-registry               203d
-schemahero-system             198d
-velero                        135d
-postgres-test                 22d
-redis-test                    22d
-nginx-test                    22d
-test                          10d
+NAME                          STATUS   AGE
+kube-system                   Active   204d
+default                       Active   204d
+kube-public                   Active   204d
+kube-node-lease               Active   204d
+docker-registry               Active   204d
+schemahero-system             Active   199d
+velero                        Active   135d
+postgres-test                 Active   22d
+redis-test                    Active   22d
+nginx-test                    Active   22d
+test                          Active   10d
 ```
 
 ```
 $ sbctl get pods -n kube-system
-NAME                                      AGE
-helm-install-traefik-crd-jk29f            203d
-helm-install-traefik-nf68z                203d
-svclb-traefik-clk94                       203d
-metrics-server-86cbb8457f-g9kdc           203d
-local-path-provisioner-5ff76fc89d-cgpdv   203d
-coredns-7448499f4d-x8fw9                  203d
-traefik-97b44b794-mhvsh                   203d
+NAME                                      READY   STATUS      RESTARTS       AGE
+helm-install-traefik-crd-jk29f            0/1     Completed   0              204d
+helm-install-traefik-nf68z                0/1     Completed   1 (204d ago)   204d
+svclb-traefik-clk94                       2/2     Running     2 (165d ago)   204d
+metrics-server-86cbb8457f-g9kdc           1/1     Running     1 (165d ago)   204d
+local-path-provisioner-5ff76fc89d-cgpdv   1/1     Running     2 (86d ago)    204d
+coredns-7448499f4d-x8fw9                  1/1     Running     1 (165d ago)   204d
+traefik-97b44b794-mhvsh                   1/1     Running     1 (165d ago)   204d
 ```

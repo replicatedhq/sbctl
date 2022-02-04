@@ -60,82 +60,82 @@ func GetCmd() *cobra.Command {
 			case "cronjob", "cronjobs":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "cronjobs", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print cronjobs")
 				}
 			case "deployment", "deployments":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "deployments", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print deployments")
 				}
 			case "event", "events":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "events", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print events")
 				}
 			case "ingress", "ingresses":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "ingress", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print ingresses")
 				}
 			case "job", "jobs":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "jobs", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print jobs")
 				}
 			case "limitrange", "limitranges":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "limitranges", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print limitranges")
 				}
 			case "pod", "pods":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "pods", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print pods")
 				}
 			case "pvc", "pvcs":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "pvcs", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print pvcs")
 				}
 			case "replicaset", "replicasets", "rs":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "replicasets", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print replicasets")
 				}
 			case "service", "services", "svc":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "services", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print services")
 				}
 			case "statefulset", "statefulsets":
 				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "statefulsets", v.GetString("namespace"))
 				if err != nil {
-					return errors.Wrap(err, "failed to pring pods")
+					return errors.Wrap(err, "failed to print statefulsets")
 				}
 			case "ns", "namespace", "namespaces":
 				err := sbctl.PrintClusterGet(clusterData.ClusterResourcesDir, "namespaces")
 				if err != nil {
-					return errors.Wrap(err, "failed to pring namespaces")
+					return errors.Wrap(err, "failed to print namespaces")
 				}
 			case "node", "nodes":
 				err := sbctl.PrintClusterGet(clusterData.ClusterResourcesDir, "nodes")
 				if err != nil {
-					return errors.Wrap(err, "failed to pring namespaces")
+					return errors.Wrap(err, "failed to print nodes")
 				}
 			case "pv", "pvs":
 				err := sbctl.PrintClusterGet(clusterData.ClusterResourcesDir, "pvs")
 				if err != nil {
-					return errors.Wrap(err, "failed to pring namespaces")
+					return errors.Wrap(err, "failed to print pvs")
 				}
 			case "resource", "resources":
 				err := sbctl.PrintClusterGet(clusterData.ClusterResourcesDir, "resources")
 				if err != nil {
-					return errors.Wrap(err, "failed to pring namespaces")
+					return errors.Wrap(err, "failed to print resources")
 				}
 			case "storageclass", "storageclasses":
 				err := sbctl.PrintClusterGet(clusterData.ClusterResourcesDir, "storage-classes")
 				if err != nil {
-					return errors.Wrap(err, "failed to pring namespaces")
+					return errors.Wrap(err, "failed to print storageclasses")
 				}
 			default:
 				return errors.Errorf("unknown resource: %s", args[0])
