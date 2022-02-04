@@ -92,7 +92,7 @@ func Print(data []byte) error {
 		// ColumnLabels *[]string
 		// NoHeaders bool
 		// Kind          schema.GroupKind
-		WithNamespace: yes,
+		// WithNamespace: yes,
 	}
 
 	printer, err := f.ToPrinter("") // "wide"
