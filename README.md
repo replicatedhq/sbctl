@@ -2,7 +2,7 @@
 
 ### How to use:
 
-Set the path to support bundle archive to directory
+Set the path to support bundle archive or directory
 ```
 export SBCTL_SUPPORT_BUNDLE_PATH=~/Downloads/support-bundle-2022-02-03T13_12_17
 ```
