@@ -38,7 +38,7 @@ traefik-97b44b794-mhvsh                   1/1     Running     1 (165d ago)   204
 ```
 
 ```
-$ ./bin/sbctl describe pod kotsadm-75d9ff6f44-ssrx6 
+$ sbctl describe pod kotsadm-75d9ff6f44-ssrx6 
 Name:         kotsadm-75d9ff6f44-ssrx6
 Namespace:    default
 Priority:     0
