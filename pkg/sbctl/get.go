@@ -33,7 +33,7 @@ func PrintNamespacedGet(rootDir string, resource string, namespace string) error
 		return errors.Wrap(err, "failed to load file")
 	}
 
-	err = Print(data)
+	err = printGet(data)
 	if err != nil {
 		return errors.Wrap(err, "failed to print data")
 	}
@@ -49,7 +49,7 @@ func PrintClusterGet(rootDir string, resource string) error {
 		return errors.Wrap(err, "failed to load file")
 	}
 
-	err = Print(data)
+	err = printGet(data)
 	if err != nil {
 		return errors.Wrap(err, "failed to print data")
 	}
@@ -57,7 +57,7 @@ func PrintClusterGet(rootDir string, resource string) error {
 	return nil
 }
 
-func Print(data []byte) error {
+func printGet(data []byte) error {
 	decode := scheme.Codecs.UniversalDeserializer().Decode
 	decoded, _, err := decode(data, nil, nil)
 	if err != nil {
