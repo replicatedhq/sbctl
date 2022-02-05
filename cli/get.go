@@ -24,10 +24,6 @@ func GetCmd() *cobra.Command {
 			v := viper.GetViper()
 
 			bundlePath := os.Getenv("SBCTL_SUPPORT_BUNDLE_PATH")
-			if len(os.Args) == 2 {
-				bundlePath = os.Args[1]
-			}
-
 			if bundlePath == "" {
 				return errors.New("support bundle filename is required or SBCTL_SUPPORT_BUNDLE_PATH must be set")
 			}
@@ -56,59 +52,61 @@ func GetCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
-			switch args[0] {
+			namespace := v.GetString("namespace")
+			resourceKind := args[0]
+			switch resourceKind {
 			case "cronjob", "cronjobs":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "cronjobs", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "cronjobs", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print cronjobs")
 				}
 			case "deployment", "deployments":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "deployments", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "deployments", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print deployments")
 				}
 			case "event", "events":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "events", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "events", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print events")
 				}
 			case "ingress", "ingresses":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "ingress", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "ingress", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print ingresses")
 				}
 			case "job", "jobs":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "jobs", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "jobs", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print jobs")
 				}
 			case "limitrange", "limitranges":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "limitranges", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "limitranges", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print limitranges")
 				}
 			case "pod", "pods":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "pods", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "pods", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print pods")
 				}
 			case "pvc", "pvcs":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "pvcs", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "pvcs", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print pvcs")
 				}
 			case "replicaset", "replicasets", "rs":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "replicasets", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "replicasets", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print replicasets")
 				}
 			case "service", "services", "svc":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "services", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "services", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print services")
 				}
 			case "statefulset", "statefulsets":
-				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "statefulsets", v.GetString("namespace"))
+				err := sbctl.PrintNamespacedGet(clusterData.ClusterResourcesDir, "statefulsets", namespace)
 				if err != nil {
 					return errors.Wrap(err, "failed to print statefulsets")
 				}
