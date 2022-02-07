@@ -1,4 +1,4 @@
-# Command line tool for examininng K8s resources in Troublehsoot's support bundles
+# Command line tool for examining K8s resources in Troublehsoot's support bundles
 
 ### How to use:
 
