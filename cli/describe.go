@@ -1,12 +1,20 @@
 package cli
 
 import (
+	"log"
 	"os"
 
 	"github.com/pkg/errors"
+	"github.com/replicatedhq/sbctl/pkg/api"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"k8s.io/apimachinery/pkg/api/meta"
+	"k8s.io/cli-runtime/pkg/genericclioptions"
+	"k8s.io/cli-runtime/pkg/resource"
+	describecli "k8s.io/kubectl/pkg/cmd/describe"
+	cmdutil "k8s.io/kubectl/pkg/cmd/util"
+	"k8s.io/kubectl/pkg/describe"
 )
 
 func DescribeCmd() *cobra.Command {
@@ -23,11 +31,13 @@ func DescribeCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			v := viper.GetViper()
 
-			bundlePath := os.Getenv("SBCTL_SUPPORT_BUNDLE_PATH")
-			if bundlePath == "" {
-				return errors.New("support bundle filename is required or SBCTL_SUPPORT_BUNDLE_PATH must be set")
+			// This only works with generated config, so let's make sure we don't mess up user's real files.
+			err := os.Setenv("KUBECONFIG", "")
+			if err != nil {
+				return errors.New("failed to clear out KUBECONFIG value")
 			}
 
+			bundlePath := os.Getenv("SBCTL_SUPPORT_BUNDLE_PATH")
 			if bundlePath == "" {
 				return errors.New("support bundle filename is required or SBCTL_SUPPORT_BUNDLE_PATH must be set")
 			}
@@ -56,92 +66,53 @@ func DescribeCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
+			_, err = api.StartAPIServer(clusterData)
+			if err != nil {
+				return errors.Wrap(err, "failed to create api server")
+
+			}
+
+			defer func() {
+				err := os.Remove(os.Getenv("KUBECONFIG"))
+				if err != nil {
+					log.Printf("failed to delete %s\n", os.Getenv("KUBECONFIG"))
+				}
+			}()
+
+			kubeConfigFlags := genericclioptions.NewConfigFlags(true).WithDeprecatedPasswordFlag().WithDiscoveryBurst(300).WithDiscoveryQPS(50.0)
+			flags := cmd.PersistentFlags()
+			kubeConfigFlags.AddFlags(flags)
+			matchVersionKubeConfigFlags := cmdutil.NewMatchVersionFlags(kubeConfigFlags)
+			matchVersionKubeConfigFlags.AddFlags(flags)
+			f := cmdutil.NewFactory(matchVersionKubeConfigFlags)
+
 			namespace := v.GetString("namespace")
-			resourceKind := args[0]
-			resourceName := args[1]
-			switch resourceKind {
-			case "cronjob", "cronjobs":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "cronjobs", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print cronjobs")
-				}
-			case "deployment", "deployments":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "deployments", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print deployments")
-				}
-			case "event", "events":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "events", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print events")
-				}
-			case "ingress", "ingresses":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "ingress", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print ingresses")
-				}
-			case "job", "jobs":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "jobs", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print jobs")
-				}
-			case "limitrange", "limitranges":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "limitranges", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print limitranges")
-				}
-			case "pod", "pods":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "pods", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print pods")
-				}
-			case "pvc", "pvcs":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "pvcs", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print pvcs")
-				}
-			case "replicaset", "replicasets", "rs":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "replicasets", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print replicasets")
-				}
-			case "service", "services", "svc":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "services", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print services")
-				}
-			case "statefulset", "statefulsets":
-				err := sbctl.PrintNamespacedDescribe(clusterData.ClusterResourcesDir, "statefulsets", resourceName, namespace)
-				if err != nil {
-					return errors.Wrap(err, "failed to print statefulsets")
-				}
-			case "ns", "namespace", "namespaces":
-				err := sbctl.PrintClusterDescribe(clusterData.ClusterResourcesDir, "namespaces", resourceName)
-				if err != nil {
-					return errors.Wrap(err, "failed to print namespaces")
-				}
-			case "node", "nodes":
-				err := sbctl.PrintClusterDescribe(clusterData.ClusterResourcesDir, "nodes", resourceName)
-				if err != nil {
-					return errors.Wrap(err, "failed to print nodes")
-				}
-			case "pv", "pvs":
-				err := sbctl.PrintClusterDescribe(clusterData.ClusterResourcesDir, "pvs", resourceName)
-				if err != nil {
-					return errors.Wrap(err, "failed to print pvs")
-				}
-			case "resource", "resources":
-				err := sbctl.PrintClusterDescribe(clusterData.ClusterResourcesDir, "resources", resourceName)
-				if err != nil {
-					return errors.Wrap(err, "failed to print resources")
-				}
-			case "storageclass", "storageclasses":
-				err := sbctl.PrintClusterDescribe(clusterData.ClusterResourcesDir, "storage-classes", resourceName)
-				if err != nil {
-					return errors.Wrap(err, "failed to print storageclasses")
-				}
-			default:
-				return errors.Errorf("unknown resource: %s", args[0])
+			if namespace == "" {
+				namespace = "default"
+			}
+
+			describeOpts := &describecli.DescribeOptions{
+				FilenameOptions: &resource.FilenameOptions{},
+				DescriberSettings: &describe.DescriberSettings{
+					ShowEvents: true,
+					ChunkSize:  cmdutil.DefaultChunkSize,
+				},
+				BuilderArgs: args,
+				NewBuilder:  f.NewBuilder,
+				Namespace:   namespace,
+				Describer: func(mapping *meta.RESTMapping) (describe.ResourceDescriber, error) {
+					return describe.DescriberFn(f, mapping)
+				},
+
+				CmdParent: "kubectl",
+				IOStreams: genericclioptions.IOStreams{
+					In:     os.Stdin,
+					Out:    os.Stdout,
+					ErrOut: os.Stderr,
+				},
+			}
+			if err := describeOpts.Run(); err != nil {
+				return errors.Wrap(err, "failed to run describer")
 			}
 
 			return nil
