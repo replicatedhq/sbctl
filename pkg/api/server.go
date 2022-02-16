@@ -15,6 +15,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
 	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
@@ -329,6 +330,20 @@ func (h handler) getAPIsObject(w http.ResponseWriter, r *http.Request) {
 		for _, d := range o.Items {
 			if d.Name == name {
 				JSON(w, http.StatusOK, d)
+				return
+			}
+		}
+	case *appsv1.DaemonSetList:
+		for _, ds := range o.Items {
+			if ds.Name == name {
+				JSON(w, http.StatusOK, ds)
+				return
+			}
+		}
+	case *batchv1.JobList:
+		for _, j := range o.Items {
+			if j.Name == name {
+				JSON(w, http.StatusOK, j)
 				return
 			}
 		}
