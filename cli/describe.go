@@ -66,11 +66,12 @@ func DescribeCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
-			_, err = api.StartAPIServer(clusterData)
+			kubeConfig, err := api.StartAPIServer(clusterData)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
 
 			}
+			os.Setenv("KUBECONFIG", kubeConfig)
 
 			defer func() {
 				err := os.Remove(os.Getenv("KUBECONFIG"))
