@@ -2,7 +2,6 @@ package api
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -31,9 +30,6 @@ import (
 	apisbatchv1beta1 "k8s.io/kubernetes/pkg/apis/batch/v1beta1"
 	apicore "k8s.io/kubernetes/pkg/apis/core"
 	apicorev1 "k8s.io/kubernetes/pkg/apis/core/v1"
-	"k8s.io/kubernetes/pkg/printers"
-	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
-	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
 )
 
 const (
@@ -591,7 +587,6 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 	version := mux.Vars(r)["version"]
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
-	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
@@ -746,35 +741,6 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 		// no conversion needed
 	}
 
-	if asTable {
-		ctx := context.TODO()
-		tableOptions := &metav1.TableOptions{}
-		tableConvertor := printerstorage.TableConvertor{
-			TableGenerator: printers.NewTableGenerator().With(printersinternal.AddHandlers),
-		}
-		table, err := tableConvertor.ConvertToTable(ctx, object, tableOptions)
-		if err != nil {
-			log.Println("could not convert to table", err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		table.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Group:   "meta.k8s.io",
-			Version: "v1",
-			Kind:    "Table",
-		})
-		for i := range table.Rows {
-			row := &table.Rows[i]
-			row.Object.Object.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-				Group:   "meta.k8s.io",
-				Version: "v1",
-				Kind:    "PartialObjectMetadata",
-			})
-		}
-		object = table
-	}
-
 	JSON(w, http.StatusOK, object)
 }
 
@@ -786,8 +752,6 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
-	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
-	fmt.Printf("+++++++asTable:%v\n", asTable)
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
