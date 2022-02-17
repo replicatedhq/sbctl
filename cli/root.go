@@ -42,6 +42,7 @@ func RootCmd() *cobra.Command {
 
 	cmd.AddCommand(GetCmd())
 	cmd.AddCommand(DescribeCmd())
+	cmd.AddCommand(APICmd())
 
 	viper.BindPFlags(cmd.Flags())
 
