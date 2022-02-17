@@ -5,7 +5,7 @@
 Start the local API server using a support bundle:
 
 ```
-$ sbctl api --support-bundle-path=/Users/divolgin/Downloads/support-bundle-2022-02-03T23_22_37
+$ sbctl serve --support-bundle-path=/Users/divolgin/Downloads/support-bundle-2022-02-03T23_22_37
 Server is running
 
 export KUBECONFIG=/var/folders/g2/05ngff7d71gds3_kl24gs0f80000gn/T/local-kubeconfig-1563064521
