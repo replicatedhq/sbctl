@@ -21,6 +21,7 @@ import (
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/kubernetes/scheme"
 	apisapps "k8s.io/kubernetes/pkg/apis/apps"
@@ -73,8 +74,9 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 	r.HandleFunc("/apis", h.getAPIs)
 	apisRouter := r.PathPrefix("/apis").Subrouter()
 	apisRouter.HandleFunc("/{group}/{version}", h.getAPIByGroupAndVersion)
-	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}", h.getAPIsObjects)
-	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}/{name}", h.getAPIsObject)
+	apisRouter.HandleFunc("/{group}/{version}/{resource}", h.getAPIsClusterResources)
+	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}", h.getAPIsNamespaceResources)
+	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}/{name}", h.getAPIsNamespaceResource)
 
 	r.PathPrefix("/").HandlerFunc(h.getNotFound)
 
@@ -153,37 +155,116 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 	log.Println("called getAPIV1ClusterResource")
 
 	resource := mux.Vars(r)["resource"]
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", resource))
 
-	data, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Println("failed to load file", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	var result runtime.Object
+	var err error
+	filenames := []string{}
+	switch resource {
+	case "namespaces", "nodes", "pvs":
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", resource))}
+	case "pods":
+		result = &corev1.PodList{
+			Items: []corev1.Pod{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Version: "v1",
+			Kind:    "PodList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get pod files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "events":
+		result = &corev1.EventList{
+			Items: []corev1.Event{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Version: "v1",
+			Kind:    "EventList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get event files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "limitranges":
+		result = &corev1.LimitRangeList{
+			Items: []corev1.LimitRange{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Version: "v1",
+			Kind:    "LimitRangeList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get event files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "services":
+		result = &corev1.ServiceList{
+			Items: []corev1.Service{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Version: "v1",
+			Kind:    "ServiceList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get service files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	decoded, _, err := decode(data, nil, nil)
-	if err != nil {
-		log.Println("failed to decode file", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	for _, fileName := range filenames {
+		data, err := ioutil.ReadFile(fileName)
+		if err != nil {
+			log.Println("failed to load file", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		decode := scheme.Codecs.UniversalDeserializer().Decode
+		decoded, gvk, err := decode(data, nil, nil)
+		if err != nil {
+			log.Println("failed to decode file", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		// TODO: filter list by selector
+		// selector := r.URL.Query().Get("fieldSelector")
+
+		switch o := decoded.(type) {
+		case *corev1.EventList:
+			r := result.(*corev1.EventList)
+			r.Items = append(r.Items, o.Items...)
+		case *corev1.PodList:
+			r := result.(*corev1.PodList)
+			r.Items = append(r.Items, o.Items...)
+		case *corev1.LimitRangeList:
+			r := result.(*corev1.LimitRangeList)
+			r.Items = append(r.Items, o.Items...)
+		case *corev1.ServiceList:
+			r := result.(*corev1.ServiceList)
+			r.Items = append(r.Items, o.Items...)
+		default:
+			log.Println("wrong gvk is found", gvk)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
-	// TODO: filter list by selector
-	// selector := r.URL.Query().Get("fieldSelector")
-
-	// switch o := decoded.(type) {
-	// case *corev1.EventList:
-	// 	JSON(w, http.StatusOK, o)
-	// 	return
-	// default:
-	// 	log.Println("wrong gvk is found", gvk)
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	return
-	// }
-
-	JSON(w, http.StatusOK, decoded)
+	JSON(w, http.StatusOK, result)
+	return
 }
 
 func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Request) {
@@ -248,10 +329,31 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 	}
 
 	switch o := decoded.(type) {
+	case *corev1.EventList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
 	case *corev1.PodList:
-		for _, pod := range o.Items {
-			if pod.Name == name {
-				JSON(w, http.StatusOK, pod)
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *corev1.LimitRangeList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *corev1.ServiceList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
 				return
 			}
 		}
@@ -338,8 +440,152 @@ func (h handler) getAPIByGroupAndVersion(w http.ResponseWriter, r *http.Request)
 	JSON(w, http.StatusNotFound, errorNotFound)
 }
 
-func (h handler) getAPIsObjects(w http.ResponseWriter, r *http.Request) {
-	log.Println("called getAPIsObjects")
+func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getAPIsClusterResources")
+
+	group := mux.Vars(r)["group"]
+	version := mux.Vars(r)["version"]
+	resource := mux.Vars(r)["resource"]
+
+	var result runtime.Object
+	var err error
+	filenames := []string{}
+	switch resource {
+	case "jobs":
+		result = &batchv1.JobList{
+			Items: []batchv1.Job{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "JobList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get job files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "cronjobs":
+		result = &batchv1beta1.CronJobList{
+			Items: []batchv1beta1.CronJob{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "CronJobList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get cronjob files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "deployments":
+		result = &appsv1.DeploymentList{
+			Items: []appsv1.Deployment{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "DeploymentList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get deployment files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "replicasets":
+		result = &appsv1.ReplicaSetList{
+			Items: []appsv1.ReplicaSet{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "ReplicaSetList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get replicaset files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "statefulsets":
+		result = &appsv1.StatefulSetList{
+			Items: []appsv1.StatefulSet{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "StatefulSetList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get replicaset files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+	case "ingresses":
+		log.Println("get ingresses is not implemented")
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	for _, fileName := range filenames {
+		data, err := ioutil.ReadFile(fileName)
+		if err != nil {
+			log.Println("failed to load file", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		decode := scheme.Codecs.UniversalDeserializer().Decode
+		decoded, gvk, err := decode(data, nil, nil)
+		if err != nil {
+			log.Println("failed to decode file", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		// TODO: filter list by selector
+		// selector := r.URL.Query().Get("fieldSelector")
+
+		switch o := decoded.(type) {
+		case *batchv1.JobList:
+			r := result.(*batchv1.JobList)
+			r.Items = append(r.Items, o.Items...)
+		case *batchv1beta1.CronJobList:
+			r := result.(*batchv1beta1.CronJobList)
+			r.Items = append(r.Items, o.Items...)
+		case *appsv1.DeploymentList:
+			r := result.(*appsv1.DeploymentList)
+			r.Items = append(r.Items, o.Items...)
+		case *appsv1.ReplicaSetList:
+			r := result.(*appsv1.ReplicaSetList)
+			r.Items = append(r.Items, o.Items...)
+		case *appsv1.StatefulSetList:
+			r := result.(*appsv1.StatefulSetList)
+			r.Items = append(r.Items, o.Items...)
+		default:
+			log.Println("wrong gvk is found", gvk)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	}
+
+	JSON(w, http.StatusOK, result)
+	return
+}
+
+func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getAPIsNamespaceResources")
 
 	group := mux.Vars(r)["group"]
 	version := mux.Vars(r)["version"]
@@ -532,8 +778,8 @@ func (h handler) getAPIsObjects(w http.ResponseWriter, r *http.Request) {
 	JSON(w, http.StatusOK, object)
 }
 
-func (h handler) getAPIsObject(w http.ResponseWriter, r *http.Request) {
-	log.Println("called getAPIsObject")
+func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getAPIsNamespaceResource")
 
 	group := mux.Vars(r)["group"]
 	version := mux.Vars(r)["version"]
@@ -567,30 +813,37 @@ func (h handler) getAPIsObject(w http.ResponseWriter, r *http.Request) {
 
 	switch o := decoded.(type) {
 	case *appsv1.ReplicaSetList:
-		for _, rs := range o.Items {
-			if rs.Name == name {
-				JSON(w, http.StatusOK, rs)
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
 				return
 			}
 		}
 	case *appsv1.DeploymentList:
-		for _, d := range o.Items {
-			if d.Name == name {
-				JSON(w, http.StatusOK, d)
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
 				return
 			}
 		}
 	case *appsv1.DaemonSetList:
-		for _, ds := range o.Items {
-			if ds.Name == name {
-				JSON(w, http.StatusOK, ds)
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *appsv1.StatefulSetList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
 				return
 			}
 		}
 	case *batchv1.JobList:
-		for _, j := range o.Items {
-			if j.Name == name {
-				JSON(w, http.StatusOK, j)
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
 				return
 			}
 		}
@@ -626,4 +879,22 @@ func JSON(w http.ResponseWriter, code int, payload interface{}) {
 
 	w.WriteHeader(code)
 	w.Write(response)
+}
+
+func getJSONFileListFromDir(dir string) ([]string, error) {
+	filenames := []string{}
+
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to read dir")
+	}
+
+	for _, file := range files {
+		if file.IsDir() || strings.ToLower(filepath.Ext(file.Name())) != ".json" {
+			continue
+		}
+		filenames = append(filenames, filepath.Join(dir, file.Name()))
+	}
+
+	return filenames, nil
 }
