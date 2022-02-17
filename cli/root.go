@@ -5,22 +5,8 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	flag "github.com/spf13/pflag"
 	"github.com/spf13/viper"
-	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
-
-var (
-	kubernetesConfigFlags *genericclioptions.ConfigFlags
-)
-
-func init() {
-	kubernetesConfigFlags = genericclioptions.NewConfigFlags(false)
-}
-
-func addKubectlFlags(flags *flag.FlagSet) {
-	kubernetesConfigFlags.AddFlags(flags)
-}
 
 func RootCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -38,17 +24,11 @@ func RootCmd() *cobra.Command {
 		viper.AutomaticEnv()
 	})
 
-	addKubectlFlags(cmd.PersistentFlags())
-
-	cmd.AddCommand(GetCmd())
-	cmd.AddCommand(DescribeCmd())
-	cmd.AddCommand(APICmd())
+	cmd.AddCommand(ServeCmd())
 
 	viper.BindPFlags(cmd.Flags())
 
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
-
-	// addKubectlFlags(cmd.Flags())
 
 	return cmd
 }
