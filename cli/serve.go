@@ -12,10 +12,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-func APICmd() *cobra.Command {
+func ServeCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "api",
-		// Args:          cobra.MinimumNArgs(0),
+		Use:           "serve",
 		Short:         "Start API server",
 		Long:          `Start API server`,
 		SilenceUsage:  true,
