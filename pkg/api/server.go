@@ -23,7 +23,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/kubernetes/scheme"
 )
 
 const (
@@ -227,10 +226,9 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		decode := scheme.Codecs.UniversalDeserializer().Decode
-		decoded, gvk, err := decode(data, nil, nil)
+		decoded, gvk, err := sbctl.Decode(resource, data)
 		if err != nil {
-			log.Println("failed to decode file", err)
+			log.Println("failed to decode wrapped", resource, ":", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -287,10 +285,9 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	decoded, _, err := decode(data, nil, nil)
+	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode file", err)
+		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -343,10 +340,9 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	decoded, _, err := decode(data, nil, nil)
+	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode file", err)
+		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -386,10 +382,9 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	decoded, gvk, err := decode(data, nil, nil)
+	decoded, gvk, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode file", err)
+		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -620,10 +615,9 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			return
 		}
 
-		decode := scheme.Codecs.UniversalDeserializer().Decode
-		decoded, gvk, err := decode(data, nil, nil)
+		decoded, gvk, err := sbctl.Decode(resource, data)
 		if err != nil {
-			log.Println("failed to decode file", err)
+			log.Println("failed to decode wrapped", resource, ":", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -678,10 +672,9 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	object, gvk, err := decode(data, nil, nil)
+	decoded, gvk, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode file", err)
+		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -692,7 +685,7 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	JSON(w, http.StatusOK, object)
+	JSON(w, http.StatusOK, decoded)
 }
 
 func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request) {
@@ -716,10 +709,9 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	decoded, gvk, err := decode(data, nil, nil)
+	decoded, gvk, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode file", err)
+		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
