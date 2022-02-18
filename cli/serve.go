@@ -83,7 +83,7 @@ func ServeCmd() *cobra.Command {
 						return errors.Wrap(err, "failed to create temp dir")
 					}
 
-					err = sbctl.ExtractBundle(os.Args[1], bundleDir)
+					err = sbctl.ExtractBundle(bundleLocation, bundleDir)
 					if err != nil {
 						return errors.Wrap(err, "failed to extract bundle")
 					}
