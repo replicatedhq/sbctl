@@ -2,6 +2,7 @@ package api
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -23,6 +24,16 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	apisapps "k8s.io/kubernetes/pkg/apis/apps"
+	apisappsv1 "k8s.io/kubernetes/pkg/apis/apps/v1"
+	apisbatch "k8s.io/kubernetes/pkg/apis/batch"
+	apisbatchv1 "k8s.io/kubernetes/pkg/apis/batch/v1"
+	apisbatchv1beta1 "k8s.io/kubernetes/pkg/apis/batch/v1beta1"
+	apicore "k8s.io/kubernetes/pkg/apis/core"
+	apicorev1 "k8s.io/kubernetes/pkg/apis/core/v1"
+	"k8s.io/kubernetes/pkg/printers"
+	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
+	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
 )
 
 const (
@@ -149,6 +160,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	log.Println("called getAPIV1ClusterResources")
 
 	resource := mux.Vars(r)["resource"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
 	var result runtime.Object
 	var err error
@@ -263,8 +275,16 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		}
 	}
 
+	if asTable {
+		table, err := toTable(result)
+		if err != nil {
+			log.Println("could not convert to table", err)
+		} else {
+			result = table
+		}
+	}
+
 	JSON(w, http.StatusOK, result)
-	return
 }
 
 func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request) {
@@ -327,6 +347,8 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
+
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
 
 	data, err := ioutil.ReadFile(fileName)
@@ -350,15 +372,14 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 	// TODO: filter list by selector
 	// selector := r.URL.Query().Get("fieldSelector")
 
-	// switch o := decoded.(type) {
-	// case *corev1.EventList:
-	// 	JSON(w, http.StatusOK, o)
-	// 	return
-	// default:
-	// 	log.Println("wrong gvk is found", gvk)
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	return
-	// }
+	if asTable {
+		table, err := toTable(decoded)
+		if err != nil {
+			log.Println("could not convert to table", err)
+		} else {
+			decoded = table
+		}
+	}
 
 	JSON(w, http.StatusOK, decoded)
 }
@@ -515,6 +536,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	group := mux.Vars(r)["group"]
 	version := mux.Vars(r)["version"]
 	resource := mux.Vars(r)["resource"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
 	var result runtime.Object
 	var err error
@@ -648,6 +670,15 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		}
 	}
 
+	if asTable {
+		table, err := toTable(result)
+		if err != nil {
+			log.Println("could not convert to table", err)
+		} else {
+			result = table
+		}
+	}
+
 	JSON(w, http.StatusOK, result)
 	return
 }
@@ -659,6 +690,7 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 	version := mux.Vars(r)["version"]
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
@@ -685,6 +717,15 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	if asTable {
+		table, err := toTable(decoded)
+		if err != nil {
+			log.Println("could not convert to table", err)
+		} else {
+			decoded = table
+		}
+	}
+
 	JSON(w, http.StatusOK, decoded)
 }
 
@@ -696,6 +737,10 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
+	if asTable {
+		log.Printf("TODO: as=Table is not yet implemeted")
+	}
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
@@ -808,4 +853,135 @@ func getJSONFileListFromDir(dir string) ([]string, error) {
 	}
 
 	return filenames, nil
+}
+
+func toTable(object runtime.Object) (runtime.Object, error) {
+	switch o := object.(type) {
+	case *corev1.PodList:
+		converted := &apicore.PodList{}
+		err := apicorev1.Convert_v1_PodList_To_core_PodList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert pod list")
+		}
+		object = converted
+	case *corev1.Pod:
+		converted := &apicore.Pod{}
+		err := apicorev1.Convert_v1_Pod_To_core_Pod(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert pod")
+		}
+		object = converted
+	case *appsv1.ReplicaSetList:
+		converted := &apisapps.ReplicaSetList{}
+		err := apisappsv1.Convert_v1_ReplicaSetList_To_apps_ReplicaSetList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert replicaset list")
+		}
+		object = converted
+	case *appsv1.ReplicaSet:
+		converted := &apisapps.ReplicaSet{}
+		err := apisappsv1.Convert_v1_ReplicaSet_To_apps_ReplicaSet(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert replicaset")
+		}
+		object = converted
+	case *appsv1.DeploymentList:
+		converted := &apisapps.DeploymentList{}
+		err := apisappsv1.Convert_v1_DeploymentList_To_apps_DeploymentList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert deployment list")
+		}
+		object = converted
+	case *appsv1.Deployment:
+		converted := &apisapps.Deployment{}
+		err := apisappsv1.Convert_v1_Deployment_To_apps_Deployment(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert deployment")
+		}
+		object = converted
+	case *corev1.NamespaceList:
+		converted := &apicore.NamespaceList{}
+		err := apicorev1.Convert_v1_NamespaceList_To_core_NamespaceList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert namespace list")
+		}
+		object = converted
+	case *corev1.Namespace:
+		converted := &apicore.Namespace{}
+		err := apicorev1.Convert_v1_Namespace_To_core_Namespace(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert namespace")
+		}
+		object = converted
+	case *corev1.EventList:
+		converted := &apicore.EventList{}
+		err := apicorev1.Convert_v1_EventList_To_core_EventList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert event list")
+		}
+		object = converted
+	case *corev1.Event:
+		converted := &apicore.Event{}
+		err := apicorev1.Convert_v1_Event_To_core_Event(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert event")
+		}
+		object = converted
+	case *batchv1beta1.CronJobList:
+		converted := &apisbatch.CronJobList{}
+		err := apisbatchv1beta1.Convert_v1beta1_CronJobList_To_batch_CronJobList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert cronjob list")
+		}
+		object = converted
+	case *batchv1beta1.CronJob:
+		converted := &apisbatch.CronJob{}
+		err := apisbatchv1beta1.Convert_v1beta1_CronJob_To_batch_CronJob(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert cronjob")
+		}
+		object = converted
+	case *batchv1.JobList:
+		converted := &apisbatch.JobList{}
+		err := apisbatchv1.Convert_v1_JobList_To_batch_JobList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert job list")
+		}
+		object = converted
+	case *batchv1.Job:
+		converted := &apisbatch.Job{}
+		err := apisbatchv1.Convert_v1_Job_To_batch_Job(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert job")
+		}
+		object = converted
+	default:
+		// no conversion needed
+	}
+
+	ctx := context.TODO()
+	tableOptions := &metav1.TableOptions{}
+	tableConvertor := printerstorage.TableConvertor{
+		TableGenerator: printers.NewTableGenerator().With(printersinternal.AddHandlers),
+	}
+	table, err := tableConvertor.ConvertToTable(ctx, object, tableOptions)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not convert to table")
+	}
+
+	table.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+		Group:   "meta.k8s.io",
+		Version: "v1",
+		Kind:    "Table",
+	})
+	for i := range table.Rows {
+		row := &table.Rows[i]
+		row.Object.Object.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   "meta.k8s.io",
+			Version: "v1",
+			Kind:    "PartialObjectMetadata",
+		})
+	}
+
+	return table, nil
 }
