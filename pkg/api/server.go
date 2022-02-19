@@ -21,6 +21,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -1035,11 +1036,18 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 	})
 	for i := range table.Rows {
 		row := &table.Rows[i]
-		row.Object.Object.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+		m, err := meta.Accessor(row.Object.Object)
+		if err != nil {
+			return nil, err
+		}
+		// TODO: turn this into an internal type and do conversion in order to get object kind automatically set?
+		partial := meta.AsPartialObjectMetadata(m)
+		partial.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
 			Group:   "meta.k8s.io",
 			Version: "v1",
 			Kind:    "PartialObjectMetadata",
 		})
+		row.Object.Object = partial
 	}
 
 	return table, nil
