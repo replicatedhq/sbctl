@@ -22,8 +22,10 @@ import (
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apiserver/pkg/registry/generic"
 	apisapps "k8s.io/kubernetes/pkg/apis/apps"
 	apisappsv1 "k8s.io/kubernetes/pkg/apis/apps/v1"
 	apisbatch "k8s.io/kubernetes/pkg/apis/batch"
@@ -161,9 +163,16 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 
 	resource := mux.Vars(r)["resource"]
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
+	fieldSelector := r.URL.Query().Get("fieldSelector")
+
+	selector, err := fields.ParseSelector(fieldSelector)
+	if err != nil {
+		log.Println("failed to parse fieldSelector", fieldSelector, ":", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	var result runtime.Object
-	var err error
 	filenames := []string{}
 	switch resource {
 	case "namespaces", "nodes", "pvs":
@@ -252,8 +261,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		// TODO: filter list by selector
-		// selector := r.URL.Query().Get("fieldSelector")
+		decoded = filterObjects(decoded, selector)
 
 		switch o := decoded.(type) {
 		case *corev1.EventList:
@@ -348,6 +356,14 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
+	fieldSelector := r.URL.Query().Get("fieldSelector")
+
+	selector, err := fields.ParseSelector(fieldSelector)
+	if err != nil {
+		log.Println("failed to parse fieldSelector", fieldSelector, ":", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
 
@@ -369,8 +385,7 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	// TODO: filter list by selector
-	// selector := r.URL.Query().Get("fieldSelector")
+	decoded = filterObjects(decoded, selector)
 
 	if asTable {
 		table, err := toTable(decoded)
@@ -853,6 +868,50 @@ func getJSONFileListFromDir(dir string) ([]string, error) {
 	}
 
 	return filenames, nil
+}
+
+func filterObjects(object runtime.Object, selector fields.Selector) runtime.Object {
+	if selector.Empty() {
+		return object
+	}
+
+	switch o := object.(type) {
+	case *corev1.EventList:
+		filtered := &corev1.EventList{}
+		for _, item := range o.Items {
+			if selector.Matches(eventToSelectableFields(&item)) {
+				filtered.Items = append(filtered.Items, *item.DeepCopy())
+			}
+		}
+		return filtered
+	default:
+		// TODO: do more
+	}
+
+	return object
+}
+
+// ToSelectableFields is available in "github.com/kubernetes/kubernetes/pkg/registry/core/event"
+func eventToSelectableFields(event *corev1.Event) fields.Set {
+	objectMetaFieldsSet := generic.ObjectMetaFieldsSet(&event.ObjectMeta, true)
+	source := event.Source.Component
+	if source == "" {
+		source = event.ReportingController
+	}
+	specificFieldsSet := fields.Set{
+		"involvedObject.kind":            event.InvolvedObject.Kind,
+		"involvedObject.namespace":       event.InvolvedObject.Namespace,
+		"involvedObject.name":            event.InvolvedObject.Name,
+		"involvedObject.uid":             string(event.InvolvedObject.UID),
+		"involvedObject.apiVersion":      event.InvolvedObject.APIVersion,
+		"involvedObject.resourceVersion": event.InvolvedObject.ResourceVersion,
+		"involvedObject.fieldPath":       event.InvolvedObject.FieldPath,
+		"reason":                         event.Reason,
+		"reportingComponent":             event.ReportingController, // use the core/v1 field name
+		"source":                         source,
+		"type":                           event.Type,
+	}
+	return generic.MergeFieldsSets(specificFieldsSet, objectMetaFieldsSet)
 }
 
 func toTable(object runtime.Object) (runtime.Object, error) {
