@@ -1,0 +1,36 @@
+project_name: sbctl
+release:
+  github:
+    owner: replicatedhq
+    name: sbctl
+  prerelease: "true"
+builds:
+  - id: sbctl
+    goos:
+    - linux
+    - darwin
+    goarch:
+    - amd64
+    env:
+      - CGO_ENABLED=0
+      - GO111MODULE=on
+    main: sbctl.go
+    ldflags: -s -w
+    binary: sbctl
+    hooks: {}
+
+archives:
+  - id: sbctl
+    builds:
+      - sbctl
+    format: tar.gz
+    name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}'
+    files:
+      - licence*
+      - LICENCE*
+      - license*
+      - LICENSE*
+      - readme*
+      - README*
+      - changelog*
+      - CHANGELOG*
