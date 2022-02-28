@@ -12,6 +12,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubectl/pkg/scheme"
+	storagev1 "k8s.io/api/storage/v1"
+
 )
 
 func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionKind, error) {
@@ -126,6 +128,14 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
 				Group:   "apps",
 				Kind:    "StatefulSet",
+				Version: "v1",
+			})
+		}
+	case *storagev1.StorageClassList:
+		for i := range o.Items {
+			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+				Group:   "apps",
+				Kind:    "StorageClass",
 				Version: "v1",
 			})
 		}

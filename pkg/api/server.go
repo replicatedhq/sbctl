@@ -35,6 +35,7 @@ import (
 	apisbatchv1beta1 "k8s.io/kubernetes/pkg/apis/batch/v1beta1"
 	apicore "k8s.io/kubernetes/pkg/apis/core"
 	apicorev1 "k8s.io/kubernetes/pkg/apis/core/v1"
+	storagev1 "k8s.io/api/storage/v1"
 	"k8s.io/kubernetes/pkg/printers"
 	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
 	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
@@ -646,7 +647,21 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-
+	case "storageclasses":
+		result = &storagev1.StorageClassList{
+			Items: []storagev1.StorageClass{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "StorageClassList",
+		})
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
+		if err != nil {
+			log.Println("failed to get storageclasses files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	case "ingresses":
 		log.Println("get ingresses is not implemented")
 		w.WriteHeader(http.StatusInternalServerError)
@@ -668,9 +683,14 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			return
 		}
 
+		// No need to do type conversions if only one file is returned.
+		// This will always be the case for cluster level resources, and sometimes for namespaced resources.
+		if len(filenames) == 1 {
+			JSON(w, http.StatusOK, decoded)
+			return
+		}
 		// TODO: filter list by selector
 		// selector := r.URL.Query().Get("fieldSelector")
-
 		switch o := decoded.(type) {
 		case *batchv1.JobList:
 			r := result.(*batchv1.JobList)
@@ -686,6 +706,9 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			r.Items = append(r.Items, o.Items...)
 		case *appsv1.StatefulSetList:
 			r := result.(*appsv1.StatefulSetList)
+			r.Items = append(r.Items, o.Items...)
+		case *storagev1.StorageClassList:
+			r := result.(*storagev1.StorageClassList)
 			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
@@ -999,28 +1022,28 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		converted := &apicore.PersistentVolumeClaimList{}
 		err := apicorev1.Convert_v1_PersistentVolumeClaimList_To_core_PersistentVolumeClaimList(o, converted, nil)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert event")
+			return nil, errors.Wrap(err, "failed to convert persistentvolumeclaim list")
 		}
 		object = converted
 	case *corev1.PersistentVolumeClaim:
 		converted := &apicore.PersistentVolumeClaim{}
 		err := apicorev1.Convert_v1_PersistentVolumeClaim_To_core_PersistentVolumeClaim(o, converted, nil)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert event")
+			return nil, errors.Wrap(err, "failed to convert persistentvolumeclaim")
 		}
 		object = converted
 	case *corev1.PersistentVolumeList:
 		converted := &apicore.PersistentVolumeList{}
 		err := apicorev1.Convert_v1_PersistentVolumeList_To_core_PersistentVolumeList(o, converted, nil)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert event")
+			return nil, errors.Wrap(err, "failed to convert persistentvolume list")
 		}
 		object = converted
 	case *corev1.PersistentVolume:
 		converted := &apicore.PersistentVolume{}
 		err := apicorev1.Convert_v1_PersistentVolume_To_core_PersistentVolume(o, converted, nil)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert event")
+			return nil, errors.Wrap(err, "failed to convert persistentvolume")
 		}
 		object = converted
 	case *batchv1beta1.CronJobList:
