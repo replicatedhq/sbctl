@@ -22,6 +22,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
+	networkingv1 "k8s.io/api/networking/v1"
 	storagev1 "k8s.io/api/storage/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -36,6 +37,8 @@ import (
 	apisbatchv1beta1 "k8s.io/kubernetes/pkg/apis/batch/v1beta1"
 	apicore "k8s.io/kubernetes/pkg/apis/core"
 	apicorev1 "k8s.io/kubernetes/pkg/apis/core/v1"
+	networking "k8s.io/kubernetes/pkg/apis/networking"
+	apinetworkingv1 "k8s.io/kubernetes/pkg/apis/networking/v1"
 	"k8s.io/kubernetes/pkg/printers"
 	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
 	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
@@ -681,9 +684,21 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			return
 		}
 	case "ingresses":
-		log.Println("get ingresses is not implemented")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		result = &networkingv1.IngressList{
+			Items: []networkingv1.Ingress{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "IngressList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get ingresses files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -728,6 +743,9 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		case *storagev1.StorageClassList:
 			r := result.(*storagev1.StorageClassList)
 			r.Items = append(r.Items, o.Items...)
+		case *networkingv1.IngressList:
+			r := result.(*networkingv1.IngressList)
+			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -745,19 +763,16 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	}
 
 	JSON(w, http.StatusOK, result)
-	return
 }
 
 func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIsNamespaceResources")
 
-	group := mux.Vars(r)["group"]
-	version := mux.Vars(r)["version"]
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
@@ -769,15 +784,9 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	decoded, gvk, err := sbctl.Decode(resource, data)
+	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
 		log.Println("failed to decode wrapped", resource, ":", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	if gvk.Group != group && gvk.Version != version {
-		log.Println("wrong gvk is found", gvk)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -797,8 +806,6 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIsNamespaceResource")
 
-	group := mux.Vars(r)["group"]
-	version := mux.Vars(r)["version"]
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
@@ -807,7 +814,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		log.Printf("TODO: as=Table is not yet implemeted")
 	}
 
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
@@ -819,15 +826,9 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	decoded, gvk, err := sbctl.Decode(resource, data)
+	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
 		log.Println("failed to decode wrapped", resource, ":", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	if gvk.Group != group && gvk.Version != version {
-		log.Println("wrong gvk is found", gvk)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -862,6 +863,13 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 			}
 		}
 	case *batchv1.JobList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *networkingv1.IngressList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -1088,6 +1096,13 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 	case *batchv1.Job:
 		converted := &apisbatch.Job{}
 		err := apisbatchv1.Convert_v1_Job_To_batch_Job(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert job")
+		}
+		object = converted
+	case *networkingv1.IngressList:
+		converted := &networking.IngressList{}
+		err := apinetworkingv1.Convert_v1_IngressList_To_networking_IngressList(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert job")
 		}

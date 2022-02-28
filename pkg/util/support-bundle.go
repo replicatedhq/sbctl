@@ -6,6 +6,7 @@ var (
 		"persistentvolumeclaims": "pvcs",
 		"persistentvolumes":      "pvs",
 		"storageclasses":         "storage-classes",
+		"ingresses":              "ingress",
 	}
 )
 
