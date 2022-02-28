@@ -5,7 +5,7 @@ var (
 	sbResourceCompatibilityMap = map[string]string{
 		"persistentvolumeclaims": "pvcs",
 		"persistentvolumes":      "pvs",
-		"storageclasses": "storage-classes",
+		"storageclasses":         "storage-classes",
 	}
 )
 

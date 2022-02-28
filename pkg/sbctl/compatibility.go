@@ -9,11 +9,10 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
+	storagev1 "k8s.io/api/storage/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubectl/pkg/scheme"
-	storagev1 "k8s.io/api/storage/v1"
-
 )
 
 func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionKind, error) {
