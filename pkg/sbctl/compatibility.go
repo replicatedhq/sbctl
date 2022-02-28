@@ -15,6 +15,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubectl/pkg/scheme"
+	storagev1 "k8s.io/api/storage/v1"
+
 )
 
 func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionKind, error) {
