@@ -240,6 +240,21 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "persistentvolumeclaims":
+		result = &corev1.PersistentVolumeClaimList{
+			Items: []corev1.PersistentVolumeClaim{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Version: "v1",
+			Kind:    "PersistentVolumeClaimList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", sbctlutil.GetSBCompatibleResourceName(resource)))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get service files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -279,6 +294,9 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		case *corev1.ServiceList:
 			r := result.(*corev1.ServiceList)
 			r.Items = append(r.Items, o.Items...)
+		case *corev1.PersistentVolumeClaimList:
+			r := result.(*corev1.PersistentVolumeClaimList)
+			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -299,7 +317,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 }
 
 func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request) {
-	log.Println("called getAPIV1ClusterResources")
+	log.Println("called getAPIV1ClusterResource")
 
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
