@@ -82,6 +82,13 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 				Version: "v1",
 			})
 		}
+	case *corev1.PersistentVolumeClaimList:
+		for i := range o.Items {
+			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+				Kind:    "PersistentVolumeClaim",
+				Version: "v1",
+			})
+		}
 	case *batchv1.JobList:
 		for i := range o.Items {
 			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
@@ -169,8 +176,11 @@ func wrapListData(resource string, data []byte) ([]byte, error) {
 	case "nodes":
 		kind = "NodeList"
 		apiVersion = "v1"
-	case "pvs":
+	case "persistentvolumes":
 		kind = "PersistentVolumeList"
+		apiVersion = "v1"
+	case "persistentvolumeclaims":
+		kind = "PersistentVolumeClaimList"
 		apiVersion = "v1"
 	case "storageclasses":
 		kind = "StorageClassList"

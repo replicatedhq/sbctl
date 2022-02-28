@@ -17,6 +17,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
+	sbctlutil "github.com/replicatedhq/sbctl/pkg/util"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
@@ -176,8 +177,8 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	var result runtime.Object
 	filenames := []string{}
 	switch resource {
-	case "namespaces", "nodes", "pvs":
-		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", resource))}
+	case "namespaces", "nodes", "persistentvolumes":
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 	case "pods":
 		result = &corev1.PodList{
 			Items: []corev1.Pod{},
@@ -302,7 +303,7 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
 
-	filename := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", resource))
+	filename := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Println("failed to load file", err)
@@ -366,7 +367,7 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -406,7 +407,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -449,6 +450,13 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 			}
 		}
 	case *corev1.ServiceList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *corev1.PersistentVolumeClaimList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -983,6 +991,34 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 	case *corev1.Event:
 		converted := &apicore.Event{}
 		err := apicorev1.Convert_v1_Event_To_core_Event(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert event")
+		}
+		object = converted
+	case *corev1.PersistentVolumeClaimList:
+		converted := &apicore.PersistentVolumeClaimList{}
+		err := apicorev1.Convert_v1_PersistentVolumeClaimList_To_core_PersistentVolumeClaimList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert event")
+		}
+		object = converted
+	case *corev1.PersistentVolumeClaim:
+		converted := &apicore.PersistentVolumeClaim{}
+		err := apicorev1.Convert_v1_PersistentVolumeClaim_To_core_PersistentVolumeClaim(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert event")
+		}
+		object = converted
+	case *corev1.PersistentVolumeList:
+		converted := &apicore.PersistentVolumeList{}
+		err := apicorev1.Convert_v1_PersistentVolumeList_To_core_PersistentVolumeList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert event")
+		}
+		object = converted
+	case *corev1.PersistentVolume:
+		converted := &apicore.PersistentVolume{}
+		err := apicorev1.Convert_v1_PersistentVolume_To_core_PersistentVolume(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert event")
 		}
