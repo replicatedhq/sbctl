@@ -24,6 +24,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
 	storagev1 "k8s.io/api/storage/v1"
+	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -84,6 +85,7 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 	apisRouter := r.PathPrefix("/apis").Subrouter()
 	apisRouter.HandleFunc("/{group}/{version}", h.getAPIByGroupAndVersion)
 	apisRouter.HandleFunc("/{group}/{version}/{resource}", h.getAPIsClusterResources)
+	apisRouter.HandleFunc("/{group}/{version}/{resource}/{name}", h.getAPIsClusterResource)
 	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}", h.getAPIsNamespaceResources)
 	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}/{name}", h.getAPIsNamespaceResource)
 
@@ -683,6 +685,21 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "customresourcedefinitions":
+		result = &extensionsv1.CustomResourceDefinitionList{
+			Items: []extensionsv1.CustomResourceDefinition{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "CustomResourceDefinitionList",
+		})
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
+		if err != nil {
+			log.Println("failed to get customresourcedefinitions files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	case "ingresses":
 		result = &networkingv1.IngressList{
 			Items: []networkingv1.Ingress{},
@@ -763,6 +780,49 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	}
 
 	JSON(w, http.StatusOK, result)
+}
+
+func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getAPIsClusterResource")
+
+	resource := mux.Vars(r)["resource"]
+	name := mux.Vars(r)["name"]
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
+	data, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		log.Println("failed to load file", err)
+		if os.IsNotExist(err) {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		return
+	}
+
+	decoded, _, err := sbctl.Decode(resource, data)
+	if err != nil {
+		log.Println("failed to decode wrapped", resource, ":", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	switch o := decoded.(type) {
+	case *storagev1.StorageClassList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *extensionsv1.CustomResourceDefinitionList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	}
+	JSON(w, http.StatusNotFound, errorNotFound)
 }
 
 func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Request) {

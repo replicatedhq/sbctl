@@ -3,10 +3,11 @@ package util
 var (
 	// sbResourceCompatibilityMap
 	sbResourceCompatibilityMap = map[string]string{
-		"persistentvolumeclaims": "pvcs",
-		"persistentvolumes":      "pvs",
-		"storageclasses":         "storage-classes",
-		"ingresses":              "ingress",
+		"persistentvolumeclaims":    "pvcs",
+		"persistentvolumes":         "pvs",
+		"storageclasses":            "storage-classes",
+		"ingresses":                 "ingress",
+		"customresourcedefinitions": "custom-resource-definitions",
 	}
 )
 

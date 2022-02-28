@@ -10,12 +10,15 @@ import (
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	storagev1 "k8s.io/api/storage/v1"
+	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	extensionsscheme "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/scheme"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubectl/pkg/scheme"
 )
 
 func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionKind, error) {
+	extensionsscheme.AddToScheme(scheme.Scheme)
 	decode := scheme.Codecs.UniversalDeserializer().Decode
 	decoded, gvk, err := decode(data, nil, nil)
 	if err == nil {
@@ -138,6 +141,14 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 				Version: "v1",
 			})
 		}
+	case *extensionsv1.CustomResourceDefinitionList:
+		for i := range o.Items {
+			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+				Group:   "apiextensions.k8s.io",
+				Kind:    "CustomResourceDefinitionList",
+				Version: "v1",
+			})
+		}
 	}
 
 	return decoded, gvk, nil
@@ -194,6 +205,9 @@ func wrapListData(resource string, data []byte) ([]byte, error) {
 	case "storageclasses":
 		kind = "StorageClassList"
 		apiVersion = "storage.k8s.io/v1"
+	case "customresourcedefinitions":
+		kind = "CustomResourceDefinitionList"
+		apiVersion = "apiextensions.k8s.io/v1"
 	default:
 		return nil, errors.Errorf("don't know how to wrap %s", resource)
 	}

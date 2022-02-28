@@ -1181,6 +1181,7 @@ k8s.io/kubernetes v1.23.3 h1:weuFJOkRP7+057uvhNUYbVTVCog/klquhbtKRD+UHUo=
 k8s.io/kubernetes v1.23.3/go.mod h1:C0AB/I7M4Nu6d1ELyGdC8qrrHEc6J5l8CHUashza1Io=
 k8s.io/kubernetes/staging/src/k8s.io/api v0.0.0-20220204201730-469c4c4a30ab h1:NgbfyB1JWaqP8iUVDJlIS/aEuRU0WKlDaLtz+jlBD3U=
 k8s.io/kubernetes/staging/src/k8s.io/api v0.0.0-20220204201730-469c4c4a30ab/go.mod h1:IpPnJRE5t3olVaut5p67N16cZkWwwU5KVFM35xCKyxM=
+k8s.io/kubernetes/staging/src/k8s.io/apiextensions-apiserver v0.0.0-20220204201730-469c4c4a30ab h1:u0Dm2ONUQP5UbBx6PLjpy65VUUqeINba3V7k6KlGw0w=
 k8s.io/kubernetes/staging/src/k8s.io/apiextensions-apiserver v0.0.0-20220204201730-469c4c4a30ab/go.mod h1:tQy8WdQyW2fJluq+frOpCVMuxGAt7tDrlFNfPJrtdRw=
 k8s.io/kubernetes/staging/src/k8s.io/apimachinery v0.0.0-20220204201730-469c4c4a30ab h1:yNTcDKZVwC0ad6sX8plnr/B8kdMlBFOyn/Nhv80RXTY=
 k8s.io/kubernetes/staging/src/k8s.io/apimachinery v0.0.0-20220204201730-469c4c4a30ab/go.mod h1:8UzQ2p/d2gKK5RokeFI3zFZGNU5xXar6mpR0nDRvvGE=
