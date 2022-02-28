@@ -133,7 +133,7 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 	case *storagev1.StorageClassList:
 		for i := range o.Items {
 			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-				Group:   "apps",
+				Group:   "storage.k8s.io",
 				Kind:    "StorageClass",
 				Version: "v1",
 			})
