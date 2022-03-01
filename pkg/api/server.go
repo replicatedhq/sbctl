@@ -80,6 +80,7 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 	apiv1Router.HandleFunc("/{resource}/{name}", h.getAPIV1ClusterResource)
 	apiv1Router.HandleFunc("/namespaces/{namespace}/{resource}", h.getAPIV1NamespaceResources)
 	apiv1Router.HandleFunc("/namespaces/{namespace}/{resource}/{name}", h.getAPIV1NamespaceResource)
+	apiv1Router.HandleFunc("/namespaces/{namespace}/{resource}/{name}/log", h.getAPIV1NamespaceResourceLog)
 
 	r.HandleFunc("/apis", h.getAPIs)
 	apisRouter := r.PathPrefix("/apis").Subrouter()
