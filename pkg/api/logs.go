@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -18,8 +19,14 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
 	container := r.URL.Query().Get("container")
+	previous, _ := strconv.ParseBool(r.URL.Query().Get("previous"))
 
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, "logs", namespace, name, fmt.Sprintf("%s.log", container))
+	logFileName := fmt.Sprintf("%s.log", container)
+	if previous {
+		logFileName = fmt.Sprintf("%s-previous.log", container)
+	}
+
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, "logs", namespace, name, logFileName)
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
