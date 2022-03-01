@@ -256,7 +256,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", sbctlutil.GetSBCompatibleResourceName(resource)))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get service files from dir", err)
+			log.Println("failed to get persistentvolumeclaim files from dir", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -1164,7 +1164,7 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		converted := &networking.IngressList{}
 		err := apinetworkingv1.Convert_v1_IngressList_To_networking_IngressList(o, converted, nil)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to convert job")
+			return nil, errors.Wrap(err, "failed to convert ingress list")
 		}
 		object = converted
 	default:
