@@ -17,10 +17,14 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
+	sbctlutil "github.com/replicatedhq/sbctl/pkg/util"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
+	networkingv1 "k8s.io/api/networking/v1"
+	storagev1 "k8s.io/api/storage/v1"
+	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -34,6 +38,8 @@ import (
 	apisbatchv1beta1 "k8s.io/kubernetes/pkg/apis/batch/v1beta1"
 	apicore "k8s.io/kubernetes/pkg/apis/core"
 	apicorev1 "k8s.io/kubernetes/pkg/apis/core/v1"
+	networking "k8s.io/kubernetes/pkg/apis/networking"
+	apinetworkingv1 "k8s.io/kubernetes/pkg/apis/networking/v1"
 	"k8s.io/kubernetes/pkg/printers"
 	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
 	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
@@ -79,6 +85,7 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 	apisRouter := r.PathPrefix("/apis").Subrouter()
 	apisRouter.HandleFunc("/{group}/{version}", h.getAPIByGroupAndVersion)
 	apisRouter.HandleFunc("/{group}/{version}/{resource}", h.getAPIsClusterResources)
+	apisRouter.HandleFunc("/{group}/{version}/{resource}/{name}", h.getAPIsClusterResource)
 	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}", h.getAPIsNamespaceResources)
 	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}/{name}", h.getAPIsNamespaceResource)
 
@@ -176,8 +183,8 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	var result runtime.Object
 	filenames := []string{}
 	switch resource {
-	case "namespaces", "nodes", "pvs":
-		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", resource))}
+	case "namespaces", "nodes", "persistentvolumes":
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 	case "pods":
 		result = &corev1.PodList{
 			Items: []corev1.Pod{},
@@ -238,6 +245,21 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "persistentvolumeclaims":
+		result = &corev1.PersistentVolumeClaimList{
+			Items: []corev1.PersistentVolumeClaim{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Version: "v1",
+			Kind:    "PersistentVolumeClaimList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", sbctlutil.GetSBCompatibleResourceName(resource)))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get persistentvolumeclaim files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -277,6 +299,9 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		case *corev1.ServiceList:
 			r := result.(*corev1.ServiceList)
 			r.Items = append(r.Items, o.Items...)
+		case *corev1.PersistentVolumeClaimList:
+			r := result.(*corev1.PersistentVolumeClaimList)
+			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -297,12 +322,12 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 }
 
 func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request) {
-	log.Println("called getAPIV1ClusterResources")
+	log.Println("called getAPIV1ClusterResource")
 
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
 
-	filename := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", resource))
+	filename := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Println("failed to load file", err)
@@ -366,7 +391,7 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -406,7 +431,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -449,6 +474,13 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 			}
 		}
 	case *corev1.ServiceList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *corev1.PersistentVolumeClaimList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -638,11 +670,52 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-
+	case "storageclasses":
+		result = &storagev1.StorageClassList{
+			Items: []storagev1.StorageClass{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "StorageClassList",
+		})
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
+		if err != nil {
+			log.Println("failed to get storageclasses files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "customresourcedefinitions":
+		result = &extensionsv1.CustomResourceDefinitionList{
+			Items: []extensionsv1.CustomResourceDefinition{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "CustomResourceDefinitionList",
+		})
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
+		if err != nil {
+			log.Println("failed to get customresourcedefinitions files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	case "ingresses":
-		log.Println("get ingresses is not implemented")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		result = &networkingv1.IngressList{
+			Items: []networkingv1.Ingress{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "IngressList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get ingresses files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -660,9 +733,14 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			return
 		}
 
+		// No need to do type conversions if only one file is returned.
+		// This will always be the case for cluster level resources, and sometimes for namespaced resources.
+		if len(filenames) == 1 {
+			JSON(w, http.StatusOK, decoded)
+			return
+		}
 		// TODO: filter list by selector
 		// selector := r.URL.Query().Get("fieldSelector")
-
 		switch o := decoded.(type) {
 		case *batchv1.JobList:
 			r := result.(*batchv1.JobList)
@@ -678,6 +756,12 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			r.Items = append(r.Items, o.Items...)
 		case *appsv1.StatefulSetList:
 			r := result.(*appsv1.StatefulSetList)
+			r.Items = append(r.Items, o.Items...)
+		case *storagev1.StorageClassList:
+			r := result.(*storagev1.StorageClassList)
+			r.Items = append(r.Items, o.Items...)
+		case *networkingv1.IngressList:
+			r := result.(*networkingv1.IngressList)
 			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
@@ -696,19 +780,14 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	}
 
 	JSON(w, http.StatusOK, result)
-	return
 }
 
-func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Request) {
-	log.Println("called getAPIsNamespaceResources")
+func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getAPIsClusterResource")
 
-	group := mux.Vars(r)["group"]
-	version := mux.Vars(r)["version"]
-	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
-	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
-
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	name := mux.Vars(r)["name"]
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
@@ -720,15 +799,54 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	decoded, gvk, err := sbctl.Decode(resource, data)
+	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
 		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	if gvk.Group != group && gvk.Version != version {
-		log.Println("wrong gvk is found", gvk)
+	switch o := decoded.(type) {
+	case *storagev1.StorageClassList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *extensionsv1.CustomResourceDefinitionList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	}
+	JSON(w, http.StatusNotFound, errorNotFound)
+}
+
+func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getAPIsNamespaceResources")
+
+	namespace := mux.Vars(r)["namespace"]
+	resource := mux.Vars(r)["resource"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
+
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
+	data, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		log.Println("failed to load file", err)
+		if os.IsNotExist(err) {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		return
+	}
+
+	decoded, _, err := sbctl.Decode(resource, data)
+	if err != nil {
+		log.Println("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -748,8 +866,6 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIsNamespaceResource")
 
-	group := mux.Vars(r)["group"]
-	version := mux.Vars(r)["version"]
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
@@ -758,7 +874,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		log.Printf("TODO: as=Table is not yet implemeted")
 	}
 
-	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, fmt.Sprintf("%s.json", namespace))
+	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
@@ -770,15 +886,9 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	decoded, gvk, err := sbctl.Decode(resource, data)
+	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
 		log.Println("failed to decode wrapped", resource, ":", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	if gvk.Group != group && gvk.Version != version {
-		log.Println("wrong gvk is found", gvk)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -813,6 +923,13 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 			}
 		}
 	case *batchv1.JobList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *networkingv1.IngressList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -987,6 +1104,34 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 			return nil, errors.Wrap(err, "failed to convert event")
 		}
 		object = converted
+	case *corev1.PersistentVolumeClaimList:
+		converted := &apicore.PersistentVolumeClaimList{}
+		err := apicorev1.Convert_v1_PersistentVolumeClaimList_To_core_PersistentVolumeClaimList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert persistentvolumeclaim list")
+		}
+		object = converted
+	case *corev1.PersistentVolumeClaim:
+		converted := &apicore.PersistentVolumeClaim{}
+		err := apicorev1.Convert_v1_PersistentVolumeClaim_To_core_PersistentVolumeClaim(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert persistentvolumeclaim")
+		}
+		object = converted
+	case *corev1.PersistentVolumeList:
+		converted := &apicore.PersistentVolumeList{}
+		err := apicorev1.Convert_v1_PersistentVolumeList_To_core_PersistentVolumeList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert persistentvolume list")
+		}
+		object = converted
+	case *corev1.PersistentVolume:
+		converted := &apicore.PersistentVolume{}
+		err := apicorev1.Convert_v1_PersistentVolume_To_core_PersistentVolume(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert persistentvolume")
+		}
+		object = converted
 	case *batchv1beta1.CronJobList:
 		converted := &apisbatch.CronJobList{}
 		err := apisbatchv1beta1.Convert_v1beta1_CronJobList_To_batch_CronJobList(o, converted, nil)
@@ -1013,6 +1158,13 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		err := apisbatchv1.Convert_v1_Job_To_batch_Job(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert job")
+		}
+		object = converted
+	case *networkingv1.IngressList:
+		converted := &networking.IngressList{}
+		err := apinetworkingv1.Convert_v1_IngressList_To_networking_IngressList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert ingress list")
 		}
 		object = converted
 	default:

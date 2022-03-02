@@ -8,6 +8,7 @@ require (
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
 	k8s.io/api v0.23.3
+	k8s.io/apiextensions-apiserver v0.23.0
 	k8s.io/apimachinery v0.23.3
 	k8s.io/apiserver v0.23.3
 	k8s.io/client-go v0.23.3
