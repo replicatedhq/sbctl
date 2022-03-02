@@ -36,8 +36,8 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 			data, err = ioutil.ReadFile(errFileName)
 			if err != nil {
 				if os.IsNotExist(err) {
-					w.Write([]byte(fmt.Sprintf("log files not found in support-bundle.\n%v\n%v", fileName, errFileName)))
-					w.WriteHeader(http.StatusNotFound)
+					PlainText(w, http.StatusNotFound, []byte(fmt.Sprintf("log files not found in support-bundle.\n%v\n%v", fileName, errFileName)))
+					return
 				}
 				w.WriteHeader(http.StatusInternalServerError)
 				return
@@ -47,8 +47,11 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 			return
 		}
 	}
+	PlainText(w, http.StatusAccepted, data)
+}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted)
-	w.Write(data)
+func PlainText(w http.ResponseWriter, responseCode int, responseBody []byte) {
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write(responseBody)
+	w.WriteHeader(responseCode)
 }
