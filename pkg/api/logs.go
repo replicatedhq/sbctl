@@ -47,7 +47,7 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 			return
 		}
 	}
-	PlainText(w, http.StatusAccepted, data)
+	PlainText(w, http.StatusOK, data)
 }
 
 func PlainText(w http.ResponseWriter, responseCode int, responseBody []byte) {
