@@ -5,3 +5,4 @@ dist
 # IDE files
 .vscode
 .idea
+__debug_bin
