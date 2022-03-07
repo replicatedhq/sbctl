@@ -15,6 +15,10 @@ import (
 func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIV1NamespaceResourceLog")
 
+	if !r.URL.Query().Has("container") {
+		PlainText(w, http.StatusBadRequest, []byte("option `-c/--container` value not provided"))
+		return
+	}
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
