@@ -278,11 +278,10 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		// No need to do type conversions if only one file is returned.
-		// This will always be the case for cluster level resources, and sometimes for namespaced resources.
+		// The switch below is incomplete, so let's skip it if we are only deling with 1 list of items
 		if len(filenames) == 1 {
-			JSON(w, http.StatusOK, decoded)
-			return
+			result = decoded
+			break
 		}
 
 		decoded = filterObjects(decoded, selector)
@@ -1133,6 +1132,20 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 			return nil, errors.Wrap(err, "failed to convert persistentvolume")
 		}
 		object = converted
+	case *corev1.NodeList:
+		converted := &apicore.NodeList{}
+		err := apicorev1.Convert_v1_NodeList_To_core_NodeList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert node list")
+		}
+		object = converted
+	case *corev1.Node:
+		converted := &apicore.Node{}
+		err := apicorev1.Convert_v1_Node_To_core_Node(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert node")
+		}
+		object = converted
 	case *batchv1beta1.CronJobList:
 		converted := &apisbatch.CronJobList{}
 		err := apisbatchv1beta1.Convert_v1beta1_CronJobList_To_batch_CronJobList(o, converted, nil)
@@ -1170,6 +1183,7 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		object = converted
 	default:
 		// no conversion needed
+		log.Printf("can't convert %T to build table\n", o)
 	}
 
 	ctx := context.TODO()
