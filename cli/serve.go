@@ -111,8 +111,8 @@ func ServeCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().String("support-bundle-location", "", "path to support bundle archive, directory, or URL")
-	cmd.Flags().String("token", "", "API token for authentication when fetching on-line bundles")
+	cmd.Flags().StringP("support-bundle-location", "s", "", "path to support bundle archive, directory, or URL")
+	cmd.Flags().StringP("token", "t", "", "API token for authentication when fetching on-line bundles")
 	return cmd
 }
 
