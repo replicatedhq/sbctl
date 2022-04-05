@@ -312,7 +312,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	if asTable {
 		table, err := toTable(result)
 		if err != nil {
-			log.Println("could not convert to table", err)
+			log.Println("could not convert to table:", err)
 		} else {
 			result = table
 		}
@@ -416,7 +416,7 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 	if asTable {
 		table, err := toTable(decoded)
 		if err != nil {
-			log.Println("could not convert to table", err)
+			log.Println("could not convert to table:", err)
 		} else {
 			decoded = table
 		}
@@ -773,7 +773,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	if asTable {
 		table, err := toTable(result)
 		if err != nil {
-			log.Println("could not convert to table", err)
+			log.Println("could not convert to table:", err)
 		} else {
 			result = table
 		}
@@ -854,7 +854,7 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 	if asTable {
 		table, err := toTable(decoded)
 		if err != nil {
-			log.Println("could not convert to table", err)
+			log.Println("could not convert to table:", err)
 		} else {
 			decoded = table
 		}
@@ -1144,6 +1144,20 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		err := apicorev1.Convert_v1_Node_To_core_Node(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert node")
+		}
+		object = converted
+	case *corev1.ServiceList:
+		converted := &apicore.ServiceList{}
+		err := apicorev1.Convert_v1_ServiceList_To_core_ServiceList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert service list")
+		}
+		object = converted
+	case *corev1.Service:
+		converted := &apicore.Service{}
+		err := apicorev1.Convert_v1_Service_To_core_Service(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert service")
 		}
 		object = converted
 	case *batchv1beta1.CronJobList:
