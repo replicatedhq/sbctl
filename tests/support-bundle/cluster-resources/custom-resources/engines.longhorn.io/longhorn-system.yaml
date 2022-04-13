@@ -1,0 +1,239 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: Engine
+  metadata:
+    creationTimestamp: "2022-04-11T22:52:12Z"
+    finalizers:
+    - longhorn.io
+    generation: 4
+    labels:
+      longhornnode: troubleshoot-demo-001
+      longhornvolume: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:replicaAddressMap:
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: {}
+        f:status:
+          f:cloneStatus:
+            f:tcp://***HIDDEN***:10000:
+              .: {}
+              f:error: {}
+              f:fromReplicaAddress: {}
+              f:isCloning: {}
+              f:progress: {}
+              f:snapshotName: {}
+              f:state: {}
+          f:currentReplicaAddressMap:
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: {}
+          f:purgeStatus:
+            f:tcp://***HIDDEN***:10000:
+              f:progress: {}
+              f:state: {}
+            f:tcp://***HIDDEN***:10000:
+              .: {}
+              f:error: {}
+              f:isPurging: {}
+              f:progress: {}
+              f:state: {}
+          f:replicaModeMap:
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: {}
+          f:restoreStatus:
+            f:tcp://***HIDDEN***:10000:
+              .: {}
+              f:backupURL: {}
+              f:currentRestoringBackup: {}
+              f:isRestoring: {}
+              f:lastRestored: {}
+              f:state: {}
+          f:snapshots:
+            f:volume-head:
+              f:size: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:04:10Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:cloneStatus:
+            f:tcp://***HIDDEN***:10000:
+              .: {}
+              f:error: {}
+              f:fromReplicaAddress: {}
+              f:isCloning: {}
+              f:progress: {}
+              f:snapshotName: {}
+              f:state: {}
+          f:currentReplicaAddressMap:
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: {}
+          f:purgeStatus:
+            f:tcp://***HIDDEN***:10000:
+              .: {}
+              f:error: {}
+              f:isPurging: {}
+              f:progress: {}
+              f:state: {}
+          f:replicaModeMap:
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: {}
+          f:restoreStatus:
+            f:tcp://***HIDDEN***:10000:
+              .: {}
+              f:backupURL: {}
+              f:currentRestoringBackup: {}
+              f:isRestoring: {}
+              f:lastRestored: {}
+              f:state: {}
+          f:snapshots:
+            f:8afb0be0-addc-40c0-93b1-e5f5cc6f8c17:
+              .: {}
+              f:children:
+                .: {}
+                f:volume-head: {}
+              f:created: {}
+              f:labels: {}
+              f:name: {}
+              f:parent: {}
+              f:removed: {}
+              f:size: {}
+              f:usercreated: {}
+            f:volume-head:
+              f:created: {}
+              f:parent: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:04:19Z"
+    name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      kind: Volume
+      name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+      uid: 45f8c38f-23a5-440c-b36b-49c94491239f
+    resourceVersion: "4499"
+    uid: d26a9725-4796-4abf-b4f6-5bf389012220
+  spec:
+    backupVolume: ""
+    desireState: running
+    disableFrontend: false
+    engineImage: longhornio/longhorn-engine:v1.2.2
+    frontend: blockdev
+    logRequested: false
+    nodeID: troubleshoot-demo-001
+    replicaAddressMap:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: ***HIDDEN***:10000
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: ***HIDDEN***:10000
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5: ***HIDDEN***:10000
+    requestedBackupRestore: ""
+    requestedDataSource: ""
+    revisionCounterDisabled: false
+    salvageRequested: false
+    upgradedReplicaAddressMap: {}
+    volumeName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    volumeSize: "10737418240"
+  status:
+    backupStatus: {}
+    cloneStatus:
+      tcp://***HIDDEN***:10000:
+        error: ""
+        fromReplicaAddress: ""
+        isCloning: false
+        progress: 0
+        snapshotName: ""
+        state: ""
+      tcp://***HIDDEN***:10000:
+        error: ""
+        fromReplicaAddress: ""
+        isCloning: false
+        progress: 0
+        snapshotName: ""
+        state: ""
+      tcp://***HIDDEN***:10000:
+        error: ""
+        fromReplicaAddress: ""
+        isCloning: false
+        progress: 0
+        snapshotName: ""
+        state: ""
+    currentImage: longhornio/longhorn-engine:v1.2.2
+    currentReplicaAddressMap:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: ***HIDDEN***:10000
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: ***HIDDEN***:10000
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5: ***HIDDEN***:10000
+    currentSize: "10737418240"
+    currentState: running
+    endpoint: /dev/longhorn/pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    instanceManagerName: instance-manager-e-20c7e80d
+    ip: ***HIDDEN***
+    isExpanding: false
+    lastExpansionError: ""
+    lastExpansionFailedAt: ""
+    lastRestoredBackup: ""
+    logFetched: false
+    ownerID: troubleshoot-demo-001
+    port: 10000
+    purgeStatus:
+      tcp://***HIDDEN***:10000:
+        error: ""
+        isPurging: false
+        progress: 100
+        state: complete
+      tcp://***HIDDEN***:10000:
+        error: ""
+        isPurging: false
+        progress: 100
+        state: complete
+      tcp://***HIDDEN***:10000:
+        error: ""
+        isPurging: false
+        progress: 100
+        state: complete
+    rebuildStatus: {}
+    replicaModeMap:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: RW
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: RW
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5: RW
+    restoreStatus:
+      tcp://***HIDDEN***:10000:
+        backupURL: ""
+        currentRestoringBackup: ""
+        isRestoring: false
+        lastRestored: ""
+        state: ""
+      tcp://***HIDDEN***:10000:
+        backupURL: ""
+        currentRestoringBackup: ""
+        isRestoring: false
+        lastRestored: ""
+        state: ""
+      tcp://***HIDDEN***:10000:
+        backupURL: ""
+        currentRestoringBackup: ""
+        isRestoring: false
+        lastRestored: ""
+        state: ""
+    salvageExecuted: false
+    snapshots:
+      8afb0be0-addc-40c0-93b1-e5f5cc6f8c17:
+        children:
+          volume-head: true
+        created: "2022-04-11T23:04:10Z"
+        labels: {}
+        name: 8afb0be0-addc-40c0-93b1-e5f5cc6f8c17
+        parent: ""
+        removed: true
+        size: "239411200"
+        usercreated: false
+      volume-head:
+        children: {}
+        created: "2022-04-11T23:04:10Z"
+        labels: {}
+        name: volume-head
+        parent: 8afb0be0-addc-40c0-93b1-e5f5cc6f8c17
+        removed: false
+        size: "0"
+        usercreated: false
+    snapshotsError: ""
+    started: true

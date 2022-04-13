@@ -1,0 +1,421 @@
+{
+  "kind": "NamespaceList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27131"
+  },
+  "items": [
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "default",
+        "uid": "dadf9b21-da96-442c-b1b0-a26a02ab1261",
+        "resourceVersion": "202",
+        "creationTimestamp": "2022-04-11T22:50:00Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "default"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-apiserver",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:00Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "kube-node-lease",
+        "uid": "44f344f3-7d38-4cfe-b92e-d0c34a1d4cf5",
+        "resourceVersion": "6",
+        "creationTimestamp": "2022-04-11T22:49:59Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-node-lease"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-apiserver",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:49:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "kube-public",
+        "uid": "6d0721cb-d065-471a-8751-65895e4b2866",
+        "resourceVersion": "5",
+        "creationTimestamp": "2022-04-11T22:49:59Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-public"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-apiserver",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:49:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "kube-system",
+        "uid": "31bd2c15-4640-4fc9-8e4e-789844cfd1a0",
+        "resourceVersion": "4",
+        "creationTimestamp": "2022-04-11T22:49:59Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "kube-system"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-apiserver",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:49:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "kurl",
+        "uid": "5ff8ff50-fa5d-40c0-9557-adde02e61991",
+        "resourceVersion": "690",
+        "creationTimestamp": "2022-04-11T22:50:18Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "kurl"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"kurl\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-create",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:18Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "longhorn-system",
+        "uid": "25cad874-258b-408f-b51d-0470a3416bec",
+        "resourceVersion": "862",
+        "creationTimestamp": "2022-04-11T22:51:03Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "longhorn-system"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"longhorn-system\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-create",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:03Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "minio",
+        "uid": "f5c0ee39-c348-41cc-9007-b5980232e017",
+        "resourceVersion": "1068",
+        "creationTimestamp": "2022-04-11T22:51:59Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "minio"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"minio\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "projectcontour",
+        "uid": "8cf6b80b-0a7f-434b-9c99-e9396892c05c",
+        "resourceVersion": "1517",
+        "creationTimestamp": "2022-04-11T22:52:40Z",
+        "labels": {
+          "kubernetes.io/metadata.name": "projectcontour"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"projectcontour\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-create",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:40Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {},
+                "f:labels": {
+                  ".": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:42Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    },
+    {
+      "kind": "Namespace",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero",
+        "uid": "4c9a66a5-1067-4706-853f-b45815f53481",
+        "resourceVersion": "1836",
+        "creationTimestamp": "2022-04-11T22:52:59Z",
+        "labels": {
+          "component": "velero",
+          "kubernetes.io/metadata.name": "velero"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"creationTimestamp\":null,\"labels\":{\"component\":\"velero\"},\"name\":\"velero\"},\"spec\":{}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:component": {},
+                  "f:kubernetes.io/metadata.name": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "finalizers": [
+          "kubernetes"
+        ]
+      },
+      "status": {
+        "phase": "Active"
+      }
+    }
+  ]
+}

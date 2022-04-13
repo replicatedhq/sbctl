@@ -1,0 +1,1620 @@
+{
+  "kind": "DeploymentList",
+  "apiVersion": "apps/v1",
+  "metadata": {
+    "resourceVersion": "27146"
+  },
+  "items": [
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-attacher",
+        "namespace": "longhorn-system",
+        "uid": "49b94219-abe6-4c21-96a0-e3e0d87ade9d",
+        "resourceVersion": "1377",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:04Z",
+        "labels": {
+          "app": "csi-attacher",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:04Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-attacher\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:14Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {},
+                "f:updatedReplicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-attacher"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-attacher"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-attacher",
+                "image": "k8s.gcr.io/sig-storage/csi-attacher:v3.2.1",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--timeout=1m50s",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 3,
+        "updatedReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:14Z",
+            "lastTransitionTime": "2022-04-11T22:52:14Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:14Z",
+            "lastTransitionTime": "2022-04-11T22:52:04Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"csi-attacher-66576879d\" has successfully progressed."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-provisioner",
+        "namespace": "longhorn-system",
+        "uid": "50788646-8c0e-4a35-9026-f7b34090aec3",
+        "resourceVersion": "1382",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:04Z",
+        "labels": {
+          "app": "csi-provisioner",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:04Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-provisioner\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:15Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {},
+                "f:updatedReplicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-provisioner"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-provisioner"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-provisioner",
+                "image": "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.2",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--timeout=1m50s",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)",
+                  "--default-fstype=ext4"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 3,
+        "updatedReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:15Z",
+            "lastTransitionTime": "2022-04-11T22:52:15Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:15Z",
+            "lastTransitionTime": "2022-04-11T22:52:05Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"csi-provisioner-57d9785cdb\" has successfully progressed."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-resizer",
+        "namespace": "longhorn-system",
+        "uid": "24e54b0c-e78a-4d9a-b7f0-16314effc19c",
+        "resourceVersion": "1391",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:05Z",
+        "labels": {
+          "app": "csi-resizer",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:05Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-resizer\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {},
+                "f:updatedReplicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-resizer"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-resizer"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-resizer",
+                "image": "k8s.gcr.io/sig-storage/csi-resizer:v1.2.0",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--timeout=1m50s",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 3,
+        "updatedReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:16Z",
+            "lastTransitionTime": "2022-04-11T22:52:16Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:16Z",
+            "lastTransitionTime": "2022-04-11T22:52:05Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"csi-resizer-778d957ccf\" has successfully progressed."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-snapshotter",
+        "namespace": "longhorn-system",
+        "uid": "f5321ec7-5bd5-4c01-a7c0-10704b0488a9",
+        "resourceVersion": "1410",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:06Z",
+        "labels": {
+          "app": "csi-snapshotter",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:06Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-snapshotter\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {},
+                "f:updatedReplicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-snapshotter"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-snapshotter"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-snapshotter",
+                "image": "k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 3,
+        "updatedReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:16Z",
+            "lastTransitionTime": "2022-04-11T22:52:16Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:16Z",
+            "lastTransitionTime": "2022-04-11T22:52:06Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"csi-snapshotter-6cff4ccb95\" has successfully progressed."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "longhorn-driver-deployer",
+        "namespace": "longhorn-system",
+        "uid": "b47371b2-1d17-458f-b408-42a22f1d2262",
+        "resourceVersion": "1104",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:51:36Z",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"longhorn-driver-deployer\",\"namespace\":\"longhorn-system\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"longhorn-driver-deployer\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"longhorn-driver-deployer\"}},\"spec\":{\"containers\":[{\"command\":[\"longhorn-manager\",\"-d\",\"deploy-driver\",\"--manager-image\",\"longhornio/longhorn-manager:v1.2.2\",\"--manager-url\",\"http://longhorn-backend:9500/v1\"],\"env\":[{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"NODE_NAME\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"spec.nodeName\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"spec.serviceAccountName\"}}}],\"image\":\"longhornio/longhorn-manager:v1.2.2\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"longhorn-driver-deployer\"}],\"initContainers\":[{\"command\":[\"sh\",\"-c\",\"while [ $(curl -m 1 -s -o /dev/null -w \\\"%{http_code}\\\" http://longhorn-backend:9500/v1) != \\\"200\\\" ]; do echo waiting; sleep 2; done\"],\"image\":\"longhornio/longhorn-manager:v1.2.2\",\"name\":\"wait-longhorn-manager\"}],\"priorityClassName\":\"system-cluster-critical\",\"securityContext\":{\"runAsUser\":0},\"serviceAccountName\":\"longhorn-service-account\"}}}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"longhorn-driver-deployer\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"NODE_NAME\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"SERVICE_ACCOUNT\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {}
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:initContainers": {
+                      ".": {},
+                      "k:{\"name\":\"wait-longhorn-manager\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {}
+                      }
+                    },
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {
+                      ".": {},
+                      "f:runAsUser": {}
+                    },
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {}
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:00Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {},
+                "f:updatedReplicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "longhorn-driver-deployer"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "longhorn-driver-deployer"
+            }
+          },
+          "spec": {
+            "initContainers": [
+              {
+                "name": "wait-longhorn-manager",
+                "image": "longhornio/longhorn-manager:v1.2.2",
+                "command": [
+                  "sh",
+                  "-c",
+                  "while [ $(curl -m 1 -s -o /dev/null -w \"%{http_code}\" http://longhorn-backend:9500/v1) != \"200\" ]; do echo waiting; sleep 2; done"
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "containers": [
+              {
+                "name": "longhorn-driver-deployer",
+                "image": "longhornio/longhorn-manager:v1.2.2",
+                "command": [
+                  "longhorn-manager",
+                  "-d",
+                  "deploy-driver",
+                  "--manager-image",
+                  "longhornio/longhorn-manager:v1.2.2",
+                  "--manager-url",
+                  "http://longhorn-backend:9500/v1"
+                ],
+                "env": [
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  },
+                  {
+                    "name": "NODE_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.nodeName"
+                      }
+                    }
+                  },
+                  {
+                    "name": "SERVICE_ACCOUNT",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.serviceAccountName"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {
+              "runAsUser": 0
+            },
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-cluster-critical"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:00Z",
+            "lastTransitionTime": "2022-04-11T22:52:00Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:52:00Z",
+            "lastTransitionTime": "2022-04-11T22:51:36Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"longhorn-driver-deployer-56d4c55cf7\" has successfully progressed."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "longhorn-ui",
+        "namespace": "longhorn-system",
+        "uid": "797a886d-ea41-47c7-85e4-f4b1a2faceca",
+        "resourceVersion": "900",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:51:36Z",
+        "labels": {
+          "app": "longhorn-ui"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"longhorn-ui\"},\"name\":\"longhorn-ui\",\"namespace\":\"longhorn-system\"},\"spec\":{\"replicas\":0,\"selector\":{\"matchLabels\":{\"app\":\"longhorn-ui\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"longhorn-ui\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"LONGHORN_MANAGER_IP\",\"value\":\"http://longhorn-backend:9500\"}],\"image\":\"longhornio/longhorn-ui:v1.2.2\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"longhorn-ui\",\"ports\":[{\"containerPort\":8000,\"name\":\"http\"}],\"securityContext\":{\"runAsUser\":0}}]}}}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {}
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"longhorn-ui\"}": {
+                        ".": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"LONGHORN_MANAGER_IP\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:ports": {
+                          ".": {},
+                          "k:{\"containerPort\":8000,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:name": {},
+                            "f:protocol": {}
+                          }
+                        },
+                        "f:resources": {},
+                        "f:securityContext": {
+                          ".": {},
+                          "f:runAsUser": {}
+                        },
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {}
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:terminationGracePeriodSeconds": {}
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 0,
+        "selector": {
+          "matchLabels": {
+            "app": "longhorn-ui"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "longhorn-ui"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "longhorn-ui",
+                "image": "longhornio/longhorn-ui:v1.2.2",
+                "ports": [
+                  {
+                    "name": "http",
+                    "containerPort": 8000,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "LONGHORN_MANAGER_IP",
+                    "value": "http://longhorn-backend:9500"
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent",
+                "securityContext": {
+                  "runAsUser": 0
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:51:36Z",
+            "lastTransitionTime": "2022-04-11T22:51:36Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-04-11T22:51:36Z",
+            "lastTransitionTime": "2022-04-11T22:51:36Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"longhorn-ui-79f5d8f848\" has successfully progressed."
+          }
+        ]
+      }
+    }
+  ]
+}

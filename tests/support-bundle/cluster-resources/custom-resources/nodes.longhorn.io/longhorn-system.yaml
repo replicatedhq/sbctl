@@ -1,0 +1,507 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: Node
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:51Z"
+    finalizers:
+    - longhorn.io
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"longhorn.io": {}
+        f:spec:
+          .: {}
+          f:allowScheduling: {}
+          f:disks:
+            .: {}
+            f:default-disk-4ba6213afc753e54:
+              .: {}
+              f:allowScheduling: {}
+              f:evictionRequested: {}
+              f:path: {}
+              f:storageReserved: {}
+              f:tags: {}
+          f:engineManagerCPURequest: {}
+          f:evictionRequested: {}
+          f:name: {}
+          f:replicaManagerCPURequest: {}
+          f:tags: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:51Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:conditions:
+            .: {}
+            f:MountPropagation:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:Ready:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:Schedulable:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:diskStatus:
+            .: {}
+            f:default-disk-4ba6213afc753e54:
+              .: {}
+              f:conditions:
+                .: {}
+                f:Ready:
+                  .: {}
+                  f:lastProbeTime: {}
+                  f:lastTransitionTime: {}
+                  f:message: {}
+                  f:reason: {}
+                  f:status: {}
+                  f:type: {}
+                f:Schedulable:
+                  .: {}
+                  f:lastProbeTime: {}
+                  f:lastTransitionTime: {}
+                  f:message: {}
+                  f:reason: {}
+                  f:status: {}
+                  f:type: {}
+              f:diskUUID: {}
+              f:scheduledReplica:
+                .: {}
+                f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5: {}
+              f:storageAvailable: {}
+              f:storageMaximum: {}
+              f:storageScheduled: {}
+          f:region: {}
+          f:zone: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T22:52:14Z"
+    name: troubleshoot-demo-001
+    namespace: longhorn-system
+    resourceVersion: "20846"
+    uid: 8fa3ff36-62a9-4e98-b2a8-da54d45dded8
+  spec:
+    allowScheduling: true
+    disks:
+      default-disk-4ba6213afc753e54:
+        allowScheduling: true
+        evictionRequested: false
+        path: /var/lib/longhorn/
+        storageReserved: 31164069888
+        tags: null
+    engineManagerCPURequest: 0
+    evictionRequested: false
+    name: troubleshoot-demo-001
+    replicaManagerCPURequest: 0
+    tags: []
+  status:
+    conditions:
+      MountPropagation:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:51:51Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: MountPropagation
+      Ready:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:51:56Z"
+        message: Node troubleshoot-demo-001 is ready
+        reason: ""
+        status: "True"
+        type: Ready
+      Schedulable:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:51:51Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: Schedulable
+    diskStatus:
+      default-disk-4ba6213afc753e54:
+        conditions:
+          Ready:
+            lastProbeTime: ""
+            lastTransitionTime: "2022-04-11T22:51:51Z"
+            message: Disk default-disk-4ba6213afc753e54(/var/lib/longhorn/) on node
+              troubleshoot-demo-001 is ready
+            reason: ""
+            status: "True"
+            type: Ready
+          Schedulable:
+            lastProbeTime: ""
+            lastTransitionTime: "2022-04-11T22:51:51Z"
+            message: Disk default-disk-4ba6213afc753e54(/var/lib/longhorn/) on node
+              troubleshoot-demo-001 is schedulable
+            reason: ""
+            status: "True"
+            type: Schedulable
+        diskUUID: 7e36f026-0b23-466b-991c-d46fb322c462
+        scheduledReplica:
+          pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5: 10737418240
+        storageAvailable: 91750400000
+        storageMaximum: 103880232960
+        storageScheduled: 10737418240
+    region: ""
+    zone: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Node
+  metadata:
+    creationTimestamp: "2022-04-11T23:03:50Z"
+    finalizers:
+    - longhorn.io
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"longhorn.io": {}
+        f:spec:
+          .: {}
+          f:allowScheduling: {}
+          f:disks:
+            .: {}
+            f:default-disk-4ba6213afc753e54:
+              .: {}
+              f:allowScheduling: {}
+              f:evictionRequested: {}
+              f:path: {}
+              f:storageReserved: {}
+              f:tags: {}
+          f:engineManagerCPURequest: {}
+          f:evictionRequested: {}
+          f:name: {}
+          f:replicaManagerCPURequest: {}
+          f:tags: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:50Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:conditions:
+            .: {}
+            f:MountPropagation:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:Ready:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:Schedulable:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:diskStatus:
+            .: {}
+            f:default-disk-4ba6213afc753e54:
+              .: {}
+              f:conditions:
+                .: {}
+                f:Ready:
+                  .: {}
+                  f:lastProbeTime: {}
+                  f:lastTransitionTime: {}
+                  f:message: {}
+                  f:reason: {}
+                  f:status: {}
+                  f:type: {}
+                f:Schedulable:
+                  .: {}
+                  f:lastProbeTime: {}
+                  f:lastTransitionTime: {}
+                  f:message: {}
+                  f:reason: {}
+                  f:status: {}
+                  f:type: {}
+              f:diskUUID: {}
+              f:scheduledReplica:
+                .: {}
+                f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: {}
+              f:storageAvailable: {}
+              f:storageMaximum: {}
+              f:storageScheduled: {}
+          f:region: {}
+          f:zone: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:04:10Z"
+    name: troubleshoot-demo-002
+    namespace: longhorn-system
+    resourceVersion: "26877"
+    uid: a601a3b9-6cbd-4b30-af23-1abb917ac654
+  spec:
+    allowScheduling: true
+    disks:
+      default-disk-4ba6213afc753e54:
+        allowScheduling: true
+        evictionRequested: false
+        path: /var/lib/longhorn/
+        storageReserved: 62383233024
+        tags: null
+    engineManagerCPURequest: 0
+    evictionRequested: false
+    name: troubleshoot-demo-002
+    replicaManagerCPURequest: 0
+    tags: []
+  status:
+    conditions:
+      MountPropagation:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:03:51Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: MountPropagation
+      Ready:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:03:54Z"
+        message: Node troubleshoot-demo-002 is ready
+        reason: ""
+        status: "True"
+        type: Ready
+      Schedulable:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:03:50Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: Schedulable
+    diskStatus:
+      default-disk-4ba6213afc753e54:
+        conditions:
+          Ready:
+            lastProbeTime: ""
+            lastTransitionTime: "2022-04-11T23:03:51Z"
+            message: Disk default-disk-4ba6213afc753e54(/var/lib/longhorn/) on node
+              troubleshoot-demo-002 is ready
+            reason: ""
+            status: "True"
+            type: Ready
+          Schedulable:
+            lastProbeTime: ""
+            lastTransitionTime: "2022-04-11T23:03:51Z"
+            message: Disk default-disk-4ba6213afc753e54(/var/lib/longhorn/) on node
+              troubleshoot-demo-002 is schedulable
+            reason: ""
+            status: "True"
+            type: Schedulable
+        diskUUID: 5f349161-6348-494a-abb6-ead2a3c5e64b
+        scheduledReplica:
+          pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc: 10737418240
+        storageAvailable: 196188569600
+        storageMaximum: 207944110080
+        storageScheduled: 10737418240
+    region: ""
+    zone: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Node
+  metadata:
+    creationTimestamp: "2022-04-11T23:03:30Z"
+    finalizers:
+    - longhorn.io
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"longhorn.io": {}
+        f:spec:
+          .: {}
+          f:allowScheduling: {}
+          f:disks:
+            .: {}
+            f:default-disk-4ba6213afc753e54:
+              .: {}
+              f:allowScheduling: {}
+              f:evictionRequested: {}
+              f:path: {}
+              f:storageReserved: {}
+              f:tags: {}
+          f:engineManagerCPURequest: {}
+          f:evictionRequested: {}
+          f:name: {}
+          f:replicaManagerCPURequest: {}
+          f:tags: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:30Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:conditions:
+            .: {}
+            f:MountPropagation:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:Ready:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:Schedulable:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:diskStatus:
+            .: {}
+            f:default-disk-4ba6213afc753e54:
+              .: {}
+              f:conditions:
+                .: {}
+                f:Ready:
+                  .: {}
+                  f:lastProbeTime: {}
+                  f:lastTransitionTime: {}
+                  f:message: {}
+                  f:reason: {}
+                  f:status: {}
+                  f:type: {}
+                f:Schedulable:
+                  .: {}
+                  f:lastProbeTime: {}
+                  f:lastTransitionTime: {}
+                  f:message: {}
+                  f:reason: {}
+                  f:status: {}
+                  f:type: {}
+              f:diskUUID: {}
+              f:scheduledReplica:
+                .: {}
+                f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: {}
+              f:storageAvailable: {}
+              f:storageMaximum: {}
+              f:storageScheduled: {}
+          f:region: {}
+          f:zone: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:03:40Z"
+    name: troubleshoot-demo-003
+    namespace: longhorn-system
+    resourceVersion: "6971"
+    uid: d86fee47-6db7-4268-9537-4a724f0df25f
+  spec:
+    allowScheduling: true
+    disks:
+      default-disk-4ba6213afc753e54:
+        allowScheduling: true
+        evictionRequested: false
+        path: /var/lib/longhorn/
+        storageReserved: 62383233024
+        tags: null
+    engineManagerCPURequest: 0
+    evictionRequested: false
+    name: troubleshoot-demo-003
+    replicaManagerCPURequest: 0
+    tags: []
+  status:
+    conditions:
+      MountPropagation:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:03:32Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: MountPropagation
+      Ready:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:03:31Z"
+        message: Node troubleshoot-demo-003 is ready
+        reason: ""
+        status: "True"
+        type: Ready
+      Schedulable:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:03:30Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: Schedulable
+    diskStatus:
+      default-disk-4ba6213afc753e54:
+        conditions:
+          Ready:
+            lastProbeTime: ""
+            lastTransitionTime: "2022-04-11T23:03:32Z"
+            message: Disk default-disk-4ba6213afc753e54(/var/lib/longhorn/) on node
+              troubleshoot-demo-003 is ready
+            reason: ""
+            status: "True"
+            type: Ready
+          Schedulable:
+            lastProbeTime: ""
+            lastTransitionTime: "2022-04-11T23:03:32Z"
+            message: Disk default-disk-4ba6213afc753e54(/var/lib/longhorn/) on node
+              troubleshoot-demo-003 is schedulable
+            reason: ""
+            status: "True"
+            type: Schedulable
+        diskUUID: 7fd273ed-95c1-452f-87e0-8ecc94b6b8f1
+        scheduledReplica:
+          pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328: 10737418240
+        storageAvailable: 196188569600
+        storageMaximum: 207944110080
+        storageScheduled: 10737418240
+    region: ""
+    zone: ""

@@ -1,0 +1,81 @@
+{
+  "kind": "ServiceList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27146"
+  },
+  "items": [
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "minio",
+        "namespace": "minio",
+        "uid": "43bebf1a-c18b-4d76-ae79-257c7cca2398",
+        "resourceVersion": "1075",
+        "creationTimestamp": "2022-04-11T22:51:59Z",
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"minio\",\"namespace\":\"minio\"},\"spec\":{\"ports\":[{\"port\":80,\"protocol\":\"TCP\",\"targetPort\":9000}],\"selector\":{\"app\":\"minio\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":80,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "protocol": "TCP",
+            "port": 80,
+            "targetPort": 9000
+          }
+        ],
+        "selector": {
+          "app": "minio"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    }
+  ]
+}

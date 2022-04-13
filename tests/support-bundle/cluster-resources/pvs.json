@@ -1,0 +1,127 @@
+{
+  "kind": "PersistentVolumeList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27221"
+  },
+  "items": [
+    {
+      "kind": "PersistentVolume",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b",
+        "uid": "a297a34a-03d7-4e34-82a3-f46ef2d78816",
+        "resourceVersion": "1420",
+        "creationTimestamp": "2022-04-11T22:52:16Z",
+        "annotations": {
+          "pv.kubernetes.io/provisioned-by": "driver.longhorn.io"
+        },
+        "finalizers": [
+          "kubernetes.io/pv-protection",
+          "external-attacher/driver-longhorn-io"
+        ],
+        "managedFields": [
+          {
+            "manager": "csi-provisioner",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:pv.kubernetes.io/provisioned-by": {}
+                }
+              },
+              "f:spec": {
+                "f:accessModes": {},
+                "f:capacity": {
+                  ".": {},
+                  "f:storage": {}
+                },
+                "f:claimRef": {},
+                "f:csi": {
+                  ".": {},
+                  "f:driver": {},
+                  "f:fsType": {},
+                  "f:volumeAttributes": {
+                    ".": {},
+                    "f:fromBackup": {},
+                    "f:numberOfReplicas": {},
+                    "f:staleReplicaTimeout": {},
+                    "f:storage.kubernetes.io/csiProvisionerIdentity": {}
+                  },
+                  "f:volumeHandle": {}
+                },
+                "f:persistentVolumeReclaimPolicy": {},
+                "f:storageClassName": {},
+                "f:volumeMode": {}
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:phase": {}
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "csi-attacher",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:18Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:finalizers": {
+                  "v:\"external-attacher/driver-longhorn-io\"": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "capacity": {
+          "storage": "10Gi"
+        },
+        "csi": {
+          "driver": "driver.longhorn.io",
+          "volumeHandle": "pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b",
+          "fsType": "ext4",
+          "volumeAttributes": {
+            "fromBackup": "",
+            "numberOfReplicas": "3",
+            "staleReplicaTimeout": "2880",
+            "storage.kubernetes.io/csiProvisionerIdentity": "1649717531982-8081-driver.longhorn.io"
+          }
+        },
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "claimRef": {
+          "kind": "PersistentVolumeClaim",
+          "namespace": "minio",
+          "name": "minio-pv-claim",
+          "uid": "36557d76-e15e-4abe-91ee-0be6075eaa7b",
+          "apiVersion": "v1",
+          "resourceVersion": "1079"
+        },
+        "persistentVolumeReclaimPolicy": "Delete",
+        "storageClassName": "longhorn",
+        "volumeMode": "Filesystem"
+      },
+      "status": {
+        "phase": "Bound"
+      }
+    }
+  ]
+}

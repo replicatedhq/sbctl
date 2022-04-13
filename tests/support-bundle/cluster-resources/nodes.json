@@ -1,0 +1,1322 @@
+{
+  "kind": "NodeList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27203"
+  },
+  "items": [
+    {
+      "kind": "Node",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "troubleshoot-demo-001",
+        "uid": "6d2d82a1-74f1-4c44-ac50-4f15ec199d09",
+        "resourceVersion": "26183",
+        "creationTimestamp": "2022-04-11T22:50:01Z",
+        "labels": {
+          "beta.kubernetes.io/arch": "amd64",
+          "beta.kubernetes.io/os": "linux",
+          "kubernetes.io/arch": "amd64",
+          "kubernetes.io/hostname": "troubleshoot-demo-001",
+          "kubernetes.io/os": "linux",
+          "kurl.sh/cluster": "true",
+          "node-role.kubernetes.io/control-plane": "",
+          "node-role.kubernetes.io/master": "",
+          "node.kubernetes.io/exclude-from-external-load-balancers": ""
+        },
+        "annotations": {
+          "csi.volume.kubernetes.io/nodeid": "{\"driver.longhorn.io\":\"troubleshoot-demo-001\"}",
+          "kubeadm.alpha.kubernetes.io/cri-socket": "/var/run/dockershim.sock",
+          "node.alpha.kubernetes.io/ttl": "0",
+          "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+        },
+        "managedFields": [
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:02Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubeadm.alpha.kubernetes.io/cri-socket": {},
+                  "f:volumes.kubernetes.io/controller-managed-attach-detach": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:beta.kubernetes.io/arch": {},
+                  "f:beta.kubernetes.io/os": {},
+                  "f:kubernetes.io/arch": {},
+                  "f:kubernetes.io/hostname": {},
+                  "f:kubernetes.io/os": {},
+                  "f:kurl.sh/cluster": {},
+                  "f:node-role.kubernetes.io/control-plane": {},
+                  "f:node-role.kubernetes.io/master": {},
+                  "f:node.kubernetes.io/exclude-from-external-load-balancers": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:node.alpha.kubernetes.io/ttl": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-utils",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:44Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"NetworkUnavailable\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                }
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:25Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:csi.volume.kubernetes.io/nodeid": {}
+                }
+              },
+              "f:status": {
+                "f:allocatable": {
+                  "f:ephemeral-storage": {}
+                },
+                "f:conditions": {
+                  "k:{\"type\":\"DiskPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"MemoryPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"PIDPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {}
+                  }
+                },
+                "f:volumesInUse": {}
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:29Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:volumesAttached": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {},
+      "status": {
+        "capacity": {
+          "cpu": "4",
+          "ephemeral-storage": "101445540Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "16390204Ki",
+          "pods": "110"
+        },
+        "allocatable": {
+          "cpu": "4",
+          "ephemeral-storage": "93492209510",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "16287804Ki",
+          "pods": "110"
+        },
+        "conditions": [
+          {
+            "type": "NetworkUnavailable",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-11T22:50:44Z",
+            "lastTransitionTime": "2022-04-11T22:50:44Z",
+            "reason": "WeaveIsUp",
+            "message": "Weave pod has set this"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:55:04Z",
+            "lastTransitionTime": "2022-04-11T22:50:01Z",
+            "reason": "KubeletHasSufficientMemory",
+            "message": "kubelet has sufficient memory available"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:55:04Z",
+            "lastTransitionTime": "2022-04-11T22:50:01Z",
+            "reason": "KubeletHasNoDiskPressure",
+            "message": "kubelet has no disk pressure"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:55:04Z",
+            "lastTransitionTime": "2022-04-11T22:50:01Z",
+            "reason": "KubeletHasSufficientPID",
+            "message": "kubelet has sufficient PID available"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2022-04-12T00:55:04Z",
+            "lastTransitionTime": "2022-04-11T22:50:53Z",
+            "reason": "KubeletReady",
+            "message": "kubelet is posting ready status. AppArmor enabled"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "InternalIP",
+            "address": "***HIDDEN***"
+          },
+          {
+            "type": "Hostname",
+            "address": "troubleshoot-demo-001"
+          }
+        ],
+        "daemonEndpoints": {
+          "kubeletEndpoint": {
+            "Port": 10250
+          }
+        },
+        "nodeInfo": {
+          "machineID": "496deb43bf58f72783c3d494444709db",
+          "systemUUID": "496deb43-bf58-f727-83c3-d494444709db",
+          "bootID": "912bf72e-f6ff-4e9b-b62f-3d27d6f30dc0",
+          "kernelVersion": "5.4.0-1069-gcp",
+          "osImage": "Ubuntu 18.04.6 LTS",
+          "containerRuntimeVersion": "docker://20.10.5",
+          "kubeletVersion": "v1.23.5",
+          "kubeProxyVersion": "v1.23.5",
+          "operatingSystem": "linux",
+          "architecture": "amd64"
+        },
+        "images": [
+          {
+            "names": [
+              "replicated/kurl-util:v2022.04.08-1"
+            ],
+            "sizeBytes": 419642390
+          },
+          {
+            "names": [
+              "longhornio/longhorn-engine:v1.2.2"
+            ],
+            "sizeBytes": 312412500
+          },
+          {
+            "names": [
+              "k8s.gcr.io/etcd:3.5.1-0"
+            ],
+            "sizeBytes": 292558922
+          },
+          {
+            "names": [
+              "longhornio/longhorn-instance-manager:v1_20210731"
+            ],
+            "sizeBytes": 285299363
+          },
+          {
+            "names": [
+              "longhornio/backing-image-manager:v2_20210820"
+            ],
+            "sizeBytes": 280013096
+          },
+          {
+            "names": [
+              "longhornio/longhorn-manager:v1.2.2"
+            ],
+            "sizeBytes": 259816425
+          },
+          {
+            "names": [
+              "longhornio/longhorn-share-manager:v1_20210914"
+            ],
+            "sizeBytes": 173711030
+          },
+          {
+            "names": [
+              "replicated/local-volume-provider:v0.3.0"
+            ],
+            "sizeBytes": 153198867
+          },
+          {
+            "names": [
+              "weaveworks/weaveexec:2.6.5"
+            ],
+            "sizeBytes": 149093862
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-apiserver:v1.23.5"
+            ],
+            "sizeBytes": 135174563
+          },
+          {
+            "names": [
+              "replicated/ekco:v0.19.0"
+            ],
+            "sizeBytes": 127386992
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-controller-manager:v1.23.5"
+            ],
+            "sizeBytes": 124988100
+          },
+          {
+            "names": [
+              "envoyproxy/envoy:v1.21.1"
+            ],
+            "sizeBytes": 123879307
+          },
+          {
+            "names": [
+              "weaveworks/weave-kube:2.6.5"
+            ],
+            "sizeBytes": 123327967
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-proxy:v1.23.5"
+            ],
+            "sizeBytes": 112331922
+          },
+          {
+            "names": [
+              "velero/velero:v1.7.1"
+            ],
+            "sizeBytes": 111993462
+          },
+          {
+            "names": [
+              "haproxy:2.4.10"
+            ],
+            "sizeBytes": 100955863
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-aws:v1.3.0"
+            ],
+            "sizeBytes": 65913226
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-gcp:v1.3.0"
+            ],
+            "sizeBytes": 58336263
+          },
+          {
+            "names": [
+              "kurlsh/s3cmd:7f7dc75-20210331"
+            ],
+            "sizeBytes": 57614290
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-resizer:v1.2.0"
+            ],
+            "sizeBytes": 53956308
+          },
+          {
+            "names": [
+              "minio/minio:RELEASE.2020-01-25T02-50-51Z"
+            ],
+            "sizeBytes": 53668583
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-attacher:v3.2.1"
+            ],
+            "sizeBytes": 53499570
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-scheduler:v1.23.5"
+            ],
+            "sizeBytes": 53492420
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.2"
+            ],
+            "sizeBytes": 51678006
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-microsoft-azure:v1.3.1"
+            ],
+            "sizeBytes": 51545026
+          },
+          {
+            "names": [
+              "longhornio/longhorn-ui:v1.2.2"
+            ],
+            "sizeBytes": 48378364
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3"
+            ],
+            "sizeBytes": 47826661
+          },
+          {
+            "names": [
+              "k8s.gcr.io/coredns/coredns:v1.8.6"
+            ],
+            "sizeBytes": 46829283
+          },
+          {
+            "names": [
+              "ghcr.io/projectcontour/contour:v1.20.1"
+            ],
+            "sizeBytes": 44912640
+          },
+          {
+            "names": [
+              "weaveworks/weave-npc:2.6.5"
+            ],
+            "sizeBytes": 36767037
+          },
+          {
+            "names": [
+              "registry:2.7.1"
+            ],
+            "sizeBytes": 26248135
+          },
+          {
+            "names": [
+              "velero/velero-restic-restore-helper:v1.7.1"
+            ],
+            "sizeBytes": 21351411
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.3.0"
+            ],
+            "sizeBytes": 18738695
+          },
+          {
+            "names": [
+              "k8s.gcr.io/pause:3.6"
+            ],
+            "sizeBytes": 682696
+          }
+        ],
+        "volumesInUse": [
+          "kubernetes.io/csi/driver.longhorn.io^pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b"
+        ],
+        "volumesAttached": [
+          {
+            "name": "kubernetes.io/csi/driver.longhorn.io^pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b",
+            "devicePath": ""
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Node",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "troubleshoot-demo-002",
+        "uid": "d514d51e-f4e4-4dba-aef8-27b950ce4f90",
+        "resourceVersion": "26384",
+        "creationTimestamp": "2022-04-11T23:03:24Z",
+        "labels": {
+          "beta.kubernetes.io/arch": "amd64",
+          "beta.kubernetes.io/os": "linux",
+          "kubernetes.io/arch": "amd64",
+          "kubernetes.io/hostname": "troubleshoot-demo-002",
+          "kubernetes.io/os": "linux",
+          "kurl.sh/cluster": "true"
+        },
+        "annotations": {
+          "csi.volume.kubernetes.io/nodeid": "{\"driver.longhorn.io\":\"troubleshoot-demo-002\"}",
+          "kubeadm.alpha.kubernetes.io/cri-socket": "/var/run/dockershim.sock",
+          "node.alpha.kubernetes.io/ttl": "0",
+          "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:24Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:node.alpha.kubernetes.io/ttl": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:29Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubeadm.alpha.kubernetes.io/cri-socket": {},
+                  "f:volumes.kubernetes.io/controller-managed-attach-detach": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:beta.kubernetes.io/arch": {},
+                  "f:beta.kubernetes.io/os": {},
+                  "f:kubernetes.io/arch": {},
+                  "f:kubernetes.io/hostname": {},
+                  "f:kubernetes.io/os": {},
+                  "f:kurl.sh/cluster": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-utils",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:37Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"NetworkUnavailable\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                }
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:49Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:csi.volume.kubernetes.io/nodeid": {}
+                }
+              },
+              "f:status": {
+                "f:allocatable": {
+                  "f:ephemeral-storage": {}
+                },
+                "f:capacity": {
+                  "f:ephemeral-storage": {}
+                },
+                "f:conditions": {
+                  "k:{\"type\":\"DiskPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"MemoryPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"PIDPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {}
+                  }
+                }
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {},
+      "status": {
+        "capacity": {
+          "cpu": "4",
+          "ephemeral-storage": "203070420Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "16390204Ki",
+          "pods": "110"
+        },
+        "allocatable": {
+          "cpu": "4",
+          "ephemeral-storage": "187149698763",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "16287804Ki",
+          "pods": "110"
+        },
+        "conditions": [
+          {
+            "type": "NetworkUnavailable",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-11T23:03:37Z",
+            "lastTransitionTime": "2022-04-11T23:03:37Z",
+            "reason": "WeaveIsUp",
+            "message": "Weave pod has set this"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:56:06Z",
+            "lastTransitionTime": "2022-04-11T23:03:24Z",
+            "reason": "KubeletHasSufficientMemory",
+            "message": "kubelet has sufficient memory available"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:56:06Z",
+            "lastTransitionTime": "2022-04-11T23:03:24Z",
+            "reason": "KubeletHasNoDiskPressure",
+            "message": "kubelet has no disk pressure"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:56:06Z",
+            "lastTransitionTime": "2022-04-11T23:03:24Z",
+            "reason": "KubeletHasSufficientPID",
+            "message": "kubelet has sufficient PID available"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2022-04-12T00:56:06Z",
+            "lastTransitionTime": "2022-04-11T23:03:44Z",
+            "reason": "KubeletReady",
+            "message": "kubelet is posting ready status. AppArmor enabled"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "InternalIP",
+            "address": "***HIDDEN***"
+          },
+          {
+            "type": "Hostname",
+            "address": "troubleshoot-demo-002"
+          }
+        ],
+        "daemonEndpoints": {
+          "kubeletEndpoint": {
+            "Port": 10250
+          }
+        },
+        "nodeInfo": {
+          "machineID": "c6b64100f3def433bcf6a52cdcf95fa1",
+          "systemUUID": "c6b64100-f3de-f433-bcf6-a52cdcf95fa1",
+          "bootID": "3ad58461-8684-4ba0-8d25-99cbed8705d8",
+          "kernelVersion": "5.4.0-1069-gcp",
+          "osImage": "Ubuntu 18.04.6 LTS",
+          "containerRuntimeVersion": "docker://20.10.5",
+          "kubeletVersion": "v1.23.5",
+          "kubeProxyVersion": "v1.23.5",
+          "operatingSystem": "linux",
+          "architecture": "amd64"
+        },
+        "images": [
+          {
+            "names": [
+              "replicated/kurl-util:v2022.04.08-1"
+            ],
+            "sizeBytes": 419642390
+          },
+          {
+            "names": [
+              "longhornio/longhorn-engine:v1.2.2"
+            ],
+            "sizeBytes": 312412500
+          },
+          {
+            "names": [
+              "k8s.gcr.io/etcd:3.5.1-0"
+            ],
+            "sizeBytes": 292558922
+          },
+          {
+            "names": [
+              "longhornio/longhorn-instance-manager:v1_20210731"
+            ],
+            "sizeBytes": 285299363
+          },
+          {
+            "names": [
+              "longhornio/backing-image-manager:v2_20210820"
+            ],
+            "sizeBytes": 280013096
+          },
+          {
+            "names": [
+              "longhornio/longhorn-manager:v1.2.2"
+            ],
+            "sizeBytes": 259816425
+          },
+          {
+            "names": [
+              "longhornio/longhorn-share-manager:v1_20210914"
+            ],
+            "sizeBytes": 173711030
+          },
+          {
+            "names": [
+              "replicated/local-volume-provider:v0.3.0"
+            ],
+            "sizeBytes": 153198867
+          },
+          {
+            "names": [
+              "weaveworks/weaveexec:2.6.5"
+            ],
+            "sizeBytes": 149093862
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-apiserver:v1.23.5"
+            ],
+            "sizeBytes": 135174563
+          },
+          {
+            "names": [
+              "replicated/ekco:v0.19.0"
+            ],
+            "sizeBytes": 127386992
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-controller-manager:v1.23.5"
+            ],
+            "sizeBytes": 124988100
+          },
+          {
+            "names": [
+              "envoyproxy/envoy:v1.21.1"
+            ],
+            "sizeBytes": 123879307
+          },
+          {
+            "names": [
+              "weaveworks/weave-kube:2.6.5"
+            ],
+            "sizeBytes": 123327967
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-proxy:v1.23.5"
+            ],
+            "sizeBytes": 112331922
+          },
+          {
+            "names": [
+              "velero/velero:v1.7.1"
+            ],
+            "sizeBytes": 111993462
+          },
+          {
+            "names": [
+              "haproxy:2.4.10"
+            ],
+            "sizeBytes": 100955863
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-aws:v1.3.0"
+            ],
+            "sizeBytes": 65913226
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-gcp:v1.3.0"
+            ],
+            "sizeBytes": 58336263
+          },
+          {
+            "names": [
+              "kurlsh/s3cmd:7f7dc75-20210331"
+            ],
+            "sizeBytes": 57614290
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-resizer:v1.2.0"
+            ],
+            "sizeBytes": 53956308
+          },
+          {
+            "names": [
+              "minio/minio:RELEASE.2020-01-25T02-50-51Z"
+            ],
+            "sizeBytes": 53668583
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-attacher:v3.2.1"
+            ],
+            "sizeBytes": 53499570
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-scheduler:v1.23.5"
+            ],
+            "sizeBytes": 53492420
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.2"
+            ],
+            "sizeBytes": 51678006
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-microsoft-azure:v1.3.1"
+            ],
+            "sizeBytes": 51545026
+          },
+          {
+            "names": [
+              "longhornio/longhorn-ui:v1.2.2"
+            ],
+            "sizeBytes": 48378364
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3"
+            ],
+            "sizeBytes": 47826661
+          },
+          {
+            "names": [
+              "k8s.gcr.io/coredns/coredns:v1.8.6"
+            ],
+            "sizeBytes": 46829283
+          },
+          {
+            "names": [
+              "ghcr.io/projectcontour/contour:v1.20.1"
+            ],
+            "sizeBytes": 44912640
+          },
+          {
+            "names": [
+              "weaveworks/weave-npc:2.6.5"
+            ],
+            "sizeBytes": 36767037
+          },
+          {
+            "names": [
+              "registry:2.7.1"
+            ],
+            "sizeBytes": 26248135
+          },
+          {
+            "names": [
+              "velero/velero-restic-restore-helper:v1.7.1"
+            ],
+            "sizeBytes": 21351411
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.3.0"
+            ],
+            "sizeBytes": 18738695
+          },
+          {
+            "names": [
+              "k8s.gcr.io/pause:3.6"
+            ],
+            "sizeBytes": 682696
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Node",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "troubleshoot-demo-003",
+        "uid": "d3e4ad30-6f2a-4cd8-9fb1-55720fdfa794",
+        "resourceVersion": "26324",
+        "creationTimestamp": "2022-04-11T23:03:05Z",
+        "labels": {
+          "beta.kubernetes.io/arch": "amd64",
+          "beta.kubernetes.io/os": "linux",
+          "kubernetes.io/arch": "amd64",
+          "kubernetes.io/hostname": "troubleshoot-demo-003",
+          "kubernetes.io/os": "linux",
+          "kurl.sh/cluster": "true"
+        },
+        "annotations": {
+          "csi.volume.kubernetes.io/nodeid": "{\"driver.longhorn.io\":\"troubleshoot-demo-003\"}",
+          "kubeadm.alpha.kubernetes.io/cri-socket": "/var/run/dockershim.sock",
+          "node.alpha.kubernetes.io/ttl": "0",
+          "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:node.alpha.kubernetes.io/ttl": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubeadm.alpha.kubernetes.io/cri-socket": {},
+                  "f:volumes.kubernetes.io/controller-managed-attach-detach": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:beta.kubernetes.io/arch": {},
+                  "f:beta.kubernetes.io/os": {},
+                  "f:kubernetes.io/arch": {},
+                  "f:kubernetes.io/hostname": {},
+                  "f:kubernetes.io/os": {},
+                  "f:kurl.sh/cluster": {}
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-utils",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:17Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"NetworkUnavailable\"}": {
+                    ".": {},
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                }
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:30Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:csi.volume.kubernetes.io/nodeid": {}
+                }
+              },
+              "f:status": {
+                "f:allocatable": {
+                  "f:ephemeral-storage": {}
+                },
+                "f:capacity": {
+                  "f:ephemeral-storage": {}
+                },
+                "f:conditions": {
+                  "k:{\"type\":\"DiskPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"MemoryPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"PIDPressure\"}": {
+                    "f:lastHeartbeatTime": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    "f:lastHeartbeatTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {}
+                  }
+                }
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {},
+      "status": {
+        "capacity": {
+          "cpu": "4",
+          "ephemeral-storage": "203070420Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "16390204Ki",
+          "pods": "110"
+        },
+        "allocatable": {
+          "cpu": "4",
+          "ephemeral-storage": "187149698763",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "16287804Ki",
+          "pods": "110"
+        },
+        "conditions": [
+          {
+            "type": "NetworkUnavailable",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-11T23:03:17Z",
+            "lastTransitionTime": "2022-04-11T23:03:17Z",
+            "reason": "WeaveIsUp",
+            "message": "Weave pod has set this"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:55:47Z",
+            "lastTransitionTime": "2022-04-11T23:03:05Z",
+            "reason": "KubeletHasSufficientMemory",
+            "message": "kubelet has sufficient memory available"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:55:47Z",
+            "lastTransitionTime": "2022-04-11T23:03:05Z",
+            "reason": "KubeletHasNoDiskPressure",
+            "message": "kubelet has no disk pressure"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2022-04-12T00:55:47Z",
+            "lastTransitionTime": "2022-04-11T23:03:05Z",
+            "reason": "KubeletHasSufficientPID",
+            "message": "kubelet has sufficient PID available"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2022-04-12T00:55:47Z",
+            "lastTransitionTime": "2022-04-11T23:03:25Z",
+            "reason": "KubeletReady",
+            "message": "kubelet is posting ready status. AppArmor enabled"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "InternalIP",
+            "address": "***HIDDEN***"
+          },
+          {
+            "type": "Hostname",
+            "address": "troubleshoot-demo-003"
+          }
+        ],
+        "daemonEndpoints": {
+          "kubeletEndpoint": {
+            "Port": 10250
+          }
+        },
+        "nodeInfo": {
+          "machineID": "905fea74e530906be99ec93bcd3244fb",
+          "systemUUID": "905fea74-e530-906b-e99e-c93bcd3244fb",
+          "bootID": "df494b06-cbb7-44b5-ad95-ec39090d8701",
+          "kernelVersion": "5.4.0-1069-gcp",
+          "osImage": "Ubuntu 18.04.6 LTS",
+          "containerRuntimeVersion": "docker://20.10.5",
+          "kubeletVersion": "v1.23.5",
+          "kubeProxyVersion": "v1.23.5",
+          "operatingSystem": "linux",
+          "architecture": "amd64"
+        },
+        "images": [
+          {
+            "names": [
+              "replicated/kurl-util:v2022.04.08-1"
+            ],
+            "sizeBytes": 419642390
+          },
+          {
+            "names": [
+              "longhornio/longhorn-engine:v1.2.2"
+            ],
+            "sizeBytes": 312412500
+          },
+          {
+            "names": [
+              "k8s.gcr.io/etcd:3.5.1-0"
+            ],
+            "sizeBytes": 292558922
+          },
+          {
+            "names": [
+              "longhornio/longhorn-instance-manager:v1_20210731"
+            ],
+            "sizeBytes": 285299363
+          },
+          {
+            "names": [
+              "longhornio/backing-image-manager:v2_20210820"
+            ],
+            "sizeBytes": 280013096
+          },
+          {
+            "names": [
+              "longhornio/longhorn-manager:v1.2.2"
+            ],
+            "sizeBytes": 259816425
+          },
+          {
+            "names": [
+              "longhornio/longhorn-share-manager:v1_20210914"
+            ],
+            "sizeBytes": 173711030
+          },
+          {
+            "names": [
+              "replicated/local-volume-provider:v0.3.0"
+            ],
+            "sizeBytes": 153198867
+          },
+          {
+            "names": [
+              "weaveworks/weaveexec:2.6.5"
+            ],
+            "sizeBytes": 149093862
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-apiserver:v1.23.5"
+            ],
+            "sizeBytes": 135174563
+          },
+          {
+            "names": [
+              "replicated/ekco:v0.19.0"
+            ],
+            "sizeBytes": 127386992
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-controller-manager:v1.23.5"
+            ],
+            "sizeBytes": 124988100
+          },
+          {
+            "names": [
+              "envoyproxy/envoy:v1.21.1"
+            ],
+            "sizeBytes": 123879307
+          },
+          {
+            "names": [
+              "weaveworks/weave-kube:2.6.5"
+            ],
+            "sizeBytes": 123327967
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-proxy:v1.23.5"
+            ],
+            "sizeBytes": 112331922
+          },
+          {
+            "names": [
+              "velero/velero:v1.7.1"
+            ],
+            "sizeBytes": 111993462
+          },
+          {
+            "names": [
+              "haproxy:2.4.10"
+            ],
+            "sizeBytes": 100955863
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-aws:v1.3.0"
+            ],
+            "sizeBytes": 65913226
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-gcp:v1.3.0"
+            ],
+            "sizeBytes": 58336263
+          },
+          {
+            "names": [
+              "kurlsh/s3cmd:7f7dc75-20210331"
+            ],
+            "sizeBytes": 57614290
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-resizer:v1.2.0"
+            ],
+            "sizeBytes": 53956308
+          },
+          {
+            "names": [
+              "minio/minio:RELEASE.2020-01-25T02-50-51Z"
+            ],
+            "sizeBytes": 53668583
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-attacher:v3.2.1"
+            ],
+            "sizeBytes": 53499570
+          },
+          {
+            "names": [
+              "k8s.gcr.io/kube-scheduler:v1.23.5"
+            ],
+            "sizeBytes": 53492420
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.2"
+            ],
+            "sizeBytes": 51678006
+          },
+          {
+            "names": [
+              "velero/velero-plugin-for-microsoft-azure:v1.3.1"
+            ],
+            "sizeBytes": 51545026
+          },
+          {
+            "names": [
+              "longhornio/longhorn-ui:v1.2.2"
+            ],
+            "sizeBytes": 48378364
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3"
+            ],
+            "sizeBytes": 47826661
+          },
+          {
+            "names": [
+              "k8s.gcr.io/coredns/coredns:v1.8.6"
+            ],
+            "sizeBytes": 46829283
+          },
+          {
+            "names": [
+              "ghcr.io/projectcontour/contour:v1.20.1"
+            ],
+            "sizeBytes": 44912640
+          },
+          {
+            "names": [
+              "weaveworks/weave-npc:2.6.5"
+            ],
+            "sizeBytes": 36767037
+          },
+          {
+            "names": [
+              "registry:2.7.1"
+            ],
+            "sizeBytes": 26248135
+          },
+          {
+            "names": [
+              "velero/velero-restic-restore-helper:v1.7.1"
+            ],
+            "sizeBytes": 21351411
+          },
+          {
+            "names": [
+              "k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.3.0"
+            ],
+            "sizeBytes": 18738695
+          },
+          {
+            "names": [
+              "k8s.gcr.io/pause:3.6"
+            ],
+            "sizeBytes": 682696
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,413 @@
+{
+  "kind": "ReplicaSetList",
+  "apiVersion": "apps/v1",
+  "metadata": {
+    "resourceVersion": "27157"
+  },
+  "items": [
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "contour-697d45c475",
+        "namespace": "projectcontour",
+        "uid": "b3d6c80a-3e35-46d5-aa96-23ce4bdb4d4f",
+        "resourceVersion": "2000",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:42Z",
+        "labels": {
+          "app": "contour",
+          "pod-template-hash": "697d45c475"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "2",
+          "deployment.kubernetes.io/max-replicas": "3",
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "contour",
+            "uid": "dc2d0cf4-29f0-4014-8ca6-d24e9a034893",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:42Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"dc2d0cf4-29f0-4014-8ca6-d24e9a034893\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:annotations": {
+                      ".": {},
+                      "f:prometheus.io/port": {},
+                      "f:prometheus.io/scrape": {}
+                    },
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:affinity": {
+                      ".": {},
+                      "f:podAntiAffinity": {
+                        ".": {},
+                        "f:preferredDuringSchedulingIgnoredDuringExecution": {}
+                      }
+                    },
+                    "f:containers": {
+                      "k:{\"name\":\"contour\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"POD_NAME\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:livenessProbe": {
+                          ".": {},
+                          "f:failureThreshold": {},
+                          "f:httpGet": {
+                            ".": {},
+                            "f:path": {},
+                            "f:port": {},
+                            "f:scheme": {}
+                          },
+                          "f:periodSeconds": {},
+                          "f:successThreshold": {},
+                          "f:timeoutSeconds": {}
+                        },
+                        "f:name": {},
+                        "f:ports": {
+                          ".": {},
+                          "k:{\"containerPort\":6060,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:name": {},
+                            "f:protocol": {}
+                          },
+                          "k:{\"containerPort\":8000,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:name": {},
+                            "f:protocol": {}
+                          },
+                          "k:{\"containerPort\":8001,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:name": {},
+                            "f:protocol": {}
+                          }
+                        },
+                        "f:readinessProbe": {
+                          ".": {},
+                          "f:failureThreshold": {},
+                          "f:initialDelaySeconds": {},
+                          "f:periodSeconds": {},
+                          "f:successThreshold": {},
+                          "f:tcpSocket": {
+                            ".": {},
+                            "f:port": {}
+                          },
+                          "f:timeoutSeconds": {}
+                        },
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/certs\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          },
+                          "k:{\"mountPath\":\"/config\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {
+                      ".": {},
+                      "f:runAsGroup": {},
+                      "f:runAsNonRoot": {},
+                      "f:runAsUser": {}
+                    },
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"contour-config\"}": {
+                        ".": {},
+                        "f:configMap": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:items": {},
+                          "f:name": {}
+                        },
+                        "f:name": {}
+                      },
+                      "k:{\"name\":\"contourcert\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:secret": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:secretName": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:53:12Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 2,
+        "selector": {
+          "matchLabels": {
+            "app": "contour",
+            "pod-template-hash": "697d45c475"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "contour",
+              "pod-template-hash": "697d45c475"
+            },
+            "annotations": {
+              "prometheus.io/port": "8000",
+              "prometheus.io/scrape": "true"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "contourcert",
+                "secret": {
+                  "secretName": "contourcert",
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "contour-config",
+                "configMap": {
+                  "name": "contour",
+                  "items": [
+                    {
+                      "key": "contour.yaml",
+                      "path": "contour.yaml"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "contour",
+                "image": "ghcr.io/projectcontour/contour:v1.20.1",
+                "command": [
+                  "contour"
+                ],
+                "args": [
+                  "serve",
+                  "--incluster",
+                  "--xds-address=***HIDDEN***",
+                  "--xds-port=8001",
+                  "--contour-cafile=/certs/ca.crt",
+                  "--contour-cert-file=/certs/tls.crt",
+                  "--contour-key-file=/certs/tls.key",
+                  "--config-path=/config/contour.yaml"
+                ],
+                "ports": [
+                  {
+                    "name": "xds",
+                    "containerPort": 8001,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "name": "metrics",
+                    "containerPort": 8000,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "name": "debug",
+                    "containerPort": 6060,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "CONTOUR_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  },
+                  {
+                    "name": "POD_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.name"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "contourcert",
+                    "readOnly": true,
+                    "mountPath": "/certs"
+                  },
+                  {
+                    "name": "contour-config",
+                    "readOnly": true,
+                    "mountPath": "/config"
+                  }
+                ],
+                "livenessProbe": {
+                  "httpGet": {
+                    "path": "/healthz",
+                    "port": 8000,
+                    "scheme": "HTTP"
+                  },
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "readinessProbe": {
+                  "tcpSocket": {
+                    "port": 8001
+                  },
+                  "initialDelaySeconds": 15,
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "contour",
+            "serviceAccount": "contour",
+            "securityContext": {
+              "runAsUser": 65534,
+              "runAsGroup": 65534,
+              "runAsNonRoot": true
+            },
+            "affinity": {
+              "podAntiAffinity": {
+                "preferredDuringSchedulingIgnoredDuringExecution": [
+                  {
+                    "weight": 100,
+                    "podAffinityTerm": {
+                      "labelSelector": {
+                        "matchLabels": {
+                          "app": "contour"
+                        }
+                      },
+                      "topologyKey": "kubernetes.io/hostname"
+                    }
+                  }
+                ]
+              }
+            },
+            "schedulerName": "default-scheduler"
+          }
+        }
+      },
+      "status": {
+        "replicas": 2,
+        "fullyLabeledReplicas": 2,
+        "readyReplicas": 2,
+        "availableReplicas": 2,
+        "observedGeneration": 1
+      }
+    }
+  ]
+}
