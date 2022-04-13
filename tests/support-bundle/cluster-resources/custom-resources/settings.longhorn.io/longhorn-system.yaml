@@ -1,0 +1,828 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:47Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:47Z"
+    name: allow-node-drain-with-last-healthy-replica
+    namespace: longhorn-system
+    resourceVersion: "977"
+    uid: 61a24622-74c7-41a7-9fe2-52ccc23f350c
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:41Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:41Z"
+    name: allow-recurring-job-while-volume-detached
+    namespace: longhorn-system
+    resourceVersion: "942"
+    uid: da352e07-7b0a-4ba8-b441-857463259737
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:48Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:48Z"
+    name: allow-volume-creation-with-degraded-availability
+    namespace: longhorn-system
+    resourceVersion: "987"
+    uid: 391d3571-9372-4008-bcc0-8917cf0a234a
+  value: "true"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:49Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:49Z"
+    name: auto-cleanup-system-generated-snapshot
+    namespace: longhorn-system
+    resourceVersion: "988"
+    uid: a2e6a6ae-ec48-41c0-9122-0700fceba0e4
+  value: "true"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:46Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:46Z"
+    name: auto-delete-pod-when-volume-detached-unexpectedly
+    namespace: longhorn-system
+    resourceVersion: "969"
+    uid: 8e3f28a2-8552-4a21-9d19-d6d5ae09792d
+  value: "true"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:45Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:45Z"
+    name: auto-salvage
+    namespace: longhorn-system
+    resourceVersion: "968"
+    uid: 0ddeb042-1e3c-49f6-bd9a-8bf9cedfe780
+  value: "true"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:49Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:49Z"
+    name: backing-image-cleanup-wait-interval
+    namespace: longhorn-system
+    resourceVersion: "991"
+    uid: 52f2bf42-93eb-41da-bd26-76b50dbadbdf
+  value: "60"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:49Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:49Z"
+    name: backing-image-recovery-wait-interval
+    namespace: longhorn-system
+    resourceVersion: "992"
+    uid: b52e83f4-65ab-4b2a-ab7b-f19d41e172a5
+  value: "300"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:41Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:41Z"
+    name: backup-target
+    namespace: longhorn-system
+    resourceVersion: "939"
+    uid: ff8410bf-1488-4a27-a0c6-8c81ecde3413
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:41Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:41Z"
+    name: backup-target-credential-secret
+    namespace: longhorn-system
+    resourceVersion: "941"
+    uid: 8d7dbdc5-d74e-4e66-894f-ac0f7067b13f
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:45Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:45Z"
+    name: backupstore-poll-interval
+    namespace: longhorn-system
+    resourceVersion: "964"
+    uid: a57cfcaf-e1b1-4184-8ba9-40fe20da6441
+  value: "300"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:49Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:49Z"
+    name: concurrent-automatic-engine-upgrade-per-node-limit
+    namespace: longhorn-system
+    resourceVersion: "989"
+    uid: 685577cc-62d3-42e3-aa14-542818dfde17
+  value: "0"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:48Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:48Z"
+    name: concurrent-replica-rebuild-per-node-limit
+    namespace: longhorn-system
+    resourceVersion: "984"
+    uid: 0f2dfd70-f9b2-4135-99ad-89c7c804127a
+  value: "5"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:38Z"
+    generation: 2
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:38Z"
+    name: crd-api-version
+    namespace: longhorn-system
+    resourceVersion: "926"
+    uid: b1eefaf8-fd70-4808-90fe-b31609e24048
+  value: longhorn.io/v1beta1
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:41Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:41Z"
+    name: create-default-disk-labeled-nodes
+    namespace: longhorn-system
+    resourceVersion: "943"
+    uid: 8e7143de-93f9-4c83-8b5a-ed84cf406cf3
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:42Z"
+    generation: 2
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:42Z"
+    name: default-backing-image-manager-image
+    namespace: longhorn-system
+    resourceVersion: "999"
+    uid: 21a2da6e-c6f8-4b1b-a5aa-34a588bd0b4c
+  value: longhornio/backing-image-manager:v2_20210820
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:44Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:44Z"
+    name: default-data-locality
+    namespace: longhorn-system
+    resourceVersion: "960"
+    uid: 3d7387f6-6ed8-4337-80f4-67af683fd01d
+  value: disabled
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:42Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:42Z"
+    name: default-data-path
+    namespace: longhorn-system
+    resourceVersion: "944"
+    uid: 326a1bcb-6a64-47b0-ae1d-fefcefe9bb84
+  value: /var/lib/longhorn/
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:42Z"
+    generation: 2
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:42Z"
+    name: default-engine-image
+    namespace: longhorn-system
+    resourceVersion: "995"
+    uid: e6459820-d6c2-4d47-8569-834c5bc58146
+  value: longhornio/longhorn-engine:v1.2.2
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:42Z"
+    generation: 2
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:42Z"
+    name: default-instance-manager-image
+    namespace: longhorn-system
+    resourceVersion: "996"
+    uid: 9533fb5b-356f-4fe1-b403-458fff0135b1
+  value: longhornio/longhorn-instance-manager:v1_20210731
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:45Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:45Z"
+    name: default-longhorn-static-storage-class
+    namespace: longhorn-system
+    resourceVersion: "962"
+    uid: 8c8e9f7b-cb10-4d9a-81f2-e9e16e75f252
+  value: longhorn-static
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:44Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:44Z"
+    name: default-replica-count
+    namespace: longhorn-system
+    resourceVersion: "959"
+    uid: 98e71968-262f-4e07-ba3a-f23d65441c88
+  value: "3"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:42Z"
+    generation: 2
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:42Z"
+    name: default-share-manager-image
+    namespace: longhorn-system
+    resourceVersion: "998"
+    uid: 25254fe9-e366-458b-890b-c5fefa991aa2
+  value: longhornio/longhorn-share-manager:v1_20210914
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:48Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:48Z"
+    name: disable-replica-rebuild
+    namespace: longhorn-system
+    resourceVersion: "982"
+    uid: 759694d2-78f6-4a92-91fc-aaad68598a9e
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:47Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:47Z"
+    name: disable-revision-counter
+    namespace: longhorn-system
+    resourceVersion: "981"
+    uid: d913498b-02fb-4af6-90f4-5ab4a09bdab8
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:46Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:46Z"
+    name: disable-scheduling-on-cordoned-node
+    namespace: longhorn-system
+    resourceVersion: "971"
+    uid: d169c1c7-d5a1-477e-809c-f341baf8e0fd
+  value: "true"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:44Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:44Z"
+    name: guaranteed-engine-cpu
+    namespace: longhorn-system
+    resourceVersion: "961"
+    uid: 89b1c8a0-462c-4160-8c8a-30ffb7fd4120
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:49Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:49Z"
+    name: guaranteed-engine-manager-cpu
+    namespace: longhorn-system
+    resourceVersion: "993"
+    uid: d0c765ee-98c1-4905-82f7-f3c08e223513
+  value: "12"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:50Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:50Z"
+    name: guaranteed-replica-manager-cpu
+    namespace: longhorn-system
+    resourceVersion: "994"
+    uid: 307edf4c-ca36-4b4b-a08d-621ec0fb7a75
+  value: "12"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:44Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:44Z"
+    name: latest-longhorn-version
+    namespace: longhorn-system
+    resourceVersion: "956"
+    uid: f7925edd-f45e-4b62-b4fa-68c12c205410
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:47Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:47Z"
+    name: mkfs-ext4-parameters
+    namespace: longhorn-system
+    resourceVersion: "979"
+    uid: 6d5bb614-a341-4432-9e32-03fae5c1c0cb
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:47Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:47Z"
+    name: node-down-pod-deletion-policy
+    namespace: longhorn-system
+    resourceVersion: "976"
+    uid: 089d0bf9-1d82-483e-bbf7-3a1e28e91a08
+  value: do-nothing
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:47Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:47Z"
+    name: priority-class
+    namespace: longhorn-system
+    resourceVersion: "980"
+    uid: 39c3cf01-d531-4f07-9b01-9033d7b09837
+  value: system-node-critical
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:46Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:46Z"
+    name: registry-secret
+    namespace: longhorn-system
+    resourceVersion: "970"
+    uid: f33f1499-bae0-4f08-b2cc-2eb05606a96c
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:43Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:43Z"
+    name: replica-auto-balance
+    namespace: longhorn-system
+    resourceVersion: "951"
+    uid: 871c70f9-d331-48b7-b55f-5788890d9acf
+  value: disabled
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:48Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:48Z"
+    name: replica-replenishment-wait-interval
+    namespace: longhorn-system
+    resourceVersion: "983"
+    uid: fff65db1-0235-4cb1-96ae-c13056730b72
+  value: "600"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:43Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:43Z"
+    name: replica-soft-anti-affinity
+    namespace: longhorn-system
+    resourceVersion: "950"
+    uid: e0228191-468f-47f7-b06e-5f7e19dcd84e
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:46Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:46Z"
+    name: replica-zone-soft-anti-affinity
+    namespace: longhorn-system
+    resourceVersion: "974"
+    uid: 5e12c5e2-8da4-4a96-b59e-bc421f80d4be
+  value: "true"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:44Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:44Z"
+    name: stable-longhorn-versions
+    namespace: longhorn-system
+    resourceVersion: "957"
+    uid: 56332d83-d0e5-4515-9232-45a63b705a07
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:43Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:43Z"
+    name: storage-minimal-available-percentage
+    namespace: longhorn-system
+    resourceVersion: "954"
+    uid: cbfe27af-bb5b-415e-be46-49b434ae6b49
+  value: "25"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:43Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:43Z"
+    name: storage-over-provisioning-percentage
+    namespace: longhorn-system
+    resourceVersion: "953"
+    uid: 236dda09-beac-4c4b-811f-daf73715315e
+  value: "200"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:45Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:45Z"
+    name: system-managed-components-node-selector
+    namespace: longhorn-system
+    resourceVersion: "967"
+    uid: 14f354f4-f56e-402b-a88a-504489ba06ad
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:48Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:48Z"
+    name: system-managed-pods-image-pull-policy
+    namespace: longhorn-system
+    resourceVersion: "986"
+    uid: 9f8d9e5a-23d4-48f9-afae-a7428ef6d387
+  value: if-not-present
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:45Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:45Z"
+    name: taint-toleration
+    namespace: longhorn-system
+    resourceVersion: "966"
+    uid: d2e21d99-e60a-40eb-98e5-f4390194c94e
+  value: ""
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:43Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:43Z"
+    name: upgrade-checker
+    namespace: longhorn-system
+    resourceVersion: "955"
+    uid: bc0f5aec-13ee-4adc-b5f7-36520339cadf
+  value: "false"
+- apiVersion: longhorn.io/v1beta1
+  kind: Setting
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:46Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:value: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:46Z"
+    name: volume-attachment-recovery-policy
+    namespace: longhorn-system
+    resourceVersion: "975"
+    uid: eac4d6ec-1405-4eed-b753-c47611b19df7
+  value: wait

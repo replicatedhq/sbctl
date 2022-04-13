@@ -1,0 +1,100 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: EngineImage
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:51Z"
+    finalizers:
+    - longhorn.io
+    generation: 1
+    labels:
+      longhorn.io/component: engine-image
+      longhorn.io/engine-image: ei-d4c780c6
+      longhorn.io/managed-by: longhorn-manager
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"longhorn.io": {}
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/engine-image: {}
+            f:longhorn.io/managed-by: {}
+        f:spec:
+          .: {}
+          f:image: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:51Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:buildDate: {}
+          f:cliAPIMinVersion: {}
+          f:cliAPIVersion: {}
+          f:conditions:
+            .: {}
+            f:ready:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:controllerAPIMinVersion: {}
+          f:controllerAPIVersion: {}
+          f:dataFormatMinVersion: {}
+          f:dataFormatVersion: {}
+          f:gitCommit: {}
+          f:noRefSince: {}
+          f:nodeDeploymentMap:
+            .: {}
+            f:troubleshoot-demo-001: {}
+            f:troubleshoot-demo-002: {}
+            f:troubleshoot-demo-003: {}
+          f:ownerID: {}
+          f:refCount: {}
+          f:state: {}
+          f:version: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:03:44Z"
+    name: ei-d4c780c6
+    namespace: longhorn-system
+    resourceVersion: "4352"
+    uid: 2d9d6886-108d-42f5-b185-eeee670e285c
+  spec:
+    image: longhornio/longhorn-engine:v1.2.2
+  status:
+    buildDate: "2021-10-07T17:57:05+00:00"
+    cliAPIMinVersion: 3
+    cliAPIVersion: 5
+    conditions:
+      ready:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:52:02Z"
+        message: Engine image ei-d4c780c6 (longhornio/longhorn-engine:v1.2.2) is fully
+          deployed on all ready nodes
+        reason: ""
+        status: "True"
+        type: ready
+    controllerAPIMinVersion: 3
+    controllerAPIVersion: 3
+    dataFormatMinVersion: 1
+    dataFormatVersion: 1
+    gitCommit: dec6a9c3073fab743417b6d49f9f4c61c9aea034
+    noRefSince: ""
+    nodeDeploymentMap:
+      troubleshoot-demo-001: true
+      troubleshoot-demo-002: true
+      troubleshoot-demo-003: true
+    ownerID: troubleshoot-demo-001
+    refCount: 1
+    state: deployed
+    version: v1.2.2

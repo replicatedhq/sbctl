@@ -1,0 +1,61 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: BackupTarget
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:56Z"
+    generation: 1
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          .: {}
+          f:backupTargetURL: {}
+          f:credentialSecret: {}
+          f:pollInterval: {}
+          f:syncRequestedAt: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:56Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:available: {}
+          f:conditions:
+            .: {}
+            f:Unavailable:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:lastSyncedAt: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T22:52:02Z"
+    name: default
+    namespace: longhorn-system
+    resourceVersion: "1114"
+    uid: b972629d-1504-4c6b-9e8c-40a29931e16b
+  spec:
+    backupTargetURL: ""
+    credentialSecret: ""
+    pollInterval: 5m0s
+    syncRequestedAt: "0001-01-01T00:00:00Z"
+  status:
+    available: false
+    conditions:
+      Unavailable:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:52:02Z"
+        message: backup target URL is empty
+        reason: Unavailable
+        status: "True"
+        type: Unavailable
+    lastSyncedAt: "0001-01-01T00:00:00Z"
+    ownerID: troubleshoot-demo-001

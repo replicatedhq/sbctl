@@ -1,0 +1,870 @@
+{
+  "kind": "ReplicaSetList",
+  "apiVersion": "apps/v1",
+  "metadata": {
+    "resourceVersion": "27156"
+  },
+  "items": [
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "ekc-operator-7c46b48fd5",
+        "namespace": "kurl",
+        "uid": "cdd761d7-56ef-4324-824c-9e4e75abcd73",
+        "resourceVersion": "741",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:50:59Z",
+        "labels": {
+          "app": "ekc-operator",
+          "pod-template-hash": "7c46b48fd5"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "1",
+          "deployment.kubernetes.io/max-replicas": "1",
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "ekc-operator",
+            "uid": "0a8cc507-0fa1-41e0-a99d-3e4b5b35e835",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:50:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"0a8cc507-0fa1-41e0-a99d-3e4b5b35e835\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"ekc-operator\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"LOG_LEVEL\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {
+                          ".": {},
+                          "f:limits": {
+                            ".": {},
+                            "f:cpu": {},
+                            "f:memory": {}
+                          },
+                          "f:requests": {
+                            ".": {},
+                            "f:cpu": {},
+                            "f:memory": {}
+                          }
+                        },
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/etc/ekco\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          },
+                          "k:{\"mountPath\":\"/etc/kubernetes/pki\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:nodeSelector": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:tolerations": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"certificates-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      },
+                      "k:{\"name\":\"ekco-config\"}": {
+                        ".": {},
+                        "f:configMap": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:name": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:01Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "ekc-operator",
+            "pod-template-hash": "7c46b48fd5"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "ekc-operator",
+              "pod-template-hash": "7c46b48fd5"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "ekco-config",
+                "configMap": {
+                  "name": "ekco-config",
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "certificates-dir",
+                "hostPath": {
+                  "path": "/etc/kubernetes/pki",
+                  "type": "Directory"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "ekc-operator",
+                "image": "replicated/ekco:v0.19.0",
+                "command": [
+                  "/usr/bin/ekco",
+                  "operator"
+                ],
+                "env": [
+                  {
+                    "name": "LOG_LEVEL",
+                    "value": "info"
+                  }
+                ],
+                "resources": {
+                  "limits": {
+                    "cpu": "200m",
+                    "memory": "128Mi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "64Mi"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "ekco-config",
+                    "readOnly": true,
+                    "mountPath": "/etc/ekco"
+                  },
+                  {
+                    "name": "certificates-dir",
+                    "readOnly": true,
+                    "mountPath": "/etc/kubernetes/pki"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "nodeSelector": {
+              "node-role.kubernetes.io/master": ""
+            },
+            "serviceAccountName": "ekco",
+            "serviceAccount": "ekco",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "tolerations": [
+              {
+                "key": "node-role.kubernetes.io/master",
+                "operator": "Exists"
+              }
+            ]
+          }
+        }
+      },
+      "status": {
+        "replicas": 1,
+        "fullyLabeledReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "observedGeneration": 1
+      }
+    },
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "registry-64bbd7b8b9",
+        "namespace": "kurl",
+        "uid": "7bb2bb22-f49d-4663-9e7c-43eba270acfa",
+        "resourceVersion": "1926",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:46Z",
+        "labels": {
+          "app": "registry",
+          "kots.io/backup": "velero",
+          "kots.io/kotsadm": "true",
+          "pod-template-hash": "64bbd7b8b9"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "2",
+          "deployment.kubernetes.io/max-replicas": "2",
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "registry",
+            "uid": "4d29baf0-6578-478b-9800-ef9e8b3a2a2a",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:46Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:kots.io/backup": {},
+                  "f:kots.io/kotsadm": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"4d29baf0-6578-478b-9800-ef9e8b3a2a2a\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:annotations": {
+                      ".": {},
+                      "f:backup.velero.io/backup-volumes": {},
+                      "f:pre.hook.backup.velero.io/command": {},
+                      "f:pre.hook.backup.velero.io/container": {},
+                      "f:pre.hook.backup.velero.io/timeout": {}
+                    },
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:kots.io/backup": {},
+                      "f:kots.io/kotsadm": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"registry\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"AWS_ACCESS_KEY_ID\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"AWS_SECRET_ACCESS_KEY\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"REGISTRY_HTTP_SECRET\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:ports": {
+                          ".": {},
+                          "k:{\"containerPort\":443,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:protocol": {}
+                          }
+                        },
+                        "f:readinessProbe": {
+                          ".": {},
+                          "f:failureThreshold": {},
+                          "f:httpGet": {
+                            ".": {},
+                            "f:path": {},
+                            "f:port": {},
+                            "f:scheme": {}
+                          },
+                          "f:initialDelaySeconds": {},
+                          "f:periodSeconds": {},
+                          "f:successThreshold": {},
+                          "f:timeoutSeconds": {}
+                        },
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/auth\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          },
+                          "k:{\"mountPath\":\"/etc/docker/registry\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          },
+                          "k:{\"mountPath\":\"/etc/pki\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      },
+                      "k:{\"name\":\"registry-backup\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"AWS_ACCESS_KEY_ID\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"AWS_SECRET_ACCESS_KEY\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"OBJECT_STORE_HOSTNAME\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/backup\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          },
+                          "k:{\"mountPath\":\"/backup.sh\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:subPath": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:initContainers": {
+                      ".": {},
+                      "k:{\"name\":\"restore\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"AWS_ACCESS_KEY_ID\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"AWS_SECRET_ACCESS_KEY\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"OBJECT_STORE_HOSTNAME\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:secretKeyRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/backup\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          },
+                          "k:{\"mountPath\":\"/restore.sh\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:subPath": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"backup\"}": {
+                        ".": {},
+                        "f:emptyDir": {},
+                        "f:name": {}
+                      },
+                      "k:{\"name\":\"registry-config\"}": {
+                        ".": {},
+                        "f:configMap": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:name": {}
+                        },
+                        "f:name": {}
+                      },
+                      "k:{\"name\":\"registry-htpasswd\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:secret": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:secretName": {}
+                        }
+                      },
+                      "k:{\"name\":\"registry-pki\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:secret": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:secretName": {}
+                        }
+                      },
+                      "k:{\"name\":\"registry-velero-config\"}": {
+                        ".": {},
+                        "f:configMap": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:name": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:53:02Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 2,
+        "selector": {
+          "matchLabels": {
+            "app": "registry",
+            "pod-template-hash": "64bbd7b8b9"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "registry",
+              "kots.io/backup": "velero",
+              "kots.io/kotsadm": "true",
+              "pod-template-hash": "64bbd7b8b9"
+            },
+            "annotations": {
+              "backup.velero.io/backup-volumes": "backup",
+              "pre.hook.backup.velero.io/command": "[\"/backup.sh\"]",
+              "pre.hook.backup.velero.io/container": "registry-backup",
+              "pre.hook.backup.velero.io/timeout": "30m"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "registry-velero-config",
+                "configMap": {
+                  "name": "registry-velero-config",
+                  "defaultMode": 511
+                }
+              },
+              {
+                "name": "backup",
+                "emptyDir": {}
+              },
+              {
+                "name": "registry-config",
+                "configMap": {
+                  "name": "registry-config",
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "registry-pki",
+                "secret": {
+                  "secretName": "registry-pki",
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "registry-htpasswd",
+                "secret": {
+                  "secretName": "registry-htpasswd",
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "initContainers": [
+              {
+                "name": "restore",
+                "image": "kurlsh/s3cmd:7f7dc75-20210331",
+                "command": [
+                  "/restore.sh"
+                ],
+                "env": [
+                  {
+                    "name": "AWS_ACCESS_KEY_ID",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "access-key-id"
+                      }
+                    }
+                  },
+                  {
+                    "name": "AWS_SECRET_ACCESS_KEY",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "secret-access-key"
+                      }
+                    }
+                  },
+                  {
+                    "name": "OBJECT_STORE_HOSTNAME",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "object-store-hostname"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "backup",
+                    "mountPath": "/backup"
+                  },
+                  {
+                    "name": "registry-velero-config",
+                    "mountPath": "/restore.sh",
+                    "subPath": "restore.sh"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "containers": [
+              {
+                "name": "registry-backup",
+                "image": "kurlsh/s3cmd:7f7dc75-20210331",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "trap : TERM INT; tail -f /dev/null \u0026 wait"
+                ],
+                "env": [
+                  {
+                    "name": "AWS_ACCESS_KEY_ID",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "access-key-id"
+                      }
+                    }
+                  },
+                  {
+                    "name": "AWS_SECRET_ACCESS_KEY",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "secret-access-key"
+                      }
+                    }
+                  },
+                  {
+                    "name": "OBJECT_STORE_HOSTNAME",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "object-store-hostname"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "registry-velero-config",
+                    "mountPath": "/backup.sh",
+                    "subPath": "backup.sh"
+                  },
+                  {
+                    "name": "backup",
+                    "mountPath": "/backup"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              },
+              {
+                "name": "registry",
+                "image": "registry:2.7.1",
+                "command": [
+                  "/bin/registry",
+                  "serve",
+                  "/etc/docker/registry/config.yml"
+                ],
+                "ports": [
+                  {
+                    "containerPort": 443,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "REGISTRY_HTTP_SECRET",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-session-secret",
+                        "key": "haSharedSecret"
+                      }
+                    }
+                  },
+                  {
+                    "name": "AWS_ACCESS_KEY_ID",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "access-key-id"
+                      }
+                    }
+                  },
+                  {
+                    "name": "AWS_SECRET_ACCESS_KEY",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "registry-s3-secret",
+                        "key": "secret-access-key"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "registry-config",
+                    "mountPath": "/etc/docker/registry"
+                  },
+                  {
+                    "name": "registry-pki",
+                    "mountPath": "/etc/pki"
+                  },
+                  {
+                    "name": "registry-htpasswd",
+                    "mountPath": "/auth"
+                  }
+                ],
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/",
+                    "port": 443,
+                    "scheme": "HTTPS"
+                  },
+                  "initialDelaySeconds": 10,
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 1,
+                  "successThreshold": 2,
+                  "failureThreshold": 3
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        }
+      },
+      "status": {
+        "replicas": 2,
+        "fullyLabeledReplicas": 2,
+        "readyReplicas": 2,
+        "availableReplicas": 2,
+        "observedGeneration": 1
+      }
+    }
+  ]
+}

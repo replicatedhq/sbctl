@@ -1,0 +1,86 @@
+- apiVersion: cluster.kurl.sh/v1beta1
+  kind: Installer
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: '***HIDDEN***'
+    creationTimestamp: "2022-04-11T22:50:22Z"
+    generation: 1
+    labels:
+      velero.io/exclude-from-backup: "true"
+    managedFields:
+    - apiVersion: cluster.kurl.sh/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          .: {}
+          f:contour:
+            .: {}
+            f:version: {}
+          f:docker:
+            .: {}
+            f:version: {}
+          f:ekco:
+            .: {}
+            f:version: {}
+          f:kubernetes:
+            .: {}
+            f:HACluster: {}
+            f:version: {}
+          f:longhorn:
+            .: {}
+            f:version: {}
+          f:minio:
+            .: {}
+            f:version: {}
+          f:registry:
+            .: {}
+            f:version: {}
+          f:velero:
+            .: {}
+            f:version: {}
+          f:weave:
+            .: {}
+            f:version: {}
+        f:status: {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: "2022-04-11T22:50:22Z"
+    - apiVersion: cluster.kurl.sh/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:velero.io/exclude-from-backup: {}
+      manager: kubectl-label
+      operation: Update
+      time: "2022-04-11T22:50:22Z"
+    name: f84c3b7
+    namespace: default
+    resourceVersion: "505"
+    uid: 54961f1c-dea5-4c75-8fe4-862db9544bf2
+  spec:
+    contour:
+      version: 1.20.1
+    docker:
+      version: 20.10.5
+    ekco:
+      version: 0.19.0
+    kubernetes:
+      HACluster: true
+      version: 1.23.5
+    longhorn:
+      version: 1.2.2
+    minio:
+      version: 2020-01-25T02-50-51Z
+    registry:
+      version: 2.7.1
+    velero:
+      version: 1.7.1
+    weave:
+      version: 2.6.5
+  status: {}

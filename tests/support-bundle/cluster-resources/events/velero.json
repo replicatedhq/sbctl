@@ -1,0 +1,3652 @@
+{
+  "kind": "EventList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27217"
+  },
+  "items": [
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff065fd2fa67",
+        "namespace": "velero",
+        "uid": "aa6c0a71-9629-4381-9f62-c0102f0b3fb6",
+        "resourceVersion": "22461",
+        "creationTimestamp": "2022-04-12T00:36:06Z",
+        "managedFields": [
+          {
+            "manager": "kube-scheduler",
+            "operation": "Update",
+            "apiVersion": "events.k8s.io/v1",
+            "time": "2022-04-12T00:36:06Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:action": {},
+              "f:eventTime": {},
+              "f:note": {},
+              "f:reason": {},
+              "f:regarding": {},
+              "f:reportingController": {},
+              "f:reportingInstance": {},
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22456"
+      },
+      "reason": "Scheduled",
+      "message": "Successfully assigned velero/velero-6996dd565b-mddj2 to troubleshoot-demo-002",
+      "source": {},
+      "firstTimestamp": null,
+      "lastTimestamp": null,
+      "type": "Normal",
+      "eventTime": "2022-04-12T00:36:06.366978Z",
+      "action": "Binding",
+      "reportingComponent": "default-scheduler",
+      "reportingInstance": "default-scheduler-troubleshoot-demo-001"
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06907ded8e",
+        "namespace": "velero",
+        "uid": "061a46dc-5d1d-4f73-848d-9b7718113e75",
+        "resourceVersion": "22469",
+        "creationTimestamp": "2022-04-12T00:36:07Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-aws:v1.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:07Z",
+      "lastTimestamp": "2022-04-12T00:36:07Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff0693c68109",
+        "namespace": "velero",
+        "uid": "f0c6ab24-a04e-4ce8-bca8-dbada91c86c0",
+        "resourceVersion": "22470",
+        "creationTimestamp": "2022-04-12T00:36:07Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-aws",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:07Z",
+      "lastTimestamp": "2022-04-12T00:36:07Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff069bdcd248",
+        "namespace": "velero",
+        "uid": "852d1f52-fb7f-41ea-98ef-98094dcf7ab5",
+        "resourceVersion": "22471",
+        "creationTimestamp": "2022-04-12T00:36:07Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-aws",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:07Z",
+      "lastTimestamp": "2022-04-12T00:36:07Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06aa58c75c",
+        "namespace": "velero",
+        "uid": "0d09a3fb-6530-453b-8ff3-82a1278d1bc4",
+        "resourceVersion": "22472",
+        "creationTimestamp": "2022-04-12T00:36:07Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-gcp:v1.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:07Z",
+      "lastTimestamp": "2022-04-12T00:36:07Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06ac9edaa0",
+        "namespace": "velero",
+        "uid": "24f71a62-bc57-46d3-a6b4-38422058a863",
+        "resourceVersion": "22474",
+        "creationTimestamp": "2022-04-12T00:36:07Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-gcp",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:07Z",
+      "lastTimestamp": "2022-04-12T00:36:07Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06b46b8eed",
+        "namespace": "velero",
+        "uid": "166062f6-6342-4d53-a44f-1d16b01026a9",
+        "resourceVersion": "22475",
+        "creationTimestamp": "2022-04-12T00:36:07Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:07Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-gcp",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:07Z",
+      "lastTimestamp": "2022-04-12T00:36:07Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06e80e1d2a",
+        "namespace": "velero",
+        "uid": "9b998a34-1280-4fa1-88d7-5fd3b4c48754",
+        "resourceVersion": "22476",
+        "creationTimestamp": "2022-04-12T00:36:08Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:08Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-microsoft-azure:v1.3.1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:08Z",
+      "lastTimestamp": "2022-04-12T00:36:08Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06e9f9ada8",
+        "namespace": "velero",
+        "uid": "f27cefd7-47a4-45f4-add9-a4a24d28bf3b",
+        "resourceVersion": "22478",
+        "creationTimestamp": "2022-04-12T00:36:08Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:08Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-microsoft-azure",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:08Z",
+      "lastTimestamp": "2022-04-12T00:36:08Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff06f11e3ed3",
+        "namespace": "velero",
+        "uid": "92393d8a-6e66-4326-a1d9-130f85d440c9",
+        "resourceVersion": "22479",
+        "creationTimestamp": "2022-04-12T00:36:08Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:08Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-microsoft-azure",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:08Z",
+      "lastTimestamp": "2022-04-12T00:36:08Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff07258c23e1",
+        "namespace": "velero",
+        "uid": "d29475c3-6387-4330-a92b-505b2afb3487",
+        "resourceVersion": "22484",
+        "creationTimestamp": "2022-04-12T00:36:09Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"replicated/local-volume-provider:v0.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:09Z",
+      "lastTimestamp": "2022-04-12T00:36:09Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff0728aff886",
+        "namespace": "velero",
+        "uid": "92f97743-eca2-4371-8b33-72e5a3f4986e",
+        "resourceVersion": "22486",
+        "creationTimestamp": "2022-04-12T00:36:09Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Created",
+      "message": "Created container replicated-local-volume-provider",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:09Z",
+      "lastTimestamp": "2022-04-12T00:36:09Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff0730e83f33",
+        "namespace": "velero",
+        "uid": "a655551a-8c9a-4744-b7e2-28cd9570f760",
+        "resourceVersion": "22487",
+        "creationTimestamp": "2022-04-12T00:36:09Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Started",
+      "message": "Started container replicated-local-volume-provider",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:09Z",
+      "lastTimestamp": "2022-04-12T00:36:09Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff0762e7d61a",
+        "namespace": "velero",
+        "uid": "5200828a-7108-47c7-ab2a-f1e1f74ed176",
+        "resourceVersion": "22488",
+        "creationTimestamp": "2022-04-12T00:36:10Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"replicated/kurl-util:v2022.04.08-1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:10Z",
+      "lastTimestamp": "2022-04-12T00:36:10Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff076570f6cc",
+        "namespace": "velero",
+        "uid": "8e40174a-7f90-4aa5-bdcc-4db302f39522",
+        "resourceVersion": "22490",
+        "creationTimestamp": "2022-04-12T00:36:10Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Created",
+      "message": "Created container replicated-kurl-util",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:10Z",
+      "lastTimestamp": "2022-04-12T00:36:10Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff076e2d2b76",
+        "namespace": "velero",
+        "uid": "a53e898a-d3ab-42ec-a686-3777d157367f",
+        "resourceVersion": "22491",
+        "creationTimestamp": "2022-04-12T00:36:10Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Started",
+      "message": "Started container replicated-kurl-util",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:10Z",
+      "lastTimestamp": "2022-04-12T00:36:10Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff07a0ac4e6e",
+        "namespace": "velero",
+        "uid": "93af4299-b8b9-4b56-8bda-93f1d6aa09f3",
+        "resourceVersion": "22571",
+        "creationTimestamp": "2022-04-12T00:36:11Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero:v1.7.1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:11Z",
+      "lastTimestamp": "2022-04-12T00:36:30Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff07a2fe8236",
+        "namespace": "velero",
+        "uid": "d1764130-487d-46fc-be3d-50ae4b374e80",
+        "resourceVersion": "22572",
+        "creationTimestamp": "2022-04-12T00:36:11Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Created",
+      "message": "Created container velero",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:11Z",
+      "lastTimestamp": "2022-04-12T00:36:30Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff07ab37ab32",
+        "namespace": "velero",
+        "uid": "41aa8b67-f022-495a-a8be-5d6bc0a765bc",
+        "resourceVersion": "22513",
+        "creationTimestamp": "2022-04-12T00:36:11Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Started",
+      "message": "Started container velero",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:11Z",
+      "lastTimestamp": "2022-04-12T00:36:12Z",
+      "count": 2,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mddj2.16e4ff081c113b00",
+        "namespace": "velero",
+        "uid": "3e21408f-5a4d-4547-9ecf-f4866b17fcb8",
+        "resourceVersion": "26396",
+        "creationTimestamp": "2022-04-12T00:36:13Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:13Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mddj2",
+        "uid": "600caa5f-74d5-4695-b37b-46fd31b0e26d",
+        "apiVersion": "v1",
+        "resourceVersion": "22457",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "BackOff",
+      "message": "Back-off restarting failed container",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:36:13Z",
+      "lastTimestamp": "2022-04-12T00:56:09Z",
+      "count": 94,
+      "type": "Warning",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7258e78a3",
+        "namespace": "velero",
+        "uid": "22f86767-ce11-407b-9ffe-dc3b19396098",
+        "resourceVersion": "21297",
+        "creationTimestamp": "2022-04-12T00:30:26Z",
+        "managedFields": [
+          {
+            "manager": "kube-scheduler",
+            "operation": "Update",
+            "apiVersion": "events.k8s.io/v1",
+            "time": "2022-04-12T00:30:26Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:action": {},
+              "f:eventTime": {},
+              "f:note": {},
+              "f:reason": {},
+              "f:regarding": {},
+              "f:reportingController": {},
+              "f:reportingInstance": {},
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21292"
+      },
+      "reason": "Scheduled",
+      "message": "Successfully assigned velero/velero-6996dd565b-mn9ns to troubleshoot-demo-002",
+      "source": {},
+      "firstTimestamp": null,
+      "lastTimestamp": null,
+      "type": "Normal",
+      "eventTime": "2022-04-12T00:30:26.086986Z",
+      "action": "Binding",
+      "reportingComponent": "default-scheduler",
+      "reportingInstance": "default-scheduler-troubleshoot-demo-001"
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb759252b01",
+        "namespace": "velero",
+        "uid": "f5237d9f-3776-4c78-a408-e8456c6463bb",
+        "resourceVersion": "21303",
+        "creationTimestamp": "2022-04-12T00:30:26Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:26Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-aws:v1.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:26Z",
+      "lastTimestamp": "2022-04-12T00:30:26Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb75c331a8b",
+        "namespace": "velero",
+        "uid": "c2cdf540-ff4e-48c4-ae3f-6e5aed28df93",
+        "resourceVersion": "21304",
+        "creationTimestamp": "2022-04-12T00:30:27Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:27Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-aws",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:27Z",
+      "lastTimestamp": "2022-04-12T00:30:27Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb76389775f",
+        "namespace": "velero",
+        "uid": "45bef5ef-852a-45dd-b243-5b2cf7f00877",
+        "resourceVersion": "21305",
+        "creationTimestamp": "2022-04-12T00:30:27Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:27Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-aws",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:27Z",
+      "lastTimestamp": "2022-04-12T00:30:27Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7a0817185",
+        "namespace": "velero",
+        "uid": "9b954eec-c9cb-499e-a580-8e879a0e2885",
+        "resourceVersion": "21309",
+        "creationTimestamp": "2022-04-12T00:30:28Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:28Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-gcp:v1.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:28Z",
+      "lastTimestamp": "2022-04-12T00:30:28Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7a2f62916",
+        "namespace": "velero",
+        "uid": "eb865565-a8cd-4312-97ee-8f2105c05445",
+        "resourceVersion": "21311",
+        "creationTimestamp": "2022-04-12T00:30:28Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:28Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-gcp",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:28Z",
+      "lastTimestamp": "2022-04-12T00:30:28Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7aa5de1ae",
+        "namespace": "velero",
+        "uid": "19625990-3893-4e00-a976-76ca1b5b60be",
+        "resourceVersion": "21312",
+        "creationTimestamp": "2022-04-12T00:30:28Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:28Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-gcp",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:28Z",
+      "lastTimestamp": "2022-04-12T00:30:28Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7ddef34fa",
+        "namespace": "velero",
+        "uid": "e9041843-2442-448b-bd48-a609159c4f29",
+        "resourceVersion": "21315",
+        "creationTimestamp": "2022-04-12T00:30:29Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:29Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-microsoft-azure:v1.3.1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:29Z",
+      "lastTimestamp": "2022-04-12T00:30:29Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7e00a6d5f",
+        "namespace": "velero",
+        "uid": "c41a00d2-719e-471c-b635-9c3db363262a",
+        "resourceVersion": "21317",
+        "creationTimestamp": "2022-04-12T00:30:29Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:29Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-microsoft-azure",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:29Z",
+      "lastTimestamp": "2022-04-12T00:30:29Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb7e7f6e53e",
+        "namespace": "velero",
+        "uid": "c8ff3a10-aebd-4b8f-99d9-cf017c651b2d",
+        "resourceVersion": "21320",
+        "creationTimestamp": "2022-04-12T00:30:29Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:29Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-microsoft-azure",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:29Z",
+      "lastTimestamp": "2022-04-12T00:30:29Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb81af5e466",
+        "namespace": "velero",
+        "uid": "f09f3764-9c04-4792-bf60-25080cec4ae2",
+        "resourceVersion": "21321",
+        "creationTimestamp": "2022-04-12T00:30:30Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:30Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"replicated/local-volume-provider:v0.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:30Z",
+      "lastTimestamp": "2022-04-12T00:30:30Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb81ce4d1bb",
+        "namespace": "velero",
+        "uid": "3239bd81-14bb-4ecd-b2b5-be8a811561ae",
+        "resourceVersion": "21323",
+        "creationTimestamp": "2022-04-12T00:30:30Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:30Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Created",
+      "message": "Created container replicated-local-volume-provider",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:30Z",
+      "lastTimestamp": "2022-04-12T00:30:30Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb82507bc98",
+        "namespace": "velero",
+        "uid": "44541799-e4d1-4aaa-89d4-2ca0134d35ce",
+        "resourceVersion": "21327",
+        "creationTimestamp": "2022-04-12T00:30:30Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:30Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Started",
+      "message": "Started container replicated-local-volume-provider",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:30Z",
+      "lastTimestamp": "2022-04-12T00:30:30Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb8582cde63",
+        "namespace": "velero",
+        "uid": "bee5e588-7550-4f19-97c6-583d9df6429f",
+        "resourceVersion": "21331",
+        "creationTimestamp": "2022-04-12T00:30:31Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:31Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"replicated/kurl-util:v2022.04.08-1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:31Z",
+      "lastTimestamp": "2022-04-12T00:30:31Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb85a56eb8d",
+        "namespace": "velero",
+        "uid": "1eb812df-74fa-48da-96b5-66dfff3eb67e",
+        "resourceVersion": "21333",
+        "creationTimestamp": "2022-04-12T00:30:31Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:31Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Created",
+      "message": "Created container replicated-kurl-util",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:31Z",
+      "lastTimestamp": "2022-04-12T00:30:31Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb86145b72d",
+        "namespace": "velero",
+        "uid": "ec521999-b33d-4425-989b-cd5e4bdbcf8b",
+        "resourceVersion": "21337",
+        "creationTimestamp": "2022-04-12T00:30:31Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:31Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Started",
+      "message": "Started container replicated-kurl-util",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:31Z",
+      "lastTimestamp": "2022-04-12T00:30:31Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb89582a2a6",
+        "namespace": "velero",
+        "uid": "65882104-3f80-4b7c-af55-2ffde07a93f1",
+        "resourceVersion": "21402",
+        "creationTimestamp": "2022-04-12T00:30:32Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:32Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero:v1.7.1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:32Z",
+      "lastTimestamp": "2022-04-12T00:30:48Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb897825414",
+        "namespace": "velero",
+        "uid": "0baa12ce-158b-4edc-8baa-2d81f8c67c0d",
+        "resourceVersion": "21403",
+        "creationTimestamp": "2022-04-12T00:30:32Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:32Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Created",
+      "message": "Created container velero",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:32Z",
+      "lastTimestamp": "2022-04-12T00:30:48Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb89eabb8fb",
+        "namespace": "velero",
+        "uid": "685d787b-10c1-43bc-80f7-27ba2a62c659",
+        "resourceVersion": "21349",
+        "creationTimestamp": "2022-04-12T00:30:32Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:32Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Started",
+      "message": "Started container velero",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:32Z",
+      "lastTimestamp": "2022-04-12T00:30:33Z",
+      "count": 2,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-mn9ns.16e4feb91028f3e5",
+        "namespace": "velero",
+        "uid": "47e94634-1849-470d-93ea-edad7181940e",
+        "resourceVersion": "21362",
+        "creationTimestamp": "2022-04-12T00:30:34Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:34Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-mn9ns",
+        "uid": "84ed9988-96ea-4ae5-918b-5c82ad0eef26",
+        "apiVersion": "v1",
+        "resourceVersion": "21294",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "BackOff",
+      "message": "Back-off restarting failed container",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:30:34Z",
+      "lastTimestamp": "2022-04-12T00:30:35Z",
+      "count": 2,
+      "type": "Warning",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003a49bcef70",
+        "namespace": "velero",
+        "uid": "9af1a3f7-55e0-4220-b2ca-317071ddb485",
+        "resourceVersion": "26803",
+        "creationTimestamp": "2022-04-12T00:58:08Z",
+        "managedFields": [
+          {
+            "manager": "kube-scheduler",
+            "operation": "Update",
+            "apiVersion": "events.k8s.io/v1",
+            "time": "2022-04-12T00:58:08Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:action": {},
+              "f:eventTime": {},
+              "f:note": {},
+              "f:reason": {},
+              "f:regarding": {},
+              "f:reportingController": {},
+              "f:reportingInstance": {},
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26797"
+      },
+      "reason": "Scheduled",
+      "message": "Successfully assigned velero/velero-6996dd565b-xl44t to troubleshoot-demo-002",
+      "source": {},
+      "firstTimestamp": null,
+      "lastTimestamp": null,
+      "type": "Normal",
+      "eventTime": "2022-04-12T00:58:08.846362Z",
+      "action": "Binding",
+      "reportingComponent": "default-scheduler",
+      "reportingInstance": "default-scheduler-troubleshoot-demo-001"
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003a7c22c2f7",
+        "namespace": "velero",
+        "uid": "a80187ff-990a-410a-82eb-add1e7c86663",
+        "resourceVersion": "26812",
+        "creationTimestamp": "2022-04-12T00:58:09Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-aws:v1.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:09Z",
+      "lastTimestamp": "2022-04-12T00:58:09Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003a7f0587dd",
+        "namespace": "velero",
+        "uid": "021363c3-d542-480f-8bb6-ec2f74debfd6",
+        "resourceVersion": "26813",
+        "creationTimestamp": "2022-04-12T00:58:09Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-aws",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:09Z",
+      "lastTimestamp": "2022-04-12T00:58:09Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003a86fe807a",
+        "namespace": "velero",
+        "uid": "40c1b503-f45a-465a-ab34-50e69a12a96d",
+        "resourceVersion": "26816",
+        "creationTimestamp": "2022-04-12T00:58:09Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:09Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-aws}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-aws",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:09Z",
+      "lastTimestamp": "2022-04-12T00:58:09Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003ab179fff1",
+        "namespace": "velero",
+        "uid": "9eb9b25c-0a00-4092-9cd2-77463fcaf605",
+        "resourceVersion": "26817",
+        "creationTimestamp": "2022-04-12T00:58:10Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-gcp:v1.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:10Z",
+      "lastTimestamp": "2022-04-12T00:58:10Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003ab3f4a925",
+        "namespace": "velero",
+        "uid": "ac932148-4e9c-4fe6-bf04-cfede1c7533b",
+        "resourceVersion": "26819",
+        "creationTimestamp": "2022-04-12T00:58:10Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-gcp",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:10Z",
+      "lastTimestamp": "2022-04-12T00:58:10Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003abc20c124",
+        "namespace": "velero",
+        "uid": "1177e3c6-e309-41a0-bbaf-59c78ee23e59",
+        "resourceVersion": "26822",
+        "creationTimestamp": "2022-04-12T00:58:10Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:10Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-gcp}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-gcp",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:10Z",
+      "lastTimestamp": "2022-04-12T00:58:10Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003aee8a1248",
+        "namespace": "velero",
+        "uid": "544371b1-bb8b-4025-9d55-6ae35e8859c0",
+        "resourceVersion": "26824",
+        "creationTimestamp": "2022-04-12T00:58:11Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero-plugin-for-microsoft-azure:v1.3.1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:11Z",
+      "lastTimestamp": "2022-04-12T00:58:11Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003af1b72dc0",
+        "namespace": "velero",
+        "uid": "5e90798a-7d35-44fa-a1d4-3804cf37b249",
+        "resourceVersion": "26826",
+        "creationTimestamp": "2022-04-12T00:58:11Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Created",
+      "message": "Created container velero-velero-plugin-for-microsoft-azure",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:11Z",
+      "lastTimestamp": "2022-04-12T00:58:11Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003afa4ceb01",
+        "namespace": "velero",
+        "uid": "284b4d37-7878-4a22-8345-5cf0b4e2fc6a",
+        "resourceVersion": "26827",
+        "creationTimestamp": "2022-04-12T00:58:11Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{velero-velero-plugin-for-microsoft-azure}"
+      },
+      "reason": "Started",
+      "message": "Started container velero-velero-plugin-for-microsoft-azure",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:11Z",
+      "lastTimestamp": "2022-04-12T00:58:11Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003b2bbd71e2",
+        "namespace": "velero",
+        "uid": "3d09acc1-b426-447f-9b88-ab56a219b291",
+        "resourceVersion": "26831",
+        "creationTimestamp": "2022-04-12T00:58:12Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:12Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"replicated/local-volume-provider:v0.3.0\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:12Z",
+      "lastTimestamp": "2022-04-12T00:58:12Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003b2d91ba0f",
+        "namespace": "velero",
+        "uid": "bdf5095c-0a8f-40e5-bab3-6d5c0cc67d32",
+        "resourceVersion": "26833",
+        "creationTimestamp": "2022-04-12T00:58:12Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:12Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Created",
+      "message": "Created container replicated-local-volume-provider",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:12Z",
+      "lastTimestamp": "2022-04-12T00:58:12Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003b35452ff7",
+        "namespace": "velero",
+        "uid": "19b3d087-a5f3-4bcb-a568-a5c7ab5d3406",
+        "resourceVersion": "26836",
+        "creationTimestamp": "2022-04-12T00:58:12Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:12Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{replicated-local-volume-provider}"
+      },
+      "reason": "Started",
+      "message": "Started container replicated-local-volume-provider",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:12Z",
+      "lastTimestamp": "2022-04-12T00:58:12Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003b69cd611b",
+        "namespace": "velero",
+        "uid": "2c76ebc0-9267-4266-aafb-5c459ee7e626",
+        "resourceVersion": "26837",
+        "creationTimestamp": "2022-04-12T00:58:13Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:13Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"replicated/kurl-util:v2022.04.08-1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:13Z",
+      "lastTimestamp": "2022-04-12T00:58:13Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003b6c1c0706",
+        "namespace": "velero",
+        "uid": "3189345c-9220-4ce1-9eba-22d7dfd9cf76",
+        "resourceVersion": "26839",
+        "creationTimestamp": "2022-04-12T00:58:13Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:13Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Created",
+      "message": "Created container replicated-kurl-util",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:13Z",
+      "lastTimestamp": "2022-04-12T00:58:13Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003b738c1a2e",
+        "namespace": "velero",
+        "uid": "f47ed39e-271b-4be9-b787-f3e43adcd4aa",
+        "resourceVersion": "26842",
+        "creationTimestamp": "2022-04-12T00:58:13Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:13Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.initContainers{replicated-kurl-util}"
+      },
+      "reason": "Started",
+      "message": "Started container replicated-kurl-util",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:13Z",
+      "lastTimestamp": "2022-04-12T00:58:13Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003ba729a4fe",
+        "namespace": "velero",
+        "uid": "28c0ad29-5e50-4d9b-83b7-94038bc0469c",
+        "resourceVersion": "26914",
+        "creationTimestamp": "2022-04-12T00:58:14Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:14Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Pulled",
+      "message": "Container image \"velero/velero:v1.7.1\" already present on machine",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:14Z",
+      "lastTimestamp": "2022-04-12T00:58:31Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003ba96543fb",
+        "namespace": "velero",
+        "uid": "9f0eb3de-97a9-4b2c-9f8a-878d5d3bca66",
+        "resourceVersion": "26915",
+        "creationTimestamp": "2022-04-12T00:58:14Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:14Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Created",
+      "message": "Created container velero",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:14Z",
+      "lastTimestamp": "2022-04-12T00:58:31Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003bb0bdcb8b",
+        "namespace": "velero",
+        "uid": "4d007ab0-66f7-4a69-b358-34fbe44b632d",
+        "resourceVersion": "26860",
+        "creationTimestamp": "2022-04-12T00:58:14Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:14Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "Started",
+      "message": "Started container velero",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:14Z",
+      "lastTimestamp": "2022-04-12T00:58:15Z",
+      "count": 2,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b-xl44t.16e5003c22f1ad5e",
+        "namespace": "velero",
+        "uid": "1e8e9090-d73b-44a4-994c-2d84d2d05ea0",
+        "resourceVersion": "26865",
+        "creationTimestamp": "2022-04-12T00:58:16Z",
+        "managedFields": [
+          {
+            "manager": "kubelet",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {},
+                "f:host": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Pod",
+        "namespace": "velero",
+        "name": "velero-6996dd565b-xl44t",
+        "uid": "192aa0a3-9281-49a6-85fe-ca6d2ae974ba",
+        "apiVersion": "v1",
+        "resourceVersion": "26801",
+        "fieldPath": "spec.containers{velero}"
+      },
+      "reason": "BackOff",
+      "message": "Back-off restarting failed container",
+      "source": {
+        "component": "kubelet",
+        "host": "troubleshoot-demo-002"
+      },
+      "firstTimestamp": "2022-04-12T00:58:16Z",
+      "lastTimestamp": "2022-04-12T00:58:17Z",
+      "count": 2,
+      "type": "Warning",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b.16e4feb7250ee7ad",
+        "namespace": "velero",
+        "uid": "7f5c7795-1666-4296-b3c1-5b6541fad389",
+        "resourceVersion": "21295",
+        "creationTimestamp": "2022-04-12T00:30:26Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:26Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "ReplicaSet",
+        "namespace": "velero",
+        "name": "velero-6996dd565b",
+        "uid": "4d122817-d20c-43e7-bd14-c4a6fe3c2e0b",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "21290"
+      },
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: velero-6996dd565b-mn9ns",
+      "source": {
+        "component": "replicaset-controller"
+      },
+      "firstTimestamp": "2022-04-12T00:30:26Z",
+      "lastTimestamp": "2022-04-12T00:30:26Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b.16e4fed63f872782",
+        "namespace": "velero",
+        "uid": "fef9675d-8592-464b-b803-c93f6ecdccbc",
+        "resourceVersion": "21772",
+        "creationTimestamp": "2022-04-12T00:32:39Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:32:39Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "ReplicaSet",
+        "namespace": "velero",
+        "name": "velero-6996dd565b",
+        "uid": "4d122817-d20c-43e7-bd14-c4a6fe3c2e0b",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "21769"
+      },
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: velero-6996dd565b-mn9ns",
+      "source": {
+        "component": "replicaset-controller"
+      },
+      "firstTimestamp": "2022-04-12T00:32:39Z",
+      "lastTimestamp": "2022-04-12T00:32:39Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b.16e4ff065f51c70d",
+        "namespace": "velero",
+        "uid": "73c24f1a-f375-4d5f-888f-e6b9d9eede11",
+        "resourceVersion": "22460",
+        "creationTimestamp": "2022-04-12T00:36:06Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:36:06Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "ReplicaSet",
+        "namespace": "velero",
+        "name": "velero-6996dd565b",
+        "uid": "4d122817-d20c-43e7-bd14-c4a6fe3c2e0b",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "22454"
+      },
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: velero-6996dd565b-mddj2",
+      "source": {
+        "component": "replicaset-controller"
+      },
+      "firstTimestamp": "2022-04-12T00:36:06Z",
+      "lastTimestamp": "2022-04-12T00:36:06Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b.16e50026863a6a3f",
+        "namespace": "velero",
+        "uid": "da1bf2f9-ac4e-4cc3-8de6-98d890fa6d7f",
+        "resourceVersion": "26517",
+        "creationTimestamp": "2022-04-12T00:56:43Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:56:43Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "ReplicaSet",
+        "namespace": "velero",
+        "name": "velero-6996dd565b",
+        "uid": "4d122817-d20c-43e7-bd14-c4a6fe3c2e0b",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "26514"
+      },
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: velero-6996dd565b-mddj2",
+      "source": {
+        "component": "replicaset-controller"
+      },
+      "firstTimestamp": "2022-04-12T00:56:43Z",
+      "lastTimestamp": "2022-04-12T00:56:43Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero-6996dd565b.16e5003a491d7152",
+        "namespace": "velero",
+        "uid": "f4c882e3-3f31-4746-ab89-5b7955a069fc",
+        "resourceVersion": "26800",
+        "creationTimestamp": "2022-04-12T00:58:08Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:58:08Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "ReplicaSet",
+        "namespace": "velero",
+        "name": "velero-6996dd565b",
+        "uid": "4d122817-d20c-43e7-bd14-c4a6fe3c2e0b",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "26796"
+      },
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: velero-6996dd565b-xl44t",
+      "source": {
+        "component": "replicaset-controller"
+      },
+      "firstTimestamp": "2022-04-12T00:58:08Z",
+      "lastTimestamp": "2022-04-12T00:58:08Z",
+      "count": 1,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero.16e4fa60064650d9",
+        "namespace": "velero",
+        "uid": "56dcde94-5783-44b0-b2e8-c186cf2239ec",
+        "resourceVersion": "26798",
+        "creationTimestamp": "2022-04-12T00:30:26Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:30:26Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Deployment",
+        "namespace": "velero",
+        "name": "velero",
+        "uid": "68ad7c56-a49d-4f46-9aca-8a1f3eb5cc68",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "21287"
+      },
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled up replica set velero-6996dd565b to 1",
+      "source": {
+        "component": "deployment-controller"
+      },
+      "firstTimestamp": "2022-04-11T23:10:53Z",
+      "lastTimestamp": "2022-04-12T00:58:08Z",
+      "count": 4,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    },
+    {
+      "kind": "Event",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "velero.16e4faa82138ccfd",
+        "namespace": "velero",
+        "uid": "07528289-9ed0-4b5e-a0c1-365dc40869f1",
+        "resourceVersion": "26515",
+        "creationTimestamp": "2022-04-12T00:32:39Z",
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-12T00:32:39Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:count": {},
+              "f:firstTimestamp": {},
+              "f:involvedObject": {},
+              "f:lastTimestamp": {},
+              "f:message": {},
+              "f:reason": {},
+              "f:source": {
+                "f:component": {}
+              },
+              "f:type": {}
+            }
+          }
+        ]
+      },
+      "involvedObject": {
+        "kind": "Deployment",
+        "namespace": "velero",
+        "name": "velero",
+        "uid": "68ad7c56-a49d-4f46-9aca-8a1f3eb5cc68",
+        "apiVersion": "apps/v1",
+        "resourceVersion": "21766"
+      },
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled down replica set velero-6996dd565b to 0",
+      "source": {
+        "component": "deployment-controller"
+      },
+      "firstTimestamp": "2022-04-11T23:16:03Z",
+      "lastTimestamp": "2022-04-12T00:56:43Z",
+      "count": 3,
+      "type": "Normal",
+      "eventTime": null,
+      "reportingComponent": "",
+      "reportingInstance": ""
+    }
+  ]
+}

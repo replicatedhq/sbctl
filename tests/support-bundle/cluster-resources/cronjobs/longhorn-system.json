@@ -1,0 +1,8 @@
+{
+  "kind": "CronJobList",
+  "apiVersion": "batch/v1beta1",
+  "metadata": {
+    "resourceVersion": "27157"
+  },
+  "items": []
+}

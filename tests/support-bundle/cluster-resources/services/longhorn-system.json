@@ -1,0 +1,527 @@
+{
+  "kind": "ServiceList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27144"
+  },
+  "items": [
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "csi-attacher",
+        "namespace": "longhorn-system",
+        "uid": "cbe852e6-0e04-473d-8497-08668bd7d895",
+        "resourceVersion": "1126",
+        "creationTimestamp": "2022-04-11T22:52:04Z",
+        "labels": {
+          "app": "csi-attacher",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:04Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":12345,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "dummy",
+            "protocol": "TCP",
+            "port": 12345,
+            "targetPort": 12345
+          }
+        ],
+        "selector": {
+          "app": "csi-attacher"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "csi-provisioner",
+        "namespace": "longhorn-system",
+        "uid": "6608887d-5e2e-4f6d-87ce-41d452703ac3",
+        "resourceVersion": "1149",
+        "creationTimestamp": "2022-04-11T22:52:04Z",
+        "labels": {
+          "app": "csi-provisioner",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:04Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":12345,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "dummy",
+            "protocol": "TCP",
+            "port": 12345,
+            "targetPort": 12345
+          }
+        ],
+        "selector": {
+          "app": "csi-provisioner"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "csi-resizer",
+        "namespace": "longhorn-system",
+        "uid": "4d4372e7-1789-4caa-882b-fe5fbdc52e79",
+        "resourceVersion": "1181",
+        "creationTimestamp": "2022-04-11T22:52:05Z",
+        "labels": {
+          "app": "csi-resizer",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:05Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":12345,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "dummy",
+            "protocol": "TCP",
+            "port": 12345,
+            "targetPort": 12345
+          }
+        ],
+        "selector": {
+          "app": "csi-resizer"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "csi-snapshotter",
+        "namespace": "longhorn-system",
+        "uid": "bb8f1c72-5564-4643-9c10-577490d7d5af",
+        "resourceVersion": "1209",
+        "creationTimestamp": "2022-04-11T22:52:05Z",
+        "labels": {
+          "app": "csi-snapshotter",
+          "longhorn.io/managed-by": "longhorn-manager"
+        },
+        "annotations": {
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:05Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:longhorn.io/managed-by": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":12345,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "dummy",
+            "protocol": "TCP",
+            "port": 12345,
+            "targetPort": 12345
+          }
+        ],
+        "selector": {
+          "app": "csi-snapshotter"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "longhorn-backend",
+        "namespace": "longhorn-system",
+        "uid": "e785ef2d-a9ff-4731-9672-81fe95cb4ec9",
+        "resourceVersion": "875",
+        "creationTimestamp": "2022-04-11T22:51:36Z",
+        "labels": {
+          "app": "longhorn-manager"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"longhorn-manager\"},\"name\":\"longhorn-backend\",\"namespace\":\"longhorn-system\"},\"spec\":{\"ports\":[{\"name\":\"manager\",\"port\":9500,\"targetPort\":\"manager\"}],\"selector\":{\"app\":\"longhorn-manager\"},\"sessionAffinity\":\"ClientIP\",\"type\":\"ClusterIP\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":9500,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:sessionAffinityConfig": {
+                  ".": {},
+                  "f:clientIP": {
+                    ".": {},
+                    "f:timeoutSeconds": {}
+                  }
+                },
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "manager",
+            "protocol": "TCP",
+            "port": 9500,
+            "targetPort": "manager"
+          }
+        ],
+        "selector": {
+          "app": "longhorn-manager"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "ClientIP",
+        "sessionAffinityConfig": {
+          "clientIP": {
+            "timeoutSeconds": 10800
+          }
+        },
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "longhorn-frontend",
+        "namespace": "longhorn-system",
+        "uid": "11ad7216-3f7d-4546-afd1-dc32b1478080",
+        "resourceVersion": "880",
+        "creationTimestamp": "2022-04-11T22:51:36Z",
+        "labels": {
+          "app": "longhorn-ui"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"longhorn-ui\"},\"name\":\"longhorn-frontend\",\"namespace\":\"longhorn-system\"},\"spec\":{\"ports\":[{\"name\":\"http\",\"nodePort\":30880,\"port\":80,\"targetPort\":\"http\"}],\"selector\":{\"app\":\"longhorn-ui\"},\"type\":\"NodePort\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {}
+                }
+              },
+              "f:spec": {
+                "f:externalTrafficPolicy": {},
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":80,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:nodePort": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "http",
+            "protocol": "TCP",
+            "port": 80,
+            "targetPort": "http",
+            "nodePort": 30880
+          }
+        ],
+        "selector": {
+          "app": "longhorn-ui"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "NodePort",
+        "sessionAffinity": "None",
+        "externalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    }
+  ]
+}
