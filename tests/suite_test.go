@@ -9,15 +9,12 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"github.com/pkg/errors"
-	"github.com/replicatedhq/sbctl/pkg/api"
-	"github.com/replicatedhq/sbctl/pkg/sbctl"
-	// "k8s.io/client-go/kubernetes/scheme"
-	// corev1 "k8s.io/api/core/v1"
-	// v1 "k8s.io/client-go/tools/clientcmd/api/v1"
 	"github.com/antzucaro/matchr"
 	"github.com/onsi/gomega/format"
 	"github.com/onsi/gomega/types"
+	"github.com/pkg/errors"
+	"github.com/replicatedhq/sbctl/pkg/api"
+	"github.com/replicatedhq/sbctl/pkg/sbctl"
 	yaml "gopkg.in/yaml.v2"
 )
 
