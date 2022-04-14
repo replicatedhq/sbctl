@@ -1,17 +1,26 @@
-# Command line tool for examining K8s resources in Troublehsoot's support bundles
+# Command line tool for examining K8s resources in Troubleshoot's support bundles
 
-### How to use:
+### How to install:
 
-Start the local API server using a support bundle:
+Download the release binary and untar it to the /usr/bin/ directory:
+`wget https://github.com/replicatedhq/sbctl/releases/download/{{ VERSION_NUMBER_GOES_HERE }}/sbctl_darwin_amd64.tar.gz`
+`tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/bin/`
+
+Restart your shell and proceed to "How to Use"
+
+
+### How to Use:
+
+Start the local API server using a support bundle and then run the `export` command that comes up to make kubectl target your support bundles API server
 
 ```
-$ sbctl serve --support-bundle-location=/Users/divolgin/Downloads/support-bundle-2022-02-03T23_22_37
+$ sbctl serve --support-bundle-location=/Users/divolgin/Downloads/support-bundle-XXXX-XX-XX
 Server is running
 
-export KUBECONFIG=/var/folders/g2/05ngff7d71gds3_kl24gs0f80000gn/T/local-kubeconfig-1563064521
+export KUBECONFIG=/var/folders/g2/05ngff7d71gds3_kl24gs0f80000gn/T/local-kubeconfig-XXXXX
 ```
 
-Use `kubectl` with the generate kubeconfig file.  When done, CTRL^C the API server.
+Using `kubectl` should now auth using the generated kubeconfig file.  When done, CTRL^C to shut down the API server.
 
 ```
 $ kubectl get ns
