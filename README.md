@@ -14,7 +14,7 @@ Restart your shell and proceed to "How to Use"
 Start the local API server using a support bundle and then run the `export` command that comes up to make kubectl target your support bundles API server
 
 ```
-$ sbctl serve --support-bundle-location=/Users/divolgin/Downloads/support-bundle-XXXX-XX-XX
+$ sbctl serve --support-bundle-location=/Users/username/Downloads/support-bundle-XXXX-XX-XX
 Server is running
 
 export KUBECONFIG=/var/folders/g2/05ngff7d71gds3_kl24gs0f80000gn/T/local-kubeconfig-XXXXX
