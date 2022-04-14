@@ -102,7 +102,13 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 		panic(srv.ListenAndServe())
 	}()
 
-	time.Sleep(2) // TODO: poll until server starts
+	for {
+		resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", localServerEndPoint))
+		if err == nil && resp.StatusCode == http.StatusOK {
+			break
+		}
+		time.Sleep(1)
+	}
 
 	configFile, err := createConfigFile(fmt.Sprintf("http://%s", localServerEndPoint))
 	if err != nil {
