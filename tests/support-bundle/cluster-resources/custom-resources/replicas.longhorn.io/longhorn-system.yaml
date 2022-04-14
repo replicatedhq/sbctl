@@ -1,0 +1,209 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: Replica
+  metadata:
+    creationTimestamp: "2022-04-11T22:52:12Z"
+    finalizers:
+    - longhorn.io
+    generation: 3
+    labels:
+      longhorn.io/backing-image: ""
+      longhorndiskuuid: 7fd273ed-95c1-452f-87e0-8ecc94b6b8f1
+      longhornnode: troubleshoot-demo-003
+      longhornvolume: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:healthyAt: {}
+        f:status:
+          f:currentImage: {}
+          f:currentState: {}
+          f:instanceManagerName: {}
+          f:ip: {}
+          f:ownerID: {}
+          f:port: {}
+          f:started: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:49Z"
+    name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      kind: Volume
+      name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+      uid: 45f8c38f-23a5-440c-b36b-49c94491239f
+    resourceVersion: "4276"
+    uid: 2501c5e5-a419-4ef3-ac9c-69c54473f997
+  spec:
+    active: true
+    backingImage: ""
+    baseImage: ""
+    dataDirectoryName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-38ad130c
+    dataPath: ""
+    desireState: running
+    diskID: 7fd273ed-95c1-452f-87e0-8ecc94b6b8f1
+    diskPath: /var/lib/longhorn/
+    engineImage: longhornio/longhorn-engine:v1.2.2
+    engineName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b
+    failedAt: ""
+    hardNodeAffinity: ""
+    healthyAt: "2022-04-11T23:03:49Z"
+    logRequested: false
+    nodeID: troubleshoot-demo-003
+    rebuildRetryCount: 0
+    revisionCounterDisabled: false
+    salvageRequested: false
+    volumeName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    volumeSize: "10737418240"
+  status:
+    currentImage: longhornio/longhorn-engine:v1.2.2
+    currentState: running
+    evictionRequested: false
+    instanceManagerName: instance-manager-r-af1c7a93
+    ip: ***HIDDEN***
+    logFetched: false
+    ownerID: troubleshoot-demo-003
+    port: 10000
+    salvageExecuted: false
+    started: true
+- apiVersion: longhorn.io/v1beta1
+  kind: Replica
+  metadata:
+    creationTimestamp: "2022-04-11T22:52:12Z"
+    finalizers:
+    - longhorn.io
+    generation: 3
+    labels:
+      longhorn.io/backing-image: ""
+      longhorndiskuuid: 5f349161-6348-494a-abb6-ead2a3c5e64b
+      longhornnode: troubleshoot-demo-002
+      longhornvolume: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:healthyAt: {}
+        f:status:
+          f:currentImage: {}
+          f:currentState: {}
+          f:instanceManagerName: {}
+          f:ip: {}
+          f:ownerID: {}
+          f:port: {}
+          f:started: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:04:19Z"
+    name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      kind: Volume
+      name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+      uid: 45f8c38f-23a5-440c-b36b-49c94491239f
+    resourceVersion: "4501"
+    uid: 5906fef7-7bdc-4c21-93cf-c692346da861
+  spec:
+    active: true
+    backingImage: ""
+    baseImage: ""
+    dataDirectoryName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-0a40a8a2
+    dataPath: ""
+    desireState: running
+    diskID: 5f349161-6348-494a-abb6-ead2a3c5e64b
+    diskPath: /var/lib/longhorn/
+    engineImage: longhornio/longhorn-engine:v1.2.2
+    engineName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b
+    failedAt: ""
+    hardNodeAffinity: ""
+    healthyAt: "2022-04-11T23:04:19Z"
+    logRequested: false
+    nodeID: troubleshoot-demo-002
+    rebuildRetryCount: 0
+    revisionCounterDisabled: false
+    salvageRequested: false
+    volumeName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    volumeSize: "10737418240"
+  status:
+    currentImage: longhornio/longhorn-engine:v1.2.2
+    currentState: running
+    evictionRequested: false
+    instanceManagerName: instance-manager-r-a5bf42e3
+    ip: ***HIDDEN***
+    logFetched: false
+    ownerID: troubleshoot-demo-002
+    port: 10000
+    salvageExecuted: false
+    started: true
+- apiVersion: longhorn.io/v1beta1
+  kind: Replica
+  metadata:
+    creationTimestamp: "2022-04-11T22:52:12Z"
+    finalizers:
+    - longhorn.io
+    generation: 4
+    labels:
+      longhorn.io/backing-image: ""
+      longhorndiskuuid: 7e36f026-0b23-466b-991c-d46fb322c462
+      longhornnode: troubleshoot-demo-001
+      longhornvolume: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:healthyAt: {}
+        f:status:
+          f:currentImage: {}
+          f:currentState: {}
+          f:instanceManagerName: {}
+          f:ip: {}
+          f:port: {}
+          f:started: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:52:29Z"
+    name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      kind: Volume
+      name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+      uid: 45f8c38f-23a5-440c-b36b-49c94491239f
+    resourceVersion: "1460"
+    uid: 8accc8e1-3d3a-43b7-b9b9-04fd7e740114
+  spec:
+    active: true
+    backingImage: ""
+    baseImage: ""
+    dataDirectoryName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-d411d0d7
+    dataPath: ""
+    desireState: running
+    diskID: 7e36f026-0b23-466b-991c-d46fb322c462
+    diskPath: /var/lib/longhorn/
+    engineImage: longhornio/longhorn-engine:v1.2.2
+    engineName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b
+    failedAt: ""
+    hardNodeAffinity: ""
+    healthyAt: "2022-04-11T22:52:29Z"
+    logRequested: false
+    nodeID: troubleshoot-demo-001
+    rebuildRetryCount: 0
+    revisionCounterDisabled: false
+    salvageRequested: false
+    volumeName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    volumeSize: "10737418240"
+  status:
+    currentImage: longhornio/longhorn-engine:v1.2.2
+    currentState: running
+    evictionRequested: false
+    instanceManagerName: instance-manager-r-f0f1e9d6
+    ip: ***HIDDEN***
+    logFetched: false
+    ownerID: troubleshoot-demo-001
+    port: 10000
+    salvageExecuted: false
+    started: true

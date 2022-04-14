@@ -1,0 +1,60 @@
+{
+  "kind": "StorageClassList",
+  "apiVersion": "storage.k8s.io/v1",
+  "metadata": {
+    "resourceVersion": "27159"
+  },
+  "items": [
+    {
+      "kind": "StorageClass",
+      "apiVersion": "storage.k8s.io/v1",
+      "metadata": {
+        "name": "longhorn",
+        "uid": "d97312ff-9b7c-4b07-b964-17ece23f9025",
+        "resourceVersion": "937",
+        "creationTimestamp": "2022-04-11T22:51:41Z",
+        "annotations": {
+          "longhorn.io/last-applied-configmap": "kind: StorageClass\napiVersion: storage.k8s.io/v1\nmetadata:\n  name: longhorn\n  annotations:\n    storageclass.kubernetes.io/is-default-class: \"true\"\nprovisioner: driver.longhorn.io\nallowVolumeExpansion: true\nreclaimPolicy: Delete\nvolumeBindingMode: Immediate\nparameters:\n  numberOfReplicas: \"3\"\n  staleReplicaTimeout: \"2880\"\n  fromBackup: \"\"\n",
+          "storageclass.kubernetes.io/is-default-class": "true"
+        },
+        "managedFields": [
+          {
+            "manager": "longhorn-manager",
+            "operation": "Update",
+            "apiVersion": "storage.k8s.io/v1",
+            "time": "2022-04-11T22:51:41Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:allowVolumeExpansion": {},
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:longhorn.io/last-applied-configmap": {},
+                  "f:storageclass.kubernetes.io/is-default-class": {}
+                }
+              },
+              "f:parameters": {
+                ".": {},
+                "f:fromBackup": {},
+                "f:numberOfReplicas": {},
+                "f:staleReplicaTimeout": {}
+              },
+              "f:provisioner": {},
+              "f:reclaimPolicy": {},
+              "f:volumeBindingMode": {}
+            }
+          }
+        ]
+      },
+      "provisioner": "driver.longhorn.io",
+      "parameters": {
+        "fromBackup": "",
+        "numberOfReplicas": "3",
+        "staleReplicaTimeout": "2880"
+      },
+      "reclaimPolicy": "Delete",
+      "allowVolumeExpansion": true,
+      "volumeBindingMode": "Immediate"
+    }
+  ]
+}

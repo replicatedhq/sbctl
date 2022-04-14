@@ -1,0 +1,174 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: Volume
+  metadata:
+    creationTimestamp: "2022-04-11T22:52:12Z"
+    finalizers:
+    - longhorn.io
+    generation: 2
+    labels:
+      longhornvolume: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+      recurring-job-group.longhorn.io/default: enabled
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:nodeID: {}
+        f:status:
+          .: {}
+          f:cloneStatus:
+            .: {}
+            f:snapshot: {}
+            f:sourceVolume: {}
+            f:state: {}
+          f:conditions:
+            .: {}
+            f:restore:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            f:scheduled:
+              .: {}
+              f:lastProbeTime: {}
+              f:type: {}
+            f:toomanysnapshots:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:currentImage: {}
+          f:expansionRequired: {}
+          f:frontendDisabled: {}
+          f:isStandby: {}
+          f:kubernetesStatus:
+            .: {}
+            f:lastPVCRefAt: {}
+            f:lastPodRefAt: {}
+            f:namespace: {}
+            f:pvName: {}
+            f:pvStatus: {}
+            f:pvcName: {}
+          f:lastBackup: {}
+          f:lastBackupAt: {}
+          f:ownerID: {}
+          f:pendingNodeID: {}
+          f:remountRequestedAt: {}
+          f:restoreInitiated: {}
+          f:restoreRequired: {}
+          f:shareEndpoint: {}
+          f:shareState: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:52:18Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:actualSize: {}
+          f:conditions:
+            f:scheduled:
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+          f:currentNodeID: {}
+          f:kubernetesStatus:
+            f:workloadsStatus: {}
+          f:lastDegradedAt: {}
+          f:robustness: {}
+          f:state: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T22:52:34Z"
+    name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+    namespace: longhorn-system
+    resourceVersion: "4502"
+    uid: 45f8c38f-23a5-440c-b36b-49c94491239f
+  spec:
+    Standby: false
+    accessMode: rwo
+    backingImage: ""
+    baseImage: ""
+    dataLocality: disabled
+    dataSource: ""
+    disableFrontend: false
+    diskSelector: null
+    encrypted: false
+    engineImage: longhornio/longhorn-engine:v1.2.2
+    fromBackup: ""
+    frontend: blockdev
+    lastAttachedBy: ""
+    migratable: false
+    migrationNodeID: ""
+    nodeID: troubleshoot-demo-001
+    nodeSelector: null
+    numberOfReplicas: 3
+    replicaAutoBalance: ignored
+    revisionCounterDisabled: false
+    size: "10737418240"
+    staleReplicaTimeout: 2880
+  status:
+    actualSize: 239411200
+    cloneStatus:
+      snapshot: ""
+      sourceVolume: ""
+      state: ""
+    conditions:
+      restore:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:52:14Z"
+        message: ""
+        reason: ""
+        status: "False"
+        type: restore
+      scheduled:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T23:04:10Z"
+        message: ""
+        reason: ""
+        status: "True"
+        type: scheduled
+      toomanysnapshots:
+        lastProbeTime: ""
+        lastTransitionTime: "2022-04-11T22:52:14Z"
+        message: ""
+        reason: ""
+        status: "False"
+        type: toomanysnapshots
+    currentImage: longhornio/longhorn-engine:v1.2.2
+    currentNodeID: troubleshoot-demo-001
+    expansionRequired: false
+    frontendDisabled: false
+    isStandby: false
+    kubernetesStatus:
+      lastPVCRefAt: ""
+      lastPodRefAt: ""
+      namespace: minio
+      pvName: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b
+      pvStatus: Bound
+      pvcName: minio-pv-claim
+      workloadsStatus:
+      - podName: minio-7b45cd544d-2gwml
+        podStatus: Running
+        workloadName: minio-7b45cd544d
+        workloadType: ReplicaSet
+    lastBackup: ""
+    lastBackupAt: ""
+    lastDegradedAt: ""
+    ownerID: troubleshoot-demo-001
+    pendingNodeID: ""
+    remountRequestedAt: ""
+    restoreInitiated: false
+    restoreRequired: false
+    robustness: healthy
+    shareEndpoint: ""
+    shareState: ""
+    state: attached
