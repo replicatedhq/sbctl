@@ -16,6 +16,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
+	"github.com/replicatedhq/sbctl/pkg/k8s"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
 	sbctlutil "github.com/replicatedhq/sbctl/pkg/util"
 	appsv1 "k8s.io/api/apps/v1"
@@ -28,6 +29,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apiserver/pkg/registry/generic"
@@ -172,11 +174,17 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 
 	resource := mux.Vars(r)["resource"]
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
-	fieldSelector := r.URL.Query().Get("fieldSelector")
 
-	selector, err := fields.ParseSelector(fieldSelector)
+	fieldSelector, err := fields.ParseSelector(r.URL.Query().Get("fieldSelector"))
 	if err != nil {
-		log.Println("failed to parse fieldSelector", fieldSelector, ":", err)
+		log.Println("failed to parse fieldSelector", r.URL.Query().Get("fieldSelector"), ":", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	labelSelector, err := fields.ParseSelector(r.URL.Query().Get("labelSelector"))
+	if err != nil {
+		log.Println("failed to parse labelSelector", r.URL.Query().Get("labelSelector"), ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -187,13 +195,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	case "namespaces", "nodes", "persistentvolumes":
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 	case "pods":
-		result = &corev1.PodList{
-			Items: []corev1.Pod{},
-		}
-		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Version: "v1",
-			Kind:    "PodList",
-		})
+		result = k8s.GetEmptyPodList()
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
@@ -202,13 +204,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 	case "events":
-		result = &corev1.EventList{
-			Items: []corev1.Event{},
-		}
-		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Version: "v1",
-			Kind:    "EventList",
-		})
+		result = k8s.GetEmptyEventList()
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
@@ -217,13 +213,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 	case "limitranges":
-		result = &corev1.LimitRangeList{
-			Items: []corev1.LimitRange{},
-		}
-		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Version: "v1",
-			Kind:    "LimitRangeList",
-		})
+		result = k8s.GetEmptyLimitRangeList()
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
@@ -232,13 +222,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 	case "services":
-		result = &corev1.ServiceList{
-			Items: []corev1.Service{},
-		}
-		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Version: "v1",
-			Kind:    "ServiceList",
-		})
+		result = k8s.GetEmptyServiceList()
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
@@ -247,13 +231,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 	case "persistentvolumeclaims":
-		result = &corev1.PersistentVolumeClaimList{
-			Items: []corev1.PersistentVolumeClaim{},
-		}
-		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Version: "v1",
-			Kind:    "PersistentVolumeClaimList",
-		})
+		result = k8s.GetEmptyPersistentVolumeClaimList()
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", sbctlutil.GetSBCompatibleResourceName(resource)))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
@@ -278,13 +256,21 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			return
 		}
 
+		// TODO: is this an AND or an OR
+		decoded, err = filterObjectsByLabels(decoded, labelSelector)
+		if err != nil {
+			log.Println("failed to filter by labels", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		decoded = filterObjectsByFields(decoded, fieldSelector)
+
 		// The switch below is incomplete, so let's skip it if we are only deling with 1 list of items
 		if len(filenames) == 1 {
 			result = decoded
 			break
 		}
-
-		decoded = filterObjects(decoded, selector)
 
 		switch o := decoded.(type) {
 		case *corev1.EventList:
@@ -382,11 +368,17 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
-	fieldSelector := r.URL.Query().Get("fieldSelector")
 
-	selector, err := fields.ParseSelector(fieldSelector)
+	fieldSelector, err := fields.ParseSelector(r.URL.Query().Get("fieldSelector"))
 	if err != nil {
 		log.Println("failed to parse fieldSelector", fieldSelector, ":", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	labelSelector, err := fields.ParseSelector(r.URL.Query().Get("labelSelector"))
+	if err != nil {
+		log.Println("failed to parse labelSelector", r.URL.Query().Get("labelSelector"), ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -411,7 +403,15 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	decoded = filterObjects(decoded, selector)
+	// TODO: is this an AND or an OR
+	decoded, err = filterObjectsByLabels(decoded, labelSelector)
+	if err != nil {
+		log.Println("failed to filter by labels", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	decoded = filterObjectsByFields(decoded, fieldSelector)
 
 	if asTable {
 		table, err := toTable(decoded)
@@ -988,7 +988,58 @@ func getJSONFileListFromDir(dir string) ([]string, error) {
 	return filenames, nil
 }
 
-func filterObjects(object runtime.Object, selector fields.Selector) runtime.Object {
+func filterObjectsByLabels(object runtime.Object, selector fields.Selector) (runtime.Object, error) {
+	if selector.Empty() {
+		return object, nil
+	}
+
+	switch o := object.(type) {
+	case *corev1.EventList:
+		r := k8s.GetEmptyEventList()
+		for _, i := range o.Items {
+			if selector.Matches(labels.Set(i.GetObjectMeta().GetLabels())) {
+				r.Items = append(r.Items, i)
+			}
+		}
+		return r, nil
+	case *corev1.PodList:
+		r := k8s.GetEmptyPodList()
+		for _, i := range o.Items {
+			if selector.Matches(labels.Set(i.GetObjectMeta().GetLabels())) {
+				r.Items = append(r.Items, i)
+			}
+		}
+		return r, nil
+	case *corev1.LimitRangeList:
+		r := k8s.GetEmptyLimitRangeList()
+		for _, i := range o.Items {
+			if selector.Matches(labels.Set(i.GetObjectMeta().GetLabels())) {
+				r.Items = append(r.Items, i)
+			}
+		}
+		return r, nil
+	case *corev1.ServiceList:
+		r := k8s.GetEmptyServiceList()
+		for _, i := range o.Items {
+			if selector.Matches(labels.Set(i.GetObjectMeta().GetLabels())) {
+				r.Items = append(r.Items, i)
+			}
+		}
+		return r, nil
+	case *corev1.PersistentVolumeClaimList:
+		r := k8s.GetEmptyPersistentVolumeClaimList()
+		for _, i := range o.Items {
+			if selector.Matches(labels.Set(i.GetObjectMeta().GetLabels())) {
+				r.Items = append(r.Items, i)
+			}
+		}
+		return r, nil
+	default:
+		return nil, errors.Errorf("cannot filter type %v", object.GetObjectKind().GroupVersionKind())
+	}
+}
+
+func filterObjectsByFields(object runtime.Object, selector fields.Selector) runtime.Object {
 	if selector.Empty() {
 		return object
 	}
@@ -1009,7 +1060,8 @@ func filterObjects(object runtime.Object, selector fields.Selector) runtime.Obje
 	return object
 }
 
-// ToSelectableFields is available in "github.com/kubernetes/kubernetes/pkg/registry/core/event"
+// ToSelectableFields is available in "k8s.io/kubernetes/pkg/registry/core/core/event"
+// This function is used to find object specific events for the describe commands
 func eventToSelectableFields(event *corev1.Event) fields.Set {
 	objectMetaFieldsSet := generic.ObjectMetaFieldsSet(&event.ObjectMeta, true)
 	source := event.Source.Component
