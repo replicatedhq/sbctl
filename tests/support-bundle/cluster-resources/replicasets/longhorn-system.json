@@ -1,0 +1,1382 @@
+{
+  "kind": "ReplicaSetList",
+  "apiVersion": "apps/v1",
+  "metadata": {
+    "resourceVersion": "27156"
+  },
+  "items": [
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-attacher-66576879d",
+        "namespace": "longhorn-system",
+        "uid": "92107373-fc84-4a58-865d-d29b96f1c3e9",
+        "resourceVersion": "1376",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:04Z",
+        "labels": {
+          "app": "csi-attacher",
+          "pod-template-hash": "66576879d"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "3",
+          "deployment.kubernetes.io/max-replicas": "4",
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "csi-attacher",
+            "uid": "49b94219-abe6-4c21-96a0-e3e0d87ade9d",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:04Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"49b94219-abe6-4c21-96a0-e3e0d87ade9d\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-attacher\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-attacher",
+            "pod-template-hash": "66576879d"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-attacher",
+              "pod-template-hash": "66576879d"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-attacher",
+                "image": "k8s.gcr.io/sig-storage/csi-attacher:v3.2.1",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--timeout=1m50s",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        }
+      },
+      "status": {
+        "replicas": 3,
+        "fullyLabeledReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "observedGeneration": 1
+      }
+    },
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-provisioner-57d9785cdb",
+        "namespace": "longhorn-system",
+        "uid": "2ddaec27-6a0a-45a1-8cb2-6d288752e409",
+        "resourceVersion": "1381",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:04Z",
+        "labels": {
+          "app": "csi-provisioner",
+          "pod-template-hash": "57d9785cdb"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "3",
+          "deployment.kubernetes.io/max-replicas": "4",
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "csi-provisioner",
+            "uid": "50788646-8c0e-4a35-9026-f7b34090aec3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:04Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"50788646-8c0e-4a35-9026-f7b34090aec3\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-provisioner\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-provisioner",
+            "pod-template-hash": "57d9785cdb"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-provisioner",
+              "pod-template-hash": "57d9785cdb"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-provisioner",
+                "image": "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.2",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--timeout=1m50s",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)",
+                  "--default-fstype=ext4"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        }
+      },
+      "status": {
+        "replicas": 3,
+        "fullyLabeledReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "observedGeneration": 1
+      }
+    },
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-resizer-778d957ccf",
+        "namespace": "longhorn-system",
+        "uid": "37980dd6-0565-4252-a666-de0718b288a3",
+        "resourceVersion": "1390",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:05Z",
+        "labels": {
+          "app": "csi-resizer",
+          "pod-template-hash": "778d957ccf"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "3",
+          "deployment.kubernetes.io/max-replicas": "4",
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "csi-resizer",
+            "uid": "24e54b0c-e78a-4d9a-b7f0-16314effc19c",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:05Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"24e54b0c-e78a-4d9a-b7f0-16314effc19c\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-resizer\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-resizer",
+            "pod-template-hash": "778d957ccf"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-resizer",
+              "pod-template-hash": "778d957ccf"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-resizer",
+                "image": "k8s.gcr.io/sig-storage/csi-resizer:v1.2.0",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--timeout=1m50s",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        }
+      },
+      "status": {
+        "replicas": 3,
+        "fullyLabeledReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "observedGeneration": 1
+      }
+    },
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "csi-snapshotter-6cff4ccb95",
+        "namespace": "longhorn-system",
+        "uid": "c9d9eade-acf0-4ce0-b996-bdd1a11715c3",
+        "resourceVersion": "1409",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:52:06Z",
+        "labels": {
+          "app": "csi-snapshotter",
+          "pod-template-hash": "6cff4ccb95"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "3",
+          "deployment.kubernetes.io/max-replicas": "4",
+          "deployment.kubernetes.io/revision": "1",
+          "driver.longhorn.io/kubernetes-version": "v1.23.5",
+          "driver.longhorn.io/version": "v1.2.2",
+          "longhorn.io/last-applied-tolerations": "[]"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "csi-snapshotter",
+            "uid": "f5321ec7-5bd5-4c01-a7c0-10704b0488a9",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:06Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {},
+                  "f:driver.longhorn.io/kubernetes-version": {},
+                  "f:driver.longhorn.io/version": {},
+                  "f:longhorn.io/last-applied-tolerations": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"f5321ec7-5bd5-4c01-a7c0-10704b0488a9\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"csi-snapshotter\"}": {
+                        ".": {},
+                        "f:args": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"ADDRESS\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/csi/\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"socket-dir\"}": {
+                        ".": {},
+                        "f:hostPath": {
+                          ".": {},
+                          "f:path": {},
+                          "f:type": {}
+                        },
+                        "f:name": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:14Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "csi-snapshotter",
+            "pod-template-hash": "6cff4ccb95"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "csi-snapshotter",
+              "pod-template-hash": "6cff4ccb95"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "socket-dir",
+                "hostPath": {
+                  "path": "/var/lib/kubelet/plugins/driver.longhorn.io",
+                  "type": "DirectoryOrCreate"
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "csi-snapshotter",
+                "image": "k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3",
+                "args": [
+                  "--v=2",
+                  "--csi-address=$(ADDRESS)",
+                  "--leader-election",
+                  "--leader-election-namespace=$(POD_NAMESPACE)"
+                ],
+                "env": [
+                  {
+                    "name": "ADDRESS",
+                    "value": "/csi/csi.sock"
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "socket-dir",
+                    "mountPath": "/csi/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-node-critical"
+          }
+        }
+      },
+      "status": {
+        "replicas": 3,
+        "fullyLabeledReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "observedGeneration": 1
+      }
+    },
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "longhorn-driver-deployer-56d4c55cf7",
+        "namespace": "longhorn-system",
+        "uid": "87d63f0f-478e-4ab9-aff3-accdc0320468",
+        "resourceVersion": "1103",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:51:36Z",
+        "labels": {
+          "app": "longhorn-driver-deployer",
+          "pod-template-hash": "56d4c55cf7"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "1",
+          "deployment.kubernetes.io/max-replicas": "2",
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "longhorn-driver-deployer",
+            "uid": "b47371b2-1d17-458f-b408-42a22f1d2262",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"b47371b2-1d17-458f-b408-42a22f1d2262\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"longhorn-driver-deployer\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"NODE_NAME\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"POD_NAMESPACE\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          },
+                          "k:{\"name\":\"SERVICE_ACCOUNT\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:valueFrom": {
+                              ".": {},
+                              "f:fieldRef": {}
+                            }
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {}
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:initContainers": {
+                      ".": {},
+                      "k:{\"name\":\"wait-longhorn-manager\"}": {
+                        ".": {},
+                        "f:command": {},
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {}
+                      }
+                    },
+                    "f:priorityClassName": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {
+                      ".": {},
+                      "f:runAsUser": {}
+                    },
+                    "f:serviceAccount": {},
+                    "f:serviceAccountName": {},
+                    "f:terminationGracePeriodSeconds": {}
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:52:00Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:availableReplicas": {},
+                "f:fullyLabeledReplicas": {},
+                "f:observedGeneration": {},
+                "f:readyReplicas": {},
+                "f:replicas": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "longhorn-driver-deployer",
+            "pod-template-hash": "56d4c55cf7"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "longhorn-driver-deployer",
+              "pod-template-hash": "56d4c55cf7"
+            }
+          },
+          "spec": {
+            "initContainers": [
+              {
+                "name": "wait-longhorn-manager",
+                "image": "longhornio/longhorn-manager:v1.2.2",
+                "command": [
+                  "sh",
+                  "-c",
+                  "while [ $(curl -m 1 -s -o /dev/null -w \"%{http_code}\" http://longhorn-backend:9500/v1) != \"200\" ]; do echo waiting; sleep 2; done"
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "containers": [
+              {
+                "name": "longhorn-driver-deployer",
+                "image": "longhornio/longhorn-manager:v1.2.2",
+                "command": [
+                  "longhorn-manager",
+                  "-d",
+                  "deploy-driver",
+                  "--manager-image",
+                  "longhornio/longhorn-manager:v1.2.2",
+                  "--manager-url",
+                  "http://longhorn-backend:9500/v1"
+                ],
+                "env": [
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  },
+                  {
+                    "name": "NODE_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.nodeName"
+                      }
+                    }
+                  },
+                  {
+                    "name": "SERVICE_ACCOUNT",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.serviceAccountName"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "longhorn-service-account",
+            "serviceAccount": "longhorn-service-account",
+            "securityContext": {
+              "runAsUser": 0
+            },
+            "schedulerName": "default-scheduler",
+            "priorityClassName": "system-cluster-critical"
+          }
+        }
+      },
+      "status": {
+        "replicas": 1,
+        "fullyLabeledReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "observedGeneration": 1
+      }
+    },
+    {
+      "kind": "ReplicaSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "longhorn-ui-79f5d8f848",
+        "namespace": "longhorn-system",
+        "uid": "461d3365-e326-48c1-a1ef-7b1a188f5ea0",
+        "resourceVersion": "896",
+        "generation": 1,
+        "creationTimestamp": "2022-04-11T22:51:36Z",
+        "labels": {
+          "app": "longhorn-ui",
+          "pod-template-hash": "79f5d8f848"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/desired-replicas": "0",
+          "deployment.kubernetes.io/max-replicas": "0",
+          "deployment.kubernetes.io/revision": "1"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "longhorn-ui",
+            "uid": "797a886d-ea41-47c7-85e4-f4b1a2faceca",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:deployment.kubernetes.io/desired-replicas": {},
+                  "f:deployment.kubernetes.io/max-replicas": {},
+                  "f:deployment.kubernetes.io/revision": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"797a886d-ea41-47c7-85e4-f4b1a2faceca\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:replicas": {},
+                "f:selector": {},
+                "f:template": {
+                  "f:metadata": {
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {},
+                      "f:pod-template-hash": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"longhorn-ui\"}": {
+                        ".": {},
+                        "f:env": {
+                          ".": {},
+                          "k:{\"name\":\"LONGHORN_MANAGER_IP\"}": {
+                            ".": {},
+                            "f:name": {},
+                            "f:value": {}
+                          }
+                        },
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:ports": {
+                          ".": {},
+                          "k:{\"containerPort\":8000,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:name": {},
+                            "f:protocol": {}
+                          }
+                        },
+                        "f:resources": {},
+                        "f:securityContext": {
+                          ".": {},
+                          "f:runAsUser": {}
+                        },
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {}
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:terminationGracePeriodSeconds": {}
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-04-11T22:51:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:observedGeneration": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 0,
+        "selector": {
+          "matchLabels": {
+            "app": "longhorn-ui",
+            "pod-template-hash": "79f5d8f848"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "longhorn-ui",
+              "pod-template-hash": "79f5d8f848"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "longhorn-ui",
+                "image": "longhornio/longhorn-ui:v1.2.2",
+                "ports": [
+                  {
+                    "name": "http",
+                    "containerPort": 8000,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "LONGHORN_MANAGER_IP",
+                    "value": "http://longhorn-backend:9500"
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent",
+                "securityContext": {
+                  "runAsUser": 0
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        }
+      },
+      "status": {
+        "replicas": 0,
+        "observedGeneration": 1
+      }
+    }
+  ]
+}

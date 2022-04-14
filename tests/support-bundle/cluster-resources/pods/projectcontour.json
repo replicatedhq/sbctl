@@ -1,0 +1,3433 @@
+{
+  "kind": "PodList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27131"
+  },
+  "items": [
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "contour-697d45c475-4g25v",
+        "generateName": "contour-697d45c475-",
+        "namespace": "projectcontour",
+        "uid": "8361c639-a9b2-4d9f-be70-83a5de1bad62",
+        "resourceVersion": "1996",
+        "creationTimestamp": "2022-04-11T22:52:42Z",
+        "labels": {
+          "app": "contour",
+          "pod-template-hash": "697d45c475"
+        },
+        "annotations": {
+          "prometheus.io/port": "8000",
+          "prometheus.io/scrape": "true"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "ReplicaSet",
+            "name": "contour-697d45c475",
+            "uid": "b3d6c80a-3e35-46d5-aa96-23ce4bdb4d4f",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:42Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:prometheus.io/port": {},
+                  "f:prometheus.io/scrape": {}
+                },
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"b3d6c80a-3e35-46d5-aa96-23ce4bdb4d4f\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:affinity": {
+                  ".": {},
+                  "f:podAntiAffinity": {
+                    ".": {},
+                    "f:preferredDuringSchedulingIgnoredDuringExecution": {}
+                  }
+                },
+                "f:containers": {
+                  "k:{\"name\":\"contour\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      },
+                      "k:{\"name\":\"POD_NAME\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:livenessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:name": {},
+                    "f:ports": {
+                      ".": {},
+                      "k:{\"containerPort\":6060,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8000,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8001,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      }
+                    },
+                    "f:readinessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:tcpSocket": {
+                        ".": {},
+                        "f:port": {}
+                      },
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      }
+                    }
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {},
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {
+                  ".": {},
+                  "f:runAsGroup": {},
+                  "f:runAsNonRoot": {},
+                  "f:runAsUser": {}
+                },
+                "f:serviceAccount": {},
+                "f:serviceAccountName": {},
+                "f:terminationGracePeriodSeconds": {},
+                "f:volumes": {
+                  ".": {},
+                  "k:{\"name\":\"contour-config\"}": {
+                    ".": {},
+                    "f:configMap": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:items": {},
+                      "f:name": {}
+                    },
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"contourcert\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:secret": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:secretName": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:53:12Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  ".": {},
+                  "k:{\"ip\":\"***HIDDEN***\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  }
+                },
+                "f:startTime": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "contourcert",
+            "secret": {
+              "secretName": "contourcert",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "contour-config",
+            "configMap": {
+              "name": "contour",
+              "items": [
+                {
+                  "key": "contour.yaml",
+                  "path": "contour.yaml"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "kube-api-access-48ccq",
+            "projected": {
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "expirationSeconds": 3607,
+                    "path": "token"
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "contour",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "contour"
+            ],
+            "args": [
+              "serve",
+              "--incluster",
+              "--xds-address=***HIDDEN***",
+              "--xds-port=8001",
+              "--contour-cafile=/certs/ca.crt",
+              "--contour-cert-file=/certs/tls.crt",
+              "--contour-key-file=/certs/tls.key",
+              "--config-path=/config/contour.yaml"
+            ],
+            "ports": [
+              {
+                "name": "xds",
+                "containerPort": 8001,
+                "protocol": "TCP"
+              },
+              {
+                "name": "metrics",
+                "containerPort": 8000,
+                "protocol": "TCP"
+              },
+              {
+                "name": "debug",
+                "containerPort": 6060,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "contourcert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              },
+              {
+                "name": "contour-config",
+                "readOnly": true,
+                "mountPath": "/config"
+              },
+              {
+                "name": "kube-api-access-48ccq",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "readinessProbe": {
+              "tcpSocket": {
+                "port": 8001
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "contour",
+        "serviceAccount": "contour",
+        "nodeName": "troubleshoot-demo-001",
+        "securityContext": {
+          "runAsUser": 65534,
+          "runAsGroup": 65534,
+          "runAsNonRoot": true
+        },
+        "affinity": {
+          "podAntiAffinity": {
+            "preferredDuringSchedulingIgnoredDuringExecution": [
+              {
+                "weight": 100,
+                "podAffinityTerm": {
+                  "labelSelector": {
+                    "matchLabels": {
+                      "app": "contour"
+                    }
+                  },
+                  "topologyKey": "kubernetes.io/hostname"
+                }
+              }
+            ]
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:42Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:53:12Z"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:53:12Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:42Z"
+          }
+        ],
+        "hostIP": "***HIDDEN***",
+        "podIP": "***HIDDEN***",
+        "podIPs": [
+          {
+            "ip": "***HIDDEN***"
+          }
+        ],
+        "startTime": "2022-04-11T22:52:42Z",
+        "containerStatuses": [
+          {
+            "name": "contour",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T22:52:48Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://ba091d34c49b1f3d4248decd7fc91e0638f1f352227f58534d2ba0aca1b348e0",
+            "started": true
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "contour-697d45c475-xpztw",
+        "generateName": "contour-697d45c475-",
+        "namespace": "projectcontour",
+        "uid": "00d458c2-333b-4071-95c7-3b80f8a0382f",
+        "resourceVersion": "1992",
+        "creationTimestamp": "2022-04-11T22:52:42Z",
+        "labels": {
+          "app": "contour",
+          "pod-template-hash": "697d45c475"
+        },
+        "annotations": {
+          "prometheus.io/port": "8000",
+          "prometheus.io/scrape": "true"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "ReplicaSet",
+            "name": "contour-697d45c475",
+            "uid": "b3d6c80a-3e35-46d5-aa96-23ce4bdb4d4f",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:42Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:prometheus.io/port": {},
+                  "f:prometheus.io/scrape": {}
+                },
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:pod-template-hash": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"b3d6c80a-3e35-46d5-aa96-23ce4bdb4d4f\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:affinity": {
+                  ".": {},
+                  "f:podAntiAffinity": {
+                    ".": {},
+                    "f:preferredDuringSchedulingIgnoredDuringExecution": {}
+                  }
+                },
+                "f:containers": {
+                  "k:{\"name\":\"contour\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      },
+                      "k:{\"name\":\"POD_NAME\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:livenessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:name": {},
+                    "f:ports": {
+                      ".": {},
+                      "k:{\"containerPort\":6060,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8000,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8001,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      }
+                    },
+                    "f:readinessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:tcpSocket": {
+                        ".": {},
+                        "f:port": {}
+                      },
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      }
+                    }
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {},
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {
+                  ".": {},
+                  "f:runAsGroup": {},
+                  "f:runAsNonRoot": {},
+                  "f:runAsUser": {}
+                },
+                "f:serviceAccount": {},
+                "f:serviceAccountName": {},
+                "f:terminationGracePeriodSeconds": {},
+                "f:volumes": {
+                  ".": {},
+                  "k:{\"name\":\"contour-config\"}": {
+                    ".": {},
+                    "f:configMap": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:items": {},
+                      "f:name": {}
+                    },
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"contourcert\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:secret": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:secretName": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:53:12Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  ".": {},
+                  "k:{\"ip\":\"***HIDDEN***\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  }
+                },
+                "f:startTime": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "contourcert",
+            "secret": {
+              "secretName": "contourcert",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "contour-config",
+            "configMap": {
+              "name": "contour",
+              "items": [
+                {
+                  "key": "contour.yaml",
+                  "path": "contour.yaml"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "kube-api-access-9dzcz",
+            "projected": {
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "expirationSeconds": 3607,
+                    "path": "token"
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "contour",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "contour"
+            ],
+            "args": [
+              "serve",
+              "--incluster",
+              "--xds-address=***HIDDEN***",
+              "--xds-port=8001",
+              "--contour-cafile=/certs/ca.crt",
+              "--contour-cert-file=/certs/tls.crt",
+              "--contour-key-file=/certs/tls.key",
+              "--config-path=/config/contour.yaml"
+            ],
+            "ports": [
+              {
+                "name": "xds",
+                "containerPort": 8001,
+                "protocol": "TCP"
+              },
+              {
+                "name": "metrics",
+                "containerPort": 8000,
+                "protocol": "TCP"
+              },
+              {
+                "name": "debug",
+                "containerPort": 6060,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "contourcert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              },
+              {
+                "name": "contour-config",
+                "readOnly": true,
+                "mountPath": "/config"
+              },
+              {
+                "name": "kube-api-access-9dzcz",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "readinessProbe": {
+              "tcpSocket": {
+                "port": 8001
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "contour",
+        "serviceAccount": "contour",
+        "nodeName": "troubleshoot-demo-001",
+        "securityContext": {
+          "runAsUser": 65534,
+          "runAsGroup": 65534,
+          "runAsNonRoot": true
+        },
+        "affinity": {
+          "podAntiAffinity": {
+            "preferredDuringSchedulingIgnoredDuringExecution": [
+              {
+                "weight": 100,
+                "podAffinityTerm": {
+                  "labelSelector": {
+                    "matchLabels": {
+                      "app": "contour"
+                    }
+                  },
+                  "topologyKey": "kubernetes.io/hostname"
+                }
+              }
+            ]
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:42Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:53:12Z"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:53:12Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:42Z"
+          }
+        ],
+        "hostIP": "***HIDDEN***",
+        "podIP": "***HIDDEN***",
+        "podIPs": [
+          {
+            "ip": "***HIDDEN***"
+          }
+        ],
+        "startTime": "2022-04-11T22:52:42Z",
+        "containerStatuses": [
+          {
+            "name": "contour",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T22:52:48Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://cbb179e3f4226040bada7638da0af340cf195ca89863591733155172c2e5e0df",
+            "started": true
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "contour-certgen-v1.20.1-9xczt",
+        "generateName": "contour-certgen-v1.20.1-",
+        "namespace": "projectcontour",
+        "uid": "fae8f75d-9323-4d62-81a2-e00b918f8e9d",
+        "resourceVersion": "1620",
+        "creationTimestamp": "2022-04-11T22:52:43Z",
+        "labels": {
+          "app": "contour-certgen",
+          "controller-uid": "28ea83d9-637b-4b58-9a9f-cf6dbef4f441",
+          "job-name": "contour-certgen-v1.20.1"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "name": "contour-certgen-v1.20.1",
+            "uid": "28ea83d9-637b-4b58-9a9f-cf6dbef4f441",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:43Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:controller-uid": {},
+                  "f:job-name": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"28ea83d9-637b-4b58-9a9f-cf6dbef4f441\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:containers": {
+                  "k:{\"name\":\"contour\"}": {
+                    ".": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {}
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {},
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {
+                  ".": {},
+                  "f:runAsGroup": {},
+                  "f:runAsNonRoot": {},
+                  "f:runAsUser": {}
+                },
+                "f:serviceAccount": {},
+                "f:serviceAccountName": {},
+                "f:terminationGracePeriodSeconds": {}
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:46Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  ".": {},
+                  "k:{\"ip\":\"***HIDDEN***\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  }
+                },
+                "f:startTime": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-api-access-6zdfj",
+            "projected": {
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "expirationSeconds": 3607,
+                    "path": "token"
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "contour",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "contour",
+              "certgen",
+              "--kube",
+              "--incluster",
+              "--overwrite",
+              "--secrets-format=compact",
+              "--namespace=$(CONTOUR_NAMESPACE)"
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "kube-api-access-6zdfj",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Never",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "contour-certgen",
+        "serviceAccount": "contour-certgen",
+        "nodeName": "troubleshoot-demo-001",
+        "securityContext": {
+          "runAsUser": 65534,
+          "runAsGroup": 65534,
+          "runAsNonRoot": true
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Succeeded",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:43Z",
+            "reason": "PodCompleted"
+          },
+          {
+            "type": "Ready",
+            "status": "False",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:45Z",
+            "reason": "PodCompleted"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "False",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:45Z",
+            "reason": "PodCompleted"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:43Z"
+          }
+        ],
+        "hostIP": "***HIDDEN***",
+        "podIP": "***HIDDEN***",
+        "podIPs": [
+          {
+            "ip": "***HIDDEN***"
+          }
+        ],
+        "startTime": "2022-04-11T22:52:43Z",
+        "containerStatuses": [
+          {
+            "name": "contour",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2022-04-11T22:52:44Z",
+                "finishedAt": "2022-04-11T22:52:45Z",
+                "containerID": "docker://f70ab1ef6b30e760007f1c1ffe3fde574669a32e897dbee31e2af8f77f793b0a"
+              }
+            },
+            "lastState": {},
+            "ready": false,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://f70ab1ef6b30e760007f1c1ffe3fde574669a32e897dbee31e2af8f77f793b0a",
+            "started": false
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "envoy-b4bxc",
+        "generateName": "envoy-",
+        "namespace": "projectcontour",
+        "uid": "9da81bfe-92ef-405b-a1cd-69b5a530b41a",
+        "resourceVersion": "4078",
+        "creationTimestamp": "2022-04-11T23:03:25Z",
+        "labels": {
+          "app": "envoy",
+          "controller-revision-hash": "574cd76ddd",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "prometheus.io/path": "/stats/prometheus",
+          "prometheus.io/port": "8002",
+          "prometheus.io/scrape": "true"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "DaemonSet",
+            "name": "envoy",
+            "uid": "72c5d73d-71ee-4b21-ad06-b8e6718237f2",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:25Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:prometheus.io/path": {},
+                  "f:prometheus.io/port": {},
+                  "f:prometheus.io/scrape": {}
+                },
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:controller-revision-hash": {},
+                  "f:pod-template-generation": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"72c5d73d-71ee-4b21-ad06-b8e6718237f2\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:affinity": {
+                  ".": {},
+                  "f:nodeAffinity": {
+                    ".": {},
+                    "f:requiredDuringSchedulingIgnoredDuringExecution": {}
+                  }
+                },
+                "f:automountServiceAccountToken": {},
+                "f:containers": {
+                  "k:{\"name\":\"envoy\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      },
+                      "k:{\"name\":\"ENVOY_POD_NAME\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:lifecycle": {
+                      ".": {},
+                      "f:preStop": {
+                        ".": {},
+                        "f:httpGet": {
+                          ".": {},
+                          "f:path": {},
+                          "f:port": {},
+                          "f:scheme": {}
+                        }
+                      }
+                    },
+                    "f:name": {},
+                    "f:ports": {
+                      ".": {},
+                      "k:{\"containerPort\":8080,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8443,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      }
+                    },
+                    "f:readinessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:resources": {
+                      ".": {},
+                      "f:limits": {
+                        ".": {},
+                        "f:cpu": {}
+                      },
+                      "f:requests": {
+                        ".": {},
+                        "f:cpu": {}
+                      }
+                    },
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/admin\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      },
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      }
+                    }
+                  },
+                  "k:{\"name\":\"shutdown-manager\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:lifecycle": {
+                      ".": {},
+                      "f:preStop": {
+                        ".": {},
+                        "f:exec": {
+                          ".": {},
+                          "f:command": {}
+                        }
+                      }
+                    },
+                    "f:livenessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/admin\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      }
+                    }
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {},
+                "f:initContainers": {
+                  ".": {},
+                  "k:{\"name\":\"envoy-initconfig\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      }
+                    }
+                  }
+                },
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {
+                  ".": {},
+                  "f:runAsGroup": {},
+                  "f:runAsNonRoot": {},
+                  "f:runAsUser": {}
+                },
+                "f:serviceAccount": {},
+                "f:serviceAccountName": {},
+                "f:terminationGracePeriodSeconds": {},
+                "f:tolerations": {},
+                "f:volumes": {
+                  ".": {},
+                  "k:{\"name\":\"envoy-admin\"}": {
+                    ".": {},
+                    "f:emptyDir": {},
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"envoy-config\"}": {
+                    ".": {},
+                    "f:emptyDir": {},
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"envoycert\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:secret": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:secretName": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:32Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:initContainerStatuses": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  ".": {},
+                  "k:{\"ip\":\"***HIDDEN***\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  }
+                },
+                "f:startTime": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "envoy-admin",
+            "emptyDir": {}
+          },
+          {
+            "name": "envoy-config",
+            "emptyDir": {}
+          },
+          {
+            "name": "envoycert",
+            "secret": {
+              "secretName": "envoycert",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "envoy-initconfig",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "contour"
+            ],
+            "args": [
+              "bootstrap",
+              "/config/envoy.json",
+              "--xds-address=contour",
+              "--xds-port=8001",
+              "--xds-resource-version=v3",
+              "--resources-dir=/config/resources",
+              "--envoy-cafile=/certs/ca.crt",
+              "--envoy-cert-file=/certs/tls.crt",
+              "--envoy-key-file=/certs/tls.key"
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "envoy-config",
+                "mountPath": "/config"
+              },
+              {
+                "name": "envoycert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "containers": [
+          {
+            "name": "envoy",
+            "image": "envoyproxy/envoy:v1.21.1",
+            "command": [
+              "envoy"
+            ],
+            "args": [
+              "-c",
+              "/config/envoy.json",
+              "--service-cluster $(CONTOUR_NAMESPACE)",
+              "--service-node $(ENVOY_POD_NAME)",
+              "--log-level info"
+            ],
+            "ports": [
+              {
+                "name": "http",
+                "containerPort": 8080,
+                "protocol": "TCP"
+              },
+              {
+                "name": "https",
+                "containerPort": 8443,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "ENVOY_POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "400m"
+              },
+              "requests": {
+                "cpu": "30m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "envoy-config",
+                "readOnly": true,
+                "mountPath": "/config"
+              },
+              {
+                "name": "envoycert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              },
+              {
+                "name": "envoy-admin",
+                "mountPath": "/admin"
+              }
+            ],
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/ready",
+                "port": 8002,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 1,
+              "periodSeconds": 4,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "lifecycle": {
+              "preStop": {
+                "httpGet": {
+                  "path": "/shutdown",
+                  "port": 8090,
+                  "scheme": "HTTP"
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "shutdown-manager",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "/bin/contour"
+            ],
+            "args": [
+              "envoy",
+              "shutdown-manager"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "envoy-admin",
+                "mountPath": "/admin"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8090,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "lifecycle": {
+              "preStop": {
+                "exec": {
+                  "command": [
+                    "/bin/contour",
+                    "envoy",
+                    "shutdown"
+                  ]
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 300,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "envoy",
+        "serviceAccount": "envoy",
+        "automountServiceAccountToken": false,
+        "nodeName": "troubleshoot-demo-003",
+        "securityContext": {
+          "runAsUser": 65534,
+          "runAsGroup": 65534,
+          "runAsNonRoot": true
+        },
+        "affinity": {
+          "nodeAffinity": {
+            "requiredDuringSchedulingIgnoredDuringExecution": {
+              "nodeSelectorTerms": [
+                {
+                  "matchFields": [
+                    {
+                      "key": "metadata.name",
+                      "operator": "In",
+                      "values": [
+                        "troubleshoot-demo-003"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.kubernetes.io/disk-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/memory-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/pid-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/unschedulable",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:27Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:31Z"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:31Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:25Z"
+          }
+        ],
+        "hostIP": "***HIDDEN***",
+        "podIP": "***HIDDEN***",
+        "podIPs": [
+          {
+            "ip": "***HIDDEN***"
+          }
+        ],
+        "startTime": "2022-04-11T23:03:25Z",
+        "initContainerStatuses": [
+          {
+            "name": "envoy-initconfig",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2022-04-11T23:03:26Z",
+                "finishedAt": "2022-04-11T23:03:26Z",
+                "containerID": "docker://241516c61aefaf318fc308df0698bfe92dd02ed804f097479bb9d37b882d9044"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://241516c61aefaf318fc308df0698bfe92dd02ed804f097479bb9d37b882d9044"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "name": "envoy",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T23:03:28Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "envoyproxy/envoy:v1.21.1",
+            "imageID": "docker://sha256:f35228998bc5c7c19786ffcb86b00975c5cf66747ea5a347fdb3c391d893d995",
+            "containerID": "docker://92cd4f1ce5066736e5ee4b9ff218b986df597ad79917530cb4bd96eea76f7b0b",
+            "started": true
+          },
+          {
+            "name": "shutdown-manager",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T23:03:28Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://72e9c0e9c5d8973384f7bcf52d95bac1c049c93bdf196136d2bbf5488fa70ffa",
+            "started": true
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "envoy-fhzh5",
+        "generateName": "envoy-",
+        "namespace": "projectcontour",
+        "uid": "fd53e800-d934-47a3-994a-83091a4c2b26",
+        "resourceVersion": "2007",
+        "creationTimestamp": "2022-04-11T22:52:43Z",
+        "labels": {
+          "app": "envoy",
+          "controller-revision-hash": "574cd76ddd",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "prometheus.io/path": "/stats/prometheus",
+          "prometheus.io/port": "8002",
+          "prometheus.io/scrape": "true"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "DaemonSet",
+            "name": "envoy",
+            "uid": "72c5d73d-71ee-4b21-ad06-b8e6718237f2",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:43Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:prometheus.io/path": {},
+                  "f:prometheus.io/port": {},
+                  "f:prometheus.io/scrape": {}
+                },
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:controller-revision-hash": {},
+                  "f:pod-template-generation": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"72c5d73d-71ee-4b21-ad06-b8e6718237f2\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:affinity": {
+                  ".": {},
+                  "f:nodeAffinity": {
+                    ".": {},
+                    "f:requiredDuringSchedulingIgnoredDuringExecution": {}
+                  }
+                },
+                "f:automountServiceAccountToken": {},
+                "f:containers": {
+                  "k:{\"name\":\"envoy\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      },
+                      "k:{\"name\":\"ENVOY_POD_NAME\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:lifecycle": {
+                      ".": {},
+                      "f:preStop": {
+                        ".": {},
+                        "f:httpGet": {
+                          ".": {},
+                          "f:path": {},
+                          "f:port": {},
+                          "f:scheme": {}
+                        }
+                      }
+                    },
+                    "f:name": {},
+                    "f:ports": {
+                      ".": {},
+                      "k:{\"containerPort\":8080,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8443,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      }
+                    },
+                    "f:readinessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:resources": {
+                      ".": {},
+                      "f:limits": {
+                        ".": {},
+                        "f:cpu": {}
+                      },
+                      "f:requests": {
+                        ".": {},
+                        "f:cpu": {}
+                      }
+                    },
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/admin\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      },
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      }
+                    }
+                  },
+                  "k:{\"name\":\"shutdown-manager\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:lifecycle": {
+                      ".": {},
+                      "f:preStop": {
+                        ".": {},
+                        "f:exec": {
+                          ".": {},
+                          "f:command": {}
+                        }
+                      }
+                    },
+                    "f:livenessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/admin\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      }
+                    }
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {},
+                "f:initContainers": {
+                  ".": {},
+                  "k:{\"name\":\"envoy-initconfig\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      }
+                    }
+                  }
+                },
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {
+                  ".": {},
+                  "f:runAsGroup": {},
+                  "f:runAsNonRoot": {},
+                  "f:runAsUser": {}
+                },
+                "f:serviceAccount": {},
+                "f:serviceAccountName": {},
+                "f:terminationGracePeriodSeconds": {},
+                "f:tolerations": {},
+                "f:volumes": {
+                  ".": {},
+                  "k:{\"name\":\"envoy-admin\"}": {
+                    ".": {},
+                    "f:emptyDir": {},
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"envoy-config\"}": {
+                    ".": {},
+                    "f:emptyDir": {},
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"envoycert\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:secret": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:secretName": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:53:15Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:initContainerStatuses": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  ".": {},
+                  "k:{\"ip\":\"***HIDDEN***\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  }
+                },
+                "f:startTime": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "envoy-admin",
+            "emptyDir": {}
+          },
+          {
+            "name": "envoy-config",
+            "emptyDir": {}
+          },
+          {
+            "name": "envoycert",
+            "secret": {
+              "secretName": "envoycert",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "envoy-initconfig",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "contour"
+            ],
+            "args": [
+              "bootstrap",
+              "/config/envoy.json",
+              "--xds-address=contour",
+              "--xds-port=8001",
+              "--xds-resource-version=v3",
+              "--resources-dir=/config/resources",
+              "--envoy-cafile=/certs/ca.crt",
+              "--envoy-cert-file=/certs/tls.crt",
+              "--envoy-key-file=/certs/tls.key"
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "envoy-config",
+                "mountPath": "/config"
+              },
+              {
+                "name": "envoycert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "containers": [
+          {
+            "name": "envoy",
+            "image": "envoyproxy/envoy:v1.21.1",
+            "command": [
+              "envoy"
+            ],
+            "args": [
+              "-c",
+              "/config/envoy.json",
+              "--service-cluster $(CONTOUR_NAMESPACE)",
+              "--service-node $(ENVOY_POD_NAME)",
+              "--log-level info"
+            ],
+            "ports": [
+              {
+                "name": "http",
+                "containerPort": 8080,
+                "protocol": "TCP"
+              },
+              {
+                "name": "https",
+                "containerPort": 8443,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "ENVOY_POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "400m"
+              },
+              "requests": {
+                "cpu": "30m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "envoy-config",
+                "readOnly": true,
+                "mountPath": "/config"
+              },
+              {
+                "name": "envoycert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              },
+              {
+                "name": "envoy-admin",
+                "mountPath": "/admin"
+              }
+            ],
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/ready",
+                "port": 8002,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 1,
+              "periodSeconds": 4,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "lifecycle": {
+              "preStop": {
+                "httpGet": {
+                  "path": "/shutdown",
+                  "port": 8090,
+                  "scheme": "HTTP"
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "shutdown-manager",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "/bin/contour"
+            ],
+            "args": [
+              "envoy",
+              "shutdown-manager"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "envoy-admin",
+                "mountPath": "/admin"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8090,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "lifecycle": {
+              "preStop": {
+                "exec": {
+                  "command": [
+                    "/bin/contour",
+                    "envoy",
+                    "shutdown"
+                  ]
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 300,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "envoy",
+        "serviceAccount": "envoy",
+        "automountServiceAccountToken": false,
+        "nodeName": "troubleshoot-demo-001",
+        "securityContext": {
+          "runAsUser": 65534,
+          "runAsGroup": 65534,
+          "runAsNonRoot": true
+        },
+        "affinity": {
+          "nodeAffinity": {
+            "requiredDuringSchedulingIgnoredDuringExecution": {
+              "nodeSelectorTerms": [
+                {
+                  "matchFields": [
+                    {
+                      "key": "metadata.name",
+                      "operator": "In",
+                      "values": [
+                        "troubleshoot-demo-001"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.kubernetes.io/disk-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/memory-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/pid-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/unschedulable",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:48Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:53:15Z"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:53:15Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T22:52:43Z"
+          }
+        ],
+        "hostIP": "***HIDDEN***",
+        "podIP": "***HIDDEN***",
+        "podIPs": [
+          {
+            "ip": "***HIDDEN***"
+          }
+        ],
+        "startTime": "2022-04-11T22:52:43Z",
+        "initContainerStatuses": [
+          {
+            "name": "envoy-initconfig",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2022-04-11T22:52:48Z",
+                "finishedAt": "2022-04-11T22:52:48Z",
+                "containerID": "docker://611211f211f5612ce42562473309c246ccbf4eb6a6a6587f31994414cbfe04e5"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://611211f211f5612ce42562473309c246ccbf4eb6a6a6587f31994414cbfe04e5"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "name": "envoy",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T22:52:49Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "envoyproxy/envoy:v1.21.1",
+            "imageID": "docker://sha256:f35228998bc5c7c19786ffcb86b00975c5cf66747ea5a347fdb3c391d893d995",
+            "containerID": "docker://fa8ebd5116130249615d5a743d458c1791c59db7b99b34e0a841b6be3f614932",
+            "started": true
+          },
+          {
+            "name": "shutdown-manager",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T22:52:49Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://a48a409fd85d7915470b1a7531a339c6d56753223c8c58b021cbf594ba1a056e",
+            "started": true
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "envoy-ndvj2",
+        "generateName": "envoy-",
+        "namespace": "projectcontour",
+        "uid": "68bb78bb-ba28-4ce5-8f21-5e2ac9a4b496",
+        "resourceVersion": "4318",
+        "creationTimestamp": "2022-04-11T23:03:44Z",
+        "labels": {
+          "app": "envoy",
+          "controller-revision-hash": "574cd76ddd",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "prometheus.io/path": "/stats/prometheus",
+          "prometheus.io/port": "8002",
+          "prometheus.io/scrape": "true"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "DaemonSet",
+            "name": "envoy",
+            "uid": "72c5d73d-71ee-4b21-ad06-b8e6718237f2",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ],
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:44Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:prometheus.io/path": {},
+                  "f:prometheus.io/port": {},
+                  "f:prometheus.io/scrape": {}
+                },
+                "f:generateName": {},
+                "f:labels": {
+                  ".": {},
+                  "f:app": {},
+                  "f:controller-revision-hash": {},
+                  "f:pod-template-generation": {}
+                },
+                "f:ownerReferences": {
+                  ".": {},
+                  "k:{\"uid\":\"72c5d73d-71ee-4b21-ad06-b8e6718237f2\"}": {}
+                }
+              },
+              "f:spec": {
+                "f:affinity": {
+                  ".": {},
+                  "f:nodeAffinity": {
+                    ".": {},
+                    "f:requiredDuringSchedulingIgnoredDuringExecution": {}
+                  }
+                },
+                "f:automountServiceAccountToken": {},
+                "f:containers": {
+                  "k:{\"name\":\"envoy\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      },
+                      "k:{\"name\":\"ENVOY_POD_NAME\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:lifecycle": {
+                      ".": {},
+                      "f:preStop": {
+                        ".": {},
+                        "f:httpGet": {
+                          ".": {},
+                          "f:path": {},
+                          "f:port": {},
+                          "f:scheme": {}
+                        }
+                      }
+                    },
+                    "f:name": {},
+                    "f:ports": {
+                      ".": {},
+                      "k:{\"containerPort\":8080,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      },
+                      "k:{\"containerPort\":8443,\"protocol\":\"TCP\"}": {
+                        ".": {},
+                        "f:containerPort": {},
+                        "f:name": {},
+                        "f:protocol": {}
+                      }
+                    },
+                    "f:readinessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:resources": {
+                      ".": {},
+                      "f:limits": {
+                        ".": {},
+                        "f:cpu": {}
+                      },
+                      "f:requests": {
+                        ".": {},
+                        "f:cpu": {}
+                      }
+                    },
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/admin\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      },
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      }
+                    }
+                  },
+                  "k:{\"name\":\"shutdown-manager\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:lifecycle": {
+                      ".": {},
+                      "f:preStop": {
+                        ".": {},
+                        "f:exec": {
+                          ".": {},
+                          "f:command": {}
+                        }
+                      }
+                    },
+                    "f:livenessProbe": {
+                      ".": {},
+                      "f:failureThreshold": {},
+                      "f:httpGet": {
+                        ".": {},
+                        "f:path": {},
+                        "f:port": {},
+                        "f:scheme": {}
+                      },
+                      "f:initialDelaySeconds": {},
+                      "f:periodSeconds": {},
+                      "f:successThreshold": {},
+                      "f:timeoutSeconds": {}
+                    },
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/admin\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      }
+                    }
+                  }
+                },
+                "f:dnsPolicy": {},
+                "f:enableServiceLinks": {},
+                "f:initContainers": {
+                  ".": {},
+                  "k:{\"name\":\"envoy-initconfig\"}": {
+                    ".": {},
+                    "f:args": {},
+                    "f:command": {},
+                    "f:env": {
+                      ".": {},
+                      "k:{\"name\":\"CONTOUR_NAMESPACE\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:valueFrom": {
+                          ".": {},
+                          "f:fieldRef": {}
+                        }
+                      }
+                    },
+                    "f:image": {},
+                    "f:imagePullPolicy": {},
+                    "f:name": {},
+                    "f:resources": {},
+                    "f:terminationMessagePath": {},
+                    "f:terminationMessagePolicy": {},
+                    "f:volumeMounts": {
+                      ".": {},
+                      "k:{\"mountPath\":\"/certs\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {},
+                        "f:readOnly": {}
+                      },
+                      "k:{\"mountPath\":\"/config\"}": {
+                        ".": {},
+                        "f:mountPath": {},
+                        "f:name": {}
+                      }
+                    }
+                  }
+                },
+                "f:restartPolicy": {},
+                "f:schedulerName": {},
+                "f:securityContext": {
+                  ".": {},
+                  "f:runAsGroup": {},
+                  "f:runAsNonRoot": {},
+                  "f:runAsUser": {}
+                },
+                "f:serviceAccount": {},
+                "f:serviceAccountName": {},
+                "f:terminationGracePeriodSeconds": {},
+                "f:tolerations": {},
+                "f:volumes": {
+                  ".": {},
+                  "k:{\"name\":\"envoy-admin\"}": {
+                    ".": {},
+                    "f:emptyDir": {},
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"envoy-config\"}": {
+                    ".": {},
+                    "f:emptyDir": {},
+                    "f:name": {}
+                  },
+                  "k:{\"name\":\"envoycert\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:secret": {
+                      ".": {},
+                      "f:defaultMode": {},
+                      "f:secretName": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "Go-http-client",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T23:03:52Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:conditions": {
+                  "k:{\"type\":\"ContainersReady\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Initialized\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Ready\"}": {
+                    ".": {},
+                    "f:lastProbeTime": {},
+                    "f:lastTransitionTime": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:containerStatuses": {},
+                "f:hostIP": {},
+                "f:initContainerStatuses": {},
+                "f:phase": {},
+                "f:podIP": {},
+                "f:podIPs": {
+                  ".": {},
+                  "k:{\"ip\":\"***HIDDEN***\"}": {
+                    ".": {},
+                    "f:ip": {}
+                  }
+                },
+                "f:startTime": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "envoy-admin",
+            "emptyDir": {}
+          },
+          {
+            "name": "envoy-config",
+            "emptyDir": {}
+          },
+          {
+            "name": "envoycert",
+            "secret": {
+              "secretName": "envoycert",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "envoy-initconfig",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "contour"
+            ],
+            "args": [
+              "bootstrap",
+              "/config/envoy.json",
+              "--xds-address=contour",
+              "--xds-port=8001",
+              "--xds-resource-version=v3",
+              "--resources-dir=/config/resources",
+              "--envoy-cafile=/certs/ca.crt",
+              "--envoy-cert-file=/certs/tls.crt",
+              "--envoy-key-file=/certs/tls.key"
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "envoy-config",
+                "mountPath": "/config"
+              },
+              {
+                "name": "envoycert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "containers": [
+          {
+            "name": "envoy",
+            "image": "envoyproxy/envoy:v1.21.1",
+            "command": [
+              "envoy"
+            ],
+            "args": [
+              "-c",
+              "/config/envoy.json",
+              "--service-cluster $(CONTOUR_NAMESPACE)",
+              "--service-node $(ENVOY_POD_NAME)",
+              "--log-level info"
+            ],
+            "ports": [
+              {
+                "name": "http",
+                "containerPort": 8080,
+                "protocol": "TCP"
+              },
+              {
+                "name": "https",
+                "containerPort": 8443,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "CONTOUR_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "ENVOY_POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "400m"
+              },
+              "requests": {
+                "cpu": "30m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "envoy-config",
+                "readOnly": true,
+                "mountPath": "/config"
+              },
+              {
+                "name": "envoycert",
+                "readOnly": true,
+                "mountPath": "/certs"
+              },
+              {
+                "name": "envoy-admin",
+                "mountPath": "/admin"
+              }
+            ],
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/ready",
+                "port": 8002,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 1,
+              "periodSeconds": 4,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "lifecycle": {
+              "preStop": {
+                "httpGet": {
+                  "path": "/shutdown",
+                  "port": 8090,
+                  "scheme": "HTTP"
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "shutdown-manager",
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "command": [
+              "/bin/contour"
+            ],
+            "args": [
+              "envoy",
+              "shutdown-manager"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "envoy-admin",
+                "mountPath": "/admin"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8090,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "lifecycle": {
+              "preStop": {
+                "exec": {
+                  "command": [
+                    "/bin/contour",
+                    "envoy",
+                    "shutdown"
+                  ]
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 300,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "envoy",
+        "serviceAccount": "envoy",
+        "automountServiceAccountToken": false,
+        "nodeName": "troubleshoot-demo-002",
+        "securityContext": {
+          "runAsUser": 65534,
+          "runAsGroup": 65534,
+          "runAsNonRoot": true
+        },
+        "affinity": {
+          "nodeAffinity": {
+            "requiredDuringSchedulingIgnoredDuringExecution": {
+              "nodeSelectorTerms": [
+                {
+                  "matchFields": [
+                    {
+                      "key": "metadata.name",
+                      "operator": "In",
+                      "values": [
+                        "troubleshoot-demo-002"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.kubernetes.io/disk-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/memory-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/pid-pressure",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.kubernetes.io/unschedulable",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          }
+        ],
+        "priority": 0,
+        "enableServiceLinks": true,
+        "preemptionPolicy": "PreemptLowerPriority"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:47Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:52Z"
+          },
+          {
+            "type": "ContainersReady",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:52Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2022-04-11T23:03:44Z"
+          }
+        ],
+        "hostIP": "***HIDDEN***",
+        "podIP": "***HIDDEN***",
+        "podIPs": [
+          {
+            "ip": "***HIDDEN***"
+          }
+        ],
+        "startTime": "2022-04-11T23:03:44Z",
+        "initContainerStatuses": [
+          {
+            "name": "envoy-initconfig",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2022-04-11T23:03:45Z",
+                "finishedAt": "2022-04-11T23:03:45Z",
+                "containerID": "docker://3aa8135e2cc6c0607436f73caeecf310005f9cf0a6fb34c966ff6774ab05b66c"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://3aa8135e2cc6c0607436f73caeecf310005f9cf0a6fb34c966ff6774ab05b66c"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "name": "envoy",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T23:03:47Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "envoyproxy/envoy:v1.21.1",
+            "imageID": "docker://sha256:f35228998bc5c7c19786ffcb86b00975c5cf66747ea5a347fdb3c391d893d995",
+            "containerID": "docker://1dc39e89f3e86a32fc31d5309ce41cbe3558b18dc0b6f493efc96935d8633b40",
+            "started": true
+          },
+          {
+            "name": "shutdown-manager",
+            "state": {
+              "running": {
+                "startedAt": "2022-04-11T23:03:47Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "ghcr.io/projectcontour/contour:v1.20.1",
+            "imageID": "docker://sha256:8c55426439849f72fda3bcd3e635d66e8cc3e1a2cf9730735a3626be3597cbd7",
+            "containerID": "docker://e4341e7e5ecf5513ee2a5f6889ecd8b0136747ffa2995e8e6b0a3e538e3e469b",
+            "started": true
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    }
+  ]
+}

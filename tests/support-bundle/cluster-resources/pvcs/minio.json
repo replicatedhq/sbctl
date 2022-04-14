@@ -1,0 +1,117 @@
+{
+  "kind": "PersistentVolumeClaimList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27224"
+  },
+  "items": [
+    {
+      "kind": "PersistentVolumeClaim",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "minio-pv-claim",
+        "namespace": "minio",
+        "uid": "36557d76-e15e-4abe-91ee-0be6075eaa7b",
+        "resourceVersion": "1396",
+        "creationTimestamp": "2022-04-11T22:51:59Z",
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"PersistentVolumeClaim\",\"metadata\":{\"annotations\":{},\"name\":\"minio-pv-claim\",\"namespace\":\"minio\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"10Gi\"}}}}\n",
+          "pv.kubernetes.io/bind-completed": "yes",
+          "pv.kubernetes.io/bound-by-controller": "yes",
+          "volume.beta.kubernetes.io/storage-provisioner": "driver.longhorn.io",
+          "volume.kubernetes.io/storage-provisioner": "driver.longhorn.io"
+        },
+        "finalizers": [
+          "kubernetes.io/pvc-protection"
+        ],
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:51:59Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              },
+              "f:spec": {
+                "f:accessModes": {},
+                "f:resources": {
+                  "f:requests": {
+                    ".": {},
+                    "f:storage": {}
+                  }
+                },
+                "f:volumeMode": {}
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:pv.kubernetes.io/bind-completed": {},
+                  "f:pv.kubernetes.io/bound-by-controller": {},
+                  "f:volume.beta.kubernetes.io/storage-provisioner": {},
+                  "f:volume.kubernetes.io/storage-provisioner": {}
+                }
+              },
+              "f:spec": {
+                "f:volumeName": {}
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:52:16Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:status": {
+                "f:accessModes": {},
+                "f:capacity": {
+                  ".": {},
+                  "f:storage": {}
+                },
+                "f:phase": {}
+              }
+            },
+            "subresource": "status"
+          }
+        ]
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "10Gi"
+          }
+        },
+        "volumeName": "pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b",
+        "storageClassName": "longhorn",
+        "volumeMode": "Filesystem"
+      },
+      "status": {
+        "phase": "Bound",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "10Gi"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,544 @@
+- apiVersion: longhorn.io/v1beta1
+  kind: InstanceManager
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:51Z"
+    generation: 1
+    labels:
+      longhorn.io/component: instance-manager
+      longhorn.io/instance-manager-image: imi-95c270a2
+      longhorn.io/instance-manager-type: engine
+      longhorn.io/managed-by: longhorn-manager
+      longhorn.io/node: troubleshoot-demo-001
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/instance-manager-image: {}
+            f:longhorn.io/instance-manager-type: {}
+            f:longhorn.io/managed-by: {}
+            f:longhorn.io/node: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"8fa3ff36-62a9-4e98-b2a8-da54d45dded8"}: {}
+        f:spec:
+          .: {}
+          f:engineImage: {}
+          f:image: {}
+          f:nodeID: {}
+          f:type: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:51Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiMinVersion: {}
+          f:apiVersion: {}
+          f:currentState: {}
+          f:instances:
+            .: {}
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b:
+              .: {}
+              f:spec:
+                .: {}
+                f:name: {}
+              f:status:
+                .: {}
+                f:endpoint: {}
+                f:errorMsg: {}
+                f:listen: {}
+                f:portEnd: {}
+                f:portStart: {}
+                f:resourceVersion: {}
+                f:state: {}
+                f:type: {}
+          f:ip: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T22:52:19Z"
+    name: instance-manager-e-20c7e80d
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      blockOwnerDeletion: true
+      kind: Node
+      name: troubleshoot-demo-001
+      uid: 8fa3ff36-62a9-4e98-b2a8-da54d45dded8
+    resourceVersion: "1443"
+    uid: 78371ba4-fe6c-4bfe-b54a-a1b32ba7cf0b
+  spec:
+    engineImage: ""
+    image: longhornio/longhorn-instance-manager:v1_20210731
+    nodeID: troubleshoot-demo-001
+    type: engine
+  status:
+    apiMinVersion: 1
+    apiVersion: 1
+    currentState: running
+    instances:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b:
+        spec:
+          name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-e-0886512b
+        status:
+          endpoint: ""
+          errorMsg: ""
+          listen: ""
+          portEnd: 10000
+          portStart: 10000
+          resourceVersion: 0
+          state: running
+          type: ""
+    ip: ***HIDDEN***
+    ownerID: troubleshoot-demo-001
+- apiVersion: longhorn.io/v1beta1
+  kind: InstanceManager
+  metadata:
+    creationTimestamp: "2022-04-11T23:03:50Z"
+    generation: 1
+    labels:
+      longhorn.io/component: instance-manager
+      longhorn.io/instance-manager-image: imi-95c270a2
+      longhorn.io/instance-manager-type: engine
+      longhorn.io/managed-by: longhorn-manager
+      longhorn.io/node: troubleshoot-demo-002
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/instance-manager-image: {}
+            f:longhorn.io/instance-manager-type: {}
+            f:longhorn.io/managed-by: {}
+            f:longhorn.io/node: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"a601a3b9-6cbd-4b30-af23-1abb917ac654"}: {}
+        f:spec:
+          .: {}
+          f:engineImage: {}
+          f:image: {}
+          f:nodeID: {}
+          f:type: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:50Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiMinVersion: {}
+          f:apiVersion: {}
+          f:currentState: {}
+          f:instances: {}
+          f:ip: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:03:51Z"
+    name: instance-manager-e-9fecdec4
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      blockOwnerDeletion: true
+      kind: Node
+      name: troubleshoot-demo-002
+      uid: a601a3b9-6cbd-4b30-af23-1abb917ac654
+    resourceVersion: "4610"
+    uid: 7384f141-de1d-4932-ac99-e14b92b696bd
+  spec:
+    engineImage: ""
+    image: longhornio/longhorn-instance-manager:v1_20210731
+    nodeID: troubleshoot-demo-002
+    type: engine
+  status:
+    apiMinVersion: 1
+    apiVersion: 1
+    currentState: running
+    instances: {}
+    ip: ***HIDDEN***
+    ownerID: troubleshoot-demo-002
+- apiVersion: longhorn.io/v1beta1
+  kind: InstanceManager
+  metadata:
+    creationTimestamp: "2022-04-11T23:03:30Z"
+    generation: 1
+    labels:
+      longhorn.io/component: instance-manager
+      longhorn.io/instance-manager-image: imi-95c270a2
+      longhorn.io/instance-manager-type: engine
+      longhorn.io/managed-by: longhorn-manager
+      longhorn.io/node: troubleshoot-demo-003
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/instance-manager-image: {}
+            f:longhorn.io/instance-manager-type: {}
+            f:longhorn.io/managed-by: {}
+            f:longhorn.io/node: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"d86fee47-6db7-4268-9537-4a724f0df25f"}: {}
+        f:spec:
+          .: {}
+          f:engineImage: {}
+          f:image: {}
+          f:nodeID: {}
+          f:type: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:30Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiMinVersion: {}
+          f:apiVersion: {}
+          f:currentState: {}
+          f:instances: {}
+          f:ip: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:03:31Z"
+    name: instance-manager-e-d5743cd9
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      blockOwnerDeletion: true
+      kind: Node
+      name: troubleshoot-demo-003
+      uid: d86fee47-6db7-4268-9537-4a724f0df25f
+    resourceVersion: "4549"
+    uid: 93a8c1e7-4116-4c18-9ee9-f8b8bad736fc
+  spec:
+    engineImage: ""
+    image: longhornio/longhorn-instance-manager:v1_20210731
+    nodeID: troubleshoot-demo-003
+    type: engine
+  status:
+    apiMinVersion: 1
+    apiVersion: 1
+    currentState: running
+    instances: {}
+    ip: ***HIDDEN***
+    ownerID: troubleshoot-demo-003
+- apiVersion: longhorn.io/v1beta1
+  kind: InstanceManager
+  metadata:
+    creationTimestamp: "2022-04-11T23:03:51Z"
+    generation: 1
+    labels:
+      longhorn.io/component: instance-manager
+      longhorn.io/instance-manager-image: imi-95c270a2
+      longhorn.io/instance-manager-type: replica
+      longhorn.io/managed-by: longhorn-manager
+      longhorn.io/node: troubleshoot-demo-002
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/instance-manager-image: {}
+            f:longhorn.io/instance-manager-type: {}
+            f:longhorn.io/managed-by: {}
+            f:longhorn.io/node: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"a601a3b9-6cbd-4b30-af23-1abb917ac654"}: {}
+        f:spec:
+          .: {}
+          f:engineImage: {}
+          f:image: {}
+          f:nodeID: {}
+          f:type: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:51Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiMinVersion: {}
+          f:apiVersion: {}
+          f:currentState: {}
+          f:instances:
+            .: {}
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc:
+              .: {}
+              f:spec:
+                .: {}
+                f:name: {}
+              f:status:
+                .: {}
+                f:endpoint: {}
+                f:errorMsg: {}
+                f:listen: {}
+                f:portEnd: {}
+                f:portStart: {}
+                f:resourceVersion: {}
+                f:state: {}
+                f:type: {}
+          f:ip: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:04:10Z"
+    name: instance-manager-r-a5bf42e3
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      blockOwnerDeletion: true
+      kind: Node
+      name: troubleshoot-demo-002
+      uid: a601a3b9-6cbd-4b30-af23-1abb917ac654
+    resourceVersion: "4447"
+    uid: 60de3d35-5001-45e8-9a5a-3660ef706348
+  spec:
+    engineImage: ""
+    image: longhornio/longhorn-instance-manager:v1_20210731
+    nodeID: troubleshoot-demo-002
+    type: replica
+  status:
+    apiMinVersion: 1
+    apiVersion: 1
+    currentState: running
+    instances:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc:
+        spec:
+          name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-260e62dc
+        status:
+          endpoint: ""
+          errorMsg: ""
+          listen: ""
+          portEnd: 10014
+          portStart: 10000
+          resourceVersion: 0
+          state: running
+          type: ""
+    ip: ***HIDDEN***
+    ownerID: troubleshoot-demo-002
+- apiVersion: longhorn.io/v1beta1
+  kind: InstanceManager
+  metadata:
+    creationTimestamp: "2022-04-11T23:03:31Z"
+    generation: 1
+    labels:
+      longhorn.io/component: instance-manager
+      longhorn.io/instance-manager-image: imi-95c270a2
+      longhorn.io/instance-manager-type: replica
+      longhorn.io/managed-by: longhorn-manager
+      longhorn.io/node: troubleshoot-demo-003
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/instance-manager-image: {}
+            f:longhorn.io/instance-manager-type: {}
+            f:longhorn.io/managed-by: {}
+            f:longhorn.io/node: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"d86fee47-6db7-4268-9537-4a724f0df25f"}: {}
+        f:spec:
+          .: {}
+          f:engineImage: {}
+          f:image: {}
+          f:nodeID: {}
+          f:type: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T23:03:31Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiMinVersion: {}
+          f:apiVersion: {}
+          f:currentState: {}
+          f:instances:
+            .: {}
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328:
+              .: {}
+              f:spec:
+                .: {}
+                f:name: {}
+              f:status:
+                .: {}
+                f:endpoint: {}
+                f:errorMsg: {}
+                f:listen: {}
+                f:portEnd: {}
+                f:portStart: {}
+                f:resourceVersion: {}
+                f:state: {}
+                f:type: {}
+          f:ip: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T23:03:40Z"
+    name: instance-manager-r-af1c7a93
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      blockOwnerDeletion: true
+      kind: Node
+      name: troubleshoot-demo-003
+      uid: d86fee47-6db7-4268-9537-4a724f0df25f
+    resourceVersion: "4160"
+    uid: 1de958dc-817b-4d8c-817b-30c21ee1bb6e
+  spec:
+    engineImage: ""
+    image: longhornio/longhorn-instance-manager:v1_20210731
+    nodeID: troubleshoot-demo-003
+    type: replica
+  status:
+    apiMinVersion: 1
+    apiVersion: 1
+    currentState: running
+    instances:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328:
+        spec:
+          name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-1cb3e328
+        status:
+          endpoint: ""
+          errorMsg: ""
+          listen: ""
+          portEnd: 10014
+          portStart: 10000
+          resourceVersion: 0
+          state: running
+          type: ""
+    ip: ***HIDDEN***
+    ownerID: troubleshoot-demo-003
+- apiVersion: longhorn.io/v1beta1
+  kind: InstanceManager
+  metadata:
+    creationTimestamp: "2022-04-11T22:51:51Z"
+    generation: 1
+    labels:
+      longhorn.io/component: instance-manager
+      longhorn.io/instance-manager-image: imi-95c270a2
+      longhorn.io/instance-manager-type: replica
+      longhorn.io/managed-by: longhorn-manager
+      longhorn.io/node: troubleshoot-demo-001
+    managedFields:
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:longhorn.io/component: {}
+            f:longhorn.io/instance-manager-image: {}
+            f:longhorn.io/instance-manager-type: {}
+            f:longhorn.io/managed-by: {}
+            f:longhorn.io/node: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"8fa3ff36-62a9-4e98-b2a8-da54d45dded8"}: {}
+        f:spec:
+          .: {}
+          f:engineImage: {}
+          f:image: {}
+          f:nodeID: {}
+          f:type: {}
+      manager: longhorn-manager
+      operation: Update
+      time: "2022-04-11T22:51:51Z"
+    - apiVersion: longhorn.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiMinVersion: {}
+          f:apiVersion: {}
+          f:currentState: {}
+          f:instances:
+            .: {}
+            f:pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5:
+              .: {}
+              f:spec:
+                .: {}
+                f:name: {}
+              f:status:
+                .: {}
+                f:endpoint: {}
+                f:errorMsg: {}
+                f:listen: {}
+                f:portEnd: {}
+                f:portStart: {}
+                f:resourceVersion: {}
+                f:state: {}
+                f:type: {}
+          f:ip: {}
+          f:ownerID: {}
+      manager: longhorn-manager
+      operation: Update
+      subresource: status
+      time: "2022-04-11T22:52:19Z"
+    name: instance-manager-r-f0f1e9d6
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta1
+      blockOwnerDeletion: true
+      kind: Node
+      name: troubleshoot-demo-001
+      uid: 8fa3ff36-62a9-4e98-b2a8-da54d45dded8
+    resourceVersion: "1427"
+    uid: 30d624aa-5d10-4cc3-9262-a7dd77dc7038
+  spec:
+    engineImage: ""
+    image: longhornio/longhorn-instance-manager:v1_20210731
+    nodeID: troubleshoot-demo-001
+    type: replica
+  status:
+    apiMinVersion: 1
+    apiVersion: 1
+    currentState: running
+    instances:
+      pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5:
+        spec:
+          name: pvc-36557d76-e15e-4abe-91ee-0be6075eaa7b-r-d711caf5
+        status:
+          endpoint: ""
+          errorMsg: ""
+          listen: ""
+          portEnd: 10014
+          portStart: 10000
+          resourceVersion: 0
+          state: running
+          type: ""
+    ip: ***HIDDEN***
+    ownerID: troubleshoot-demo-001

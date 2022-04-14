@@ -1,0 +1,90 @@
+{
+  "kind": "ServiceList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27143"
+  },
+  "items": [
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "registry",
+        "namespace": "kurl",
+        "uid": "f6b87ed8-0ab5-4d12-8faf-d35e73278ff9",
+        "resourceVersion": "1629",
+        "creationTimestamp": "2022-04-11T22:50:19Z",
+        "labels": {
+          "app": "registry"
+        },
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"registry\"},\"name\":\"registry\",\"namespace\":\"kurl\"},\"spec\":{\"clusterIP\":\"***HIDDEN***\",\"ports\":[{\"name\":\"registry\",\"port\":443,\"protocol\":\"TCP\",\"targetPort\":443}],\"selector\":{\"app\":\"registry\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:19Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {}
+                }
+              },
+              "f:spec": {
+                "f:internalTrafficPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":443,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:selector": {},
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "registry",
+            "protocol": "TCP",
+            "port": 443,
+            "targetPort": 443
+          }
+        ],
+        "selector": {
+          "app": "registry"
+        },
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    }
+  ]
+}

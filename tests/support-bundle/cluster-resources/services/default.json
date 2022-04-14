@@ -1,0 +1,98 @@
+{
+  "kind": "ServiceList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "27142"
+  },
+  "items": [
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "kubernetes",
+        "namespace": "default",
+        "uid": "968eef15-756e-49f0-a821-e17967ca6be4",
+        "resourceVersion": "1883",
+        "creationTimestamp": "2022-04-11T22:50:00Z",
+        "labels": {
+          "component": "apiserver",
+          "provider": "kubernetes",
+          "velero.io/exclude-from-backup": "true"
+        },
+        "managedFields": [
+          {
+            "manager": "kube-apiserver",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:50:00Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  ".": {},
+                  "f:component": {},
+                  "f:provider": {}
+                }
+              },
+              "f:spec": {
+                "f:clusterIP": {},
+                "f:internalTrafficPolicy": {},
+                "f:ipFamilyPolicy": {},
+                "f:ports": {
+                  ".": {},
+                  "k:{\"port\":443,\"protocol\":\"TCP\"}": {
+                    ".": {},
+                    "f:name": {},
+                    "f:port": {},
+                    "f:protocol": {},
+                    "f:targetPort": {}
+                  }
+                },
+                "f:sessionAffinity": {},
+                "f:type": {}
+              }
+            }
+          },
+          {
+            "manager": "kubectl-label",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2022-04-11T22:53:00Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:labels": {
+                  "f:velero.io/exclude-from-backup": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "https",
+            "protocol": "TCP",
+            "port": 443,
+            "targetPort": 6443
+          }
+        ],
+        "clusterIP": "***HIDDEN***",
+        "clusterIPs": [
+          "***HIDDEN***"
+        ],
+        "type": "ClusterIP",
+        "sessionAffinity": "None",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "internalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    }
+  ]
+}
