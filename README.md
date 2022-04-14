@@ -1,37 +1,26 @@
-# Command line tool for examining K8s resources in Troublehsoot's support bundles
+# Command line tool for examining K8s resources in Troubleshoot's support bundles
 
-### Interractive:
+### How to install:
 
-Start the interractive shell
-```
-$ sbctl shell -s ~/Downloads/support-bundle-2022-02-03T23_22_37
-bash-5.0$
-```
+Download the release binary and untar it to the /usr/bin/ directory:
+`wget https://github.com/replicatedhq/sbctl/releases/download/{{ VERSION_NUMBER_GOES_HERE }}/sbctl_darwin_amd64.tar.gz`
+`tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/bin/`
 
-Run `kubectl` commands at the prompt.  When done, type `exit`.
+Restart your shell and proceed to "How to Use"
 
-```
-bash-5.0$ kubectl get nodes
-NAME                    STATUS   ROLES                  AGE     VERSION
-troubleshoot-demo-001   Ready    control-plane,master   2d22h   v1.23.5
-troubleshoot-demo-002   Ready    <none>                 2d21h   v1.23.5
-troubleshoot-demo-003   Ready    <none>                 2d21h   v1.23.5
-bash-5.0$ exit
-exit
-```
+### How to Use:
 
-### Starting the API server:
-
-Start the local API server using a support bundle:
+Start the local API server using a support bundle and then run the `export` command that comes up to make kubectl target your support bundles API server
 
 ```
-$ sbctl serve -s ~/Downloads/support-bundle-2022-02-03T23_22_37
+$ sbctl serve --support-bundle-location=/Users/username/Downloads/support-bundle-XXXX-XX-XX
+
 Server is running
 
-export KUBECONFIG=/var/folders/g2/05ngff7d71gds3_kl24gs0f80000gn/T/local-kubeconfig-1563064521
+export KUBECONFIG=/var/folders/g2/XXXXXXXXXXX/T/local-kubeconfig-XXXXX
 ```
 
-Use `kubectl` with the generate kubeconfig file.  When done, CTRL^C the API server.
+Using `kubectl` should now auth using the generated kubeconfig file.  When done, CTRL^C to shut down the API server.
 
 ```
 $ kubectl get ns
@@ -161,4 +150,25 @@ QoS Class:                   Burstable
 Node-Selectors:              <none>
 Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+```
+
+
+### Interractive:
+
+Start the interractive shell
+```
+$ sbctl shell -s ~/Downloads/support-bundle-2022-02-03T23_22_37
+bash-5.0$
+```
+
+Run `kubectl` commands at the prompt.  When done, type `exit`.
+
+```
+bash-5.0$ kubectl get nodes
+NAME                    STATUS   ROLES                  AGE     VERSION
+troubleshoot-demo-001   Ready    control-plane,master   2d22h   v1.23.5
+troubleshoot-demo-002   Ready    <none>                 2d21h   v1.23.5
+troubleshoot-demo-003   Ready    <none>                 2d21h   v1.23.5
+bash-5.0$ exit
+exit
 ```
