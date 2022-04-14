@@ -1,11 +1,31 @@
 # Command line tool for examining K8s resources in Troublehsoot's support bundles
 
-### How to use:
+### Interractive:
+
+Start the interractive shell
+```
+$ sbctl shell -s ~/Downloads/support-bundle-2022-02-03T23_22_37
+bash-5.0$
+```
+
+Run `kubectl` commands at the prompt.  When done, type `exit`.
+
+```
+bash-5.0$ kubectl get nodes
+NAME                    STATUS   ROLES                  AGE     VERSION
+troubleshoot-demo-001   Ready    control-plane,master   2d22h   v1.23.5
+troubleshoot-demo-002   Ready    <none>                 2d21h   v1.23.5
+troubleshoot-demo-003   Ready    <none>                 2d21h   v1.23.5
+bash-5.0$ exit
+exit
+```
+
+### Starting the API server:
 
 Start the local API server using a support bundle:
 
 ```
-$ sbctl serve --support-bundle-location=/Users/divolgin/Downloads/support-bundle-2022-02-03T23_22_37
+$ sbctl serve -s ~/Downloads/support-bundle-2022-02-03T23_22_37
 Server is running
 
 export KUBECONFIG=/var/folders/g2/05ngff7d71gds3_kl24gs0f80000gn/T/local-kubeconfig-1563064521
