@@ -3,13 +3,13 @@ package api
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 )
 
 func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Request) {
