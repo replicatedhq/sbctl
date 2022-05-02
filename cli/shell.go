@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -10,6 +11,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/replicatedhq/sbctl/pkg/api"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -28,6 +30,14 @@ func ShellCmd() *cobra.Command {
 			var kubeConfig string
 			var bundleDir string
 			deleteBundleDir := false
+
+			logFile, err := ioutil.TempFile("", "sbctl-server-logs-")
+			if err == nil {
+				fmt.Printf("API server logs will be written to %s\n", logFile.Name())
+				defer logFile.Close()
+				defer os.RemoveAll(logFile.Name())
+				log.SetOutput(logFile)
+			}
 
 			go func() {
 				signalChan := make(chan os.Signal, 1)
