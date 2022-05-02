@@ -2,9 +2,9 @@ package sbctl
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
