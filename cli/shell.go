@@ -2,18 +2,22 @@ package cli
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/signal"
 	"strings"
+	"syscall"
 
+	"github.com/creack/pty"
 	"github.com/pkg/errors"
 	"github.com/replicatedhq/sbctl/pkg/api"
 	"github.com/replicatedhq/sbctl/pkg/sbctl"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"golang.org/x/term"
 )
 
 func ShellCmd() *cobra.Command {
@@ -103,17 +107,52 @@ func ShellCmd() *cobra.Command {
 			kubeConfig, err = api.StartAPIServer(clusterData)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
-
 			}
 			defer os.RemoveAll(kubeConfig)
 
-			shellExec := exec.Command("bash")
-			shellExec.Stdin = os.Stdin
-			shellExec.Stdout = os.Stdout
-			shellExec.Stderr = os.Stderr
-			shellExec.Env = []string{fmt.Sprintf("KUBECONFIG=%s", kubeConfig)}
-			_ = shellExec.Run() // add error checking
+			shellCmd := os.Getenv("SHELL")
+			if shellCmd == "" {
+				return errors.New("SHELL environment is required for shell command")
+			}
 
+			shellExec := exec.Command(shellCmd)
+			shellExec.Env = os.Environ()
+			fmt.Printf("Starting new shell with KUBECONFIG Ctl-D when done to end the shell and sbctl server\n")
+			shellPty, err := pty.Start(shellExec)
+
+			// Handle pty size.
+			ch := make(chan os.Signal, 1)
+			signal.Notify(ch, syscall.SIGWINCH)
+			go func() {
+				for range ch {
+					if err := pty.InheritSize(os.Stdin, shellPty); err != nil {
+						log.Printf("error resizing pty: %s", err)
+					}
+				}
+			}()
+			ch <- syscall.SIGWINCH                        // Initial resize.
+			defer func() { signal.Stop(ch); close(ch) }()
+
+			// Set stdin to raw mode.
+			oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+			if err != nil {
+				panic(err)
+			}
+			defer func() {
+				_ = term.Restore(int(os.Stdin.Fd()), oldState)
+				fmt.Printf("sbctl shell exited\n")
+			}()
+
+			// Setup the shell
+			setupCmd := fmt.Sprintf("export KUBECONFIG=%s\n", kubeConfig)
+			io.WriteString(shellPty, setupCmd)
+			io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd)))  // Don't print to screen, terminal will echo anyway
+
+			// Copy stdin to the pty and the pty to stdout.
+			go func() { _, _ = io.Copy(shellPty, os.Stdin) }()
+			go func() { _, _ = io.Copy(os.Stdout, shellPty) }()
+
+			shellExec.Wait()
 			return nil
 		},
 	}
