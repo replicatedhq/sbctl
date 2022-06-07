@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -48,7 +49,7 @@ import (
 )
 
 const (
-	localServerEndPoint = "127.0.0.1:31180" // TODO: find random port
+	localServerEndPoint = "127.0.0.1"
 )
 
 var (
@@ -98,19 +99,24 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 		Handler: r,
 		Addr:    localServerEndPoint,
 	}
+	listener, err := net.Listen("tcp", ":0")
+	if err != nil {
+		return "", errors.Wrap(err, "listening on port")
+	}
+
 	go func() {
-		panic(srv.ListenAndServe())
+		panic(srv.Serve(listener))
 	}()
 
 	for {
-		resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", localServerEndPoint))
+		resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", listener.Addr()))
 		if err == nil && resp.StatusCode == http.StatusOK {
 			break
 		}
 		time.Sleep(1)
 	}
 
-	configFile, err := createConfigFile(fmt.Sprintf("http://%s", localServerEndPoint))
+	configFile, err := createConfigFile(fmt.Sprintf("http://%s", listener.Addr()))
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create clientset for local endpoint")
 	}
