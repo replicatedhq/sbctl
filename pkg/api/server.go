@@ -109,14 +109,14 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 	}()
 
 	for {
-		resp, err := http.Get(fmt.Sprintf("http://%s:%d/api/v1", localServerEndPoint, listener.Addr().(*net.TCPAddr).Port))
+		resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", listener.Addr()))
 		if err == nil && resp.StatusCode == http.StatusOK {
 			break
 		}
 		time.Sleep(1)
 	}
 
-	configFile, err := createConfigFile(fmt.Sprintf("http://%s:%d", localServerEndPoint, listener.Addr().(*net.TCPAddr).Port))
+	configFile, err := createConfigFile(fmt.Sprintf("http://%s", listener.Addr()))
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create clientset for local endpoint")
 	}
