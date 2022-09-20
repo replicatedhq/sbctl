@@ -3,9 +3,10 @@
 ### How to install:
 
 Download the release binary and untar it to the /usr/bin/ directory:
-`wget https://github.com/replicatedhq/sbctl/releases/download/{{ VERSION_NUMBER_GOES_HERE }}/sbctl_darwin_amd64.tar.gz`
-`tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/bin/`
-
+```
+$ wget https://github.com/replicatedhq/sbctl/releases/download/{{ VERSION_NUMBER_GOES_HERE }}/sbctl_darwin_amd64.tar.gz
+$ tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/bin/
+```
 Restart your shell and proceed to "How to Use"
 
 ### How to Use:
