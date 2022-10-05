@@ -878,6 +878,10 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIsNamespaceResource")
 
+	// It's important to respond with correct group and version here.  If the request is for batch/v1beta1/cronjobs,
+	// we cannot return a batch/v1/cronjobs object.
+	group := mux.Vars(r)["group"]
+	version := mux.Vars(r)["version"]
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
@@ -905,51 +909,83 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	switch o := decoded.(type) {
-	case *appsv1.ReplicaSetList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+	if group == "apps" && version == "v1" {
+		switch o := decoded.(type) {
+		case *appsv1.ReplicaSetList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
 			}
-		}
-	case *appsv1.DeploymentList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		case *appsv1.DeploymentList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
 			}
-		}
-	case *appsv1.DaemonSetList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		case *appsv1.DaemonSetList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
 			}
-		}
-	case *appsv1.StatefulSetList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
-			}
-		}
-	case *batchv1.JobList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
-			}
-		}
-	case *networkingv1.IngressList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		case *appsv1.StatefulSetList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
 			}
 		}
 	}
 
+	if group == "batch" && version == "v1" {
+		switch o := decoded.(type) {
+		case *batchv1.JobList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
+			}
+		case *batchv1.CronJobList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
+			}
+		}
+	}
+
+	if group == "batch" && version == "v1beta1" {
+		switch o := decoded.(type) {
+		case *batchv1beta1.CronJobList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
+			}
+		}
+	}
+
+	if group == "networking" && version == "v1" {
+		switch o := decoded.(type) {
+		case *networkingv1.IngressList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
+			}
+		}
+	}
+
+	log.Printf("unknown type in group=%s version=%s: %T\n", group, version, decoded)
 	JSON(w, http.StatusNotFound, errorNotFound)
 }
 
