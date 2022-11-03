@@ -117,7 +117,7 @@ func ShellCmd() *cobra.Command {
 
 			shellExec := exec.Command(shellCmd)
 			shellExec.Env = os.Environ()
-			fmt.Printf("Starting new shell with KUBECONFIG Ctl-D when done to end the shell and sbctl server\n")
+			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
 			shellPty, err := pty.Start(shellExec)
 
 			// Handle pty size.
