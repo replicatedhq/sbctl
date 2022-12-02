@@ -156,7 +156,7 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
 
 ### Interractive:
 
-Start the interractive shell
+Start the interactive shell
 ```
 $ sbctl shell -s ~/Downloads/support-bundle-2022-02-03T23_22_37
 bash-5.0$
