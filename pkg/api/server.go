@@ -108,12 +108,21 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 		panic(srv.Serve(listener))
 	}()
 
+	timeout := 10 * time.Second
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+WAIT_FOR_SERVER:
 	for {
-		resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", listener.Addr()))
-		if err == nil && resp.StatusCode == http.StatusOK {
-			break
+		select {
+		case <-time.After(1):
+			resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", listener.Addr()))
+			if err == nil && resp.StatusCode == http.StatusOK {
+				break WAIT_FOR_SERVER
+			}
+		case <-ctx.Done():
+			return "", errors.New("timeout waiting for server to start")
 		}
-		time.Sleep(1)
 	}
 
 	configFile, err := createConfigFile(fmt.Sprintf("http://%s", listener.Addr()))
