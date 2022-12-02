@@ -81,7 +81,11 @@ func FindClusterData(bundlePath string) (ClusterData, error) {
 
 		if info.IsDir() {
 			if info.Name() == "cluster-resources" {
-				result.ClusterResourcesDir = path
+				// Support bundle can have multiple cluster-resources directories.
+				// We want the one at the root, so find the file with the shortest name
+				if result.ClusterResourcesDir == "" || len(path) < len(result.ClusterResourcesDir) {
+					result.ClusterResourcesDir = path
+				}
 			}
 		} else if info.Name() == "cluster_version.json" {
 			result.ClusterInfoFile = path
