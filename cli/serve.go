@@ -125,7 +125,7 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 	_, slug := path.Split(parsedUrl.Path)
 
 	gqlUrl := "https://g.replicated.com/graphql"
-	gqlReqest := "{\"operationName\":\"supportBundleForSlug\",\"variables\":{\"slug\":\"%s\"},\"query\":\"query supportBundleForSlug($slug: String!) {\\n  supportBundleForSlug(slug: $slug) {\\n    bundle {\\n      id\\n      appId\\n      size\\n      name\\n      teamId\\n      teamName\\n      teamShareIds\\n      status\\n      createdAt\\n      collectedAt\\n      slug\\n      viewed\\n      analyzeChannelId\\n      customer {\\n        id\\n        name\\n        avatar\\n      }\\n      uri\\n      signedUri\\n      notes\\n      treeIndex\\n    }\\n    insights {\\n      level\\n      primary\\n      key\\n      detail\\n      icon\\n      icon_key\\n      desiredPosition\\n      involvedObject {\\n        kind\\n        namespace\\n        name\\n        apiVersion\\n      }\\n      labels {\\n        key\\n        value\\n      }\\n    }\\n  }\\n}\\n\"}"
+	gqlReqest := "{\"operationName\":\"supportBundleForSlug\",\"variables\":{\"slug\":\"%s\"},\"query\":\"query supportBundleForSlug($slug: String!) {\\n  supportBundleForSlug(slug: $slug) {\\n    bundle { signedUri } } } \"}"
 	gqlReqest = fmt.Sprintf(gqlReqest, slug)
 
 	req, err := http.NewRequest("POST", gqlUrl, strings.NewReader(gqlReqest))
