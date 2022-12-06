@@ -43,9 +43,13 @@ import (
 	apicorev1 "k8s.io/kubernetes/pkg/apis/core/v1"
 	networking "k8s.io/kubernetes/pkg/apis/networking"
 	apinetworkingv1 "k8s.io/kubernetes/pkg/apis/networking/v1"
+	"k8s.io/kubernetes/pkg/apis/rbac"
 	"k8s.io/kubernetes/pkg/printers"
 	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
 	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
+	apisrbac "k8s.io/kubernetes/pkg/apis/rbac"
+	apisrbacv1 "k8s.io/kubernetes/pkg/apis/rbac/v1"
+	
 )
 
 const (
@@ -190,6 +194,7 @@ func (h handler) getAPIV1(w http.ResponseWriter, r *http.Request) {
 	JSON(w, http.StatusNotFound, errorNotFound)
 }
 
+// Look in here to see why I can't get roles to work in sbctl
 func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIV1ClusterResources")
 
@@ -257,6 +262,15 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get persistentvolumeclaim files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "roles":
+		result = k8s.GetEmptyRoleList()
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get role files from dir", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -737,6 +751,22 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "roles":
+		result = &rbac.RoleList{
+			Items: []rbac.Role{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "RoleList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get roles files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -783,6 +813,9 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			r.Items = append(r.Items, o.Items...)
 		case *networkingv1.IngressList:
 			r := result.(*networkingv1.IngressList)
+			r.Items = append(r.Items, o.Items...)
+		case *rbac.RoleList:
+			r := result.(*rbac.RoleList)
 			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
@@ -985,6 +1018,18 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	if group == "networking" && version == "v1" {
 		switch o := decoded.(type) {
 		case *networkingv1.IngressList:
+			for _, item := range o.Items {
+				if item.Name == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
+			}
+		}
+	}
+
+	if group == "rbac" && version == "v1" {
+		switch o := decoded.(type) {
+		case *rbac.RoleList:
 			for _, item := range o.Items {
 				if item.Name == name {
 					JSON(w, http.StatusOK, item)
@@ -1304,6 +1349,21 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 			return nil, errors.Wrap(err, "failed to convert ingress list")
 		}
 		object = converted
+	case *rbac.RoleList:
+		converted := &apisrbac.RoleList{}
+		err := apisrbacv1.Convert_v1_RoleList_To_rbac_RoleList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert role list")
+		}
+		object = converted
+	case *rbac.Role:
+		converted := &apisrbac.Role{}
+		err := apisrbacv1.Convert_v1_Role_To_rbac_Role(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert role")
+		}
+		object = converted
+	
 	default:
 		// no conversion needed
 		log.Printf("can't convert %T to build table\n", o)
