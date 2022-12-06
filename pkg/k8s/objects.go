@@ -3,6 +3,7 @@ package k8s
 import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/kubernetes/pkg/apis/rbac"
 )
 
 func GetEmptyEventList() *corev1.EventList {
@@ -56,6 +57,17 @@ func GetEmptyPersistentVolumeClaimList() *corev1.PersistentVolumeClaimList {
 	r.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
 		Version: "v1",
 		Kind:    "PersistentVolumeClaimList",
+	})
+	return r
+}
+
+func GetEmptyRoleList() *rbac.RoleList {
+	r := &rbac.RoleList{
+		Items: []rbac.Role{},
+	}
+	r.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+		Version: "v1",
+		Kind:    "RoleList",
 	})
 	return r
 }
