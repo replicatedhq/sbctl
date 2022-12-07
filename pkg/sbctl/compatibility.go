@@ -148,9 +148,9 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 				Kind:    "CustomResourceDefinitionList",
 				Version: "v1",
 			})
-
 		}
 	}
+
 	return decoded, gvk, nil
 }
 
@@ -205,6 +205,9 @@ func wrapListData(resource string, data []byte) ([]byte, error) {
 	case "storageclasses":
 		kind = "StorageClassList"
 		apiVersion = "storage.k8s.io/v1"
+	case "customresourcedefinitions":
+		kind = "CustomResourceDefinitionList"
+		apiVersion = "apiextensions.k8s.io/v1"
 	default:
 		return nil, errors.Errorf("don't know how to wrap %s", resource)
 	}
