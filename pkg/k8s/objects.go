@@ -71,3 +71,36 @@ func GetEmptyRoleList() *rbac.RoleList {
 	})
 	return r
 }
+
+//func GetEmptyClusterRoleList() *rbac.ClusterRoleList {
+//	r := &rbac.ClusterRoleList{
+//		Items: []rbac.ClusterRole{},
+//	}
+//	r.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+//		Version: "v1",
+//		Kind:    "ClusterRoleList",
+//	})
+//	return r
+//}
+
+//func GetEmptyClusterRoleBindingList() *rbac.ClusterRoleBindingList {
+//	r := &rbac.ClusterRoleBindingList{
+//		Items: []rbac.ClusterRoleBinding{},
+//	}
+//	r.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+//		Version: "v1",
+//		Kind:    "ClusterRoleBindingList",
+//	})
+//	return r
+//}
+
+func GetEmptyRoleBindingList() *rbac.RoleBindingList {
+	r := &rbac.RoleBindingList{
+		Items: []rbac.RoleBinding{},
+	}
+	r.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+		Version: "v1",
+		Kind:    "RoleBindingList",
+	})
+	return r
+}
