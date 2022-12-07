@@ -9,6 +9,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
+	rbacv1 "k8s.io/api/rbac/v1"
 	storagev1 "k8s.io/api/storage/v1"
 	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	extensionsscheme "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/scheme"
@@ -148,9 +149,41 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 				Kind:    "CustomResourceDefinitionList",
 				Version: "v1",
 			})
+
+		}
+	case *rbacv1.RoleList:
+		for i := range o.Items {
+			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+				Group:   "rbac",
+				Kind:    "RoleList",
+				Version: "v1",
+			})
+		}
+	//case *rbacv1.ClusterRoleList:
+	//	for i := range o.Items {
+	//		o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+	//			Group:   "rbac",
+	//			Kind:    "ClusterRoleList",
+	//			Version: "v1",
+	//		})
+	//	}
+	//case *rbacv1.ClusterRoleBindingList:
+	//	for i := range o.Items {
+	//		o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+	//			Group:   "rbac",
+	//			Kind:    "ClusterRoleBindingList",
+	//			Version: "v1",
+	//		})
+	//	}
+	case *rbacv1.RoleBindingList:
+		for i := range o.Items {
+			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+				Group:   "rbac",
+				Kind:    "RoleBindingList",
+				Version: "v1",
+			})
 		}
 	}
-
 	return decoded, gvk, nil
 }
 
@@ -205,6 +238,18 @@ func wrapListData(resource string, data []byte) ([]byte, error) {
 	case "storageclasses":
 		kind = "StorageClassList"
 		apiVersion = "storage.k8s.io/v1"
+	case "roles":
+		kind = "RoleList"
+		apiVersion = "k8s.io/kubernetes/pkg/apis/rbac"
+	case "rolebindings":
+		kind = "RoleBindingList"
+		apiVersion = "k8s.io/kubernetes/pkg/apis/rbac"
+	case "clusterroles":
+		kind = "ClusterRoleList"
+		apiVersion = "k8s.io/kubernetes/pkg/apis/rbac"
+	case "clusterrolebindings":
+		kind = "ClusterRoleBindingsList"
+		apiVersion = "k8s.io/kubernetes/pkg/apis/rbac"
 	case "customresourcedefinitions":
 		kind = "CustomResourceDefinitionList"
 		apiVersion = "apiextensions.k8s.io/v1"
