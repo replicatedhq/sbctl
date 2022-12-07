@@ -216,7 +216,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	var result runtime.Object
 	filenames := []string{}
 	switch resource {
-	case "namespaces", "nodes", "persistentvolumes":
+	case "namespaces", "nodes", "persistentvolumes", "clusterroles", "clusterrolebindings":
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 	case "pods":
 		result = k8s.GetEmptyPodList()
@@ -263,15 +263,17 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-	case "roles":
-		result = k8s.GetEmptyRoleList()
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
-		filenames, err = getJSONFileListFromDir(dirName)
-		if err != nil {
-			log.Println("failed to get role files from dir", err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
+
+		// This below block can be removed:
+		//case "roles":
+		//	result = k8s.GetEmptyRoleList()
+		//	dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		//	filenames, err = getJSONFileListFromDir(dirName)
+		//	if err != nil {
+		//		log.Println("failed to get role files from dir", err)
+		//		w.WriteHeader(http.StatusInternalServerError)
+		//		return
+		//	}
 	}
 
 	for _, fileName := range filenames {
@@ -321,6 +323,10 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		case *corev1.PersistentVolumeClaimList:
 			r := result.(*corev1.PersistentVolumeClaimList)
 			r.Items = append(r.Items, o.Items...)
+		// This below block can be removed:
+		//case *rbacv1.RoleList:
+		//	r := result.(*rbacv1.RoleList)
+		//	r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -384,6 +390,37 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 			}
 		}
 	case *corev1.PersistentVolumeList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *rbacv1.RoleList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+
+	case *rbacv1.RoleBindingList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+
+	case *rbacv1.ClusterRoleList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+
+	case *rbacv1.ClusterRoleBindingList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -514,6 +551,34 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 			}
 		}
 	case *corev1.PersistentVolumeClaimList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *rbacv1.RoleList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *rbacv1.RoleBindingList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *rbacv1.ClusterRoleList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *rbacv1.ClusterRoleBindingList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -750,8 +815,8 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			return
 		}
 	case "roles":
-		result = &rbac.RoleList{
-			Items: []rbac.Role{},
+		result = &rbacv1.RoleList{
+			Items: []rbacv1.Role{},
 		}
 		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
 			Group:   group,
@@ -765,6 +830,54 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	//case "clusterroles":
+	//	result = &rbacv1.ClusterRoleList{
+	//		Items: []rbacv1.ClusterRole{},
+	//	}
+	//	result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+	//		Group:   group,
+	//		Version: version,
+	//		Kind:    "ClusterRoleList",
+	//	})
+	//	dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+	//	filenames, err = getJSONFileListFromDir(dirName)
+	//	if err != nil {
+	//		log.Println("failed to get clusterroles files from dir", err)
+	//		w.WriteHeader(http.StatusInternalServerError)
+	//		return
+	//	}
+	case "rolebindings":
+		result = &rbacv1.RoleBindingList{
+			Items: []rbacv1.RoleBinding{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "RoleBindingList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get rolebindings files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		//case "clusterrolebindings":
+		//	result = &rbacv1.ClusterRoleBindingList{
+		//		Items: []rbacv1.ClusterRoleBinding{},
+		//	}
+		//	result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+		//		Group:   group,
+		//		Version: version,
+		//		Kind:    "ClusterRoleBindingList",
+		//	})
+		//	dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		//	filenames, err = getJSONFileListFromDir(dirName)
+		//	if err != nil {
+		//		log.Println("failed to get roles files from dir", err)
+		//		w.WriteHeader(http.StatusInternalServerError)
+		//		return
+		//	}
 	}
 
 	for _, fileName := range filenames {
@@ -812,9 +925,20 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		case *networkingv1.IngressList:
 			r := result.(*networkingv1.IngressList)
 			r.Items = append(r.Items, o.Items...)
-		case *rbac.RoleList:
-			r := result.(*rbac.RoleList)
+		// The below case is key to get this to work:
+		case *rbacv1.RoleList:
+			r := result.(*rbacv1.RoleList)
 			r.Items = append(r.Items, o.Items...)
+		case *rbacv1.RoleBindingList:
+			r := result.(*rbacv1.RoleBindingList)
+			r.Items = append(r.Items, o.Items...)
+		case *rbacv1.ClusterRoleList:
+			r := result.(*rbacv1.ClusterRoleList)
+			r.Items = append(r.Items, o.Items...)
+		case *rbacv1.ClusterRoleBindingList:
+			r := result.(*rbacv1.ClusterRoleBindingList)
+			r.Items = append(r.Items, o.Items...)
+		//
 		default:
 			log.Println("wrong gvk is found", gvk)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -1025,17 +1149,17 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		}
 	}
 
-	if group == "rbac" && version == "v1" {
-		switch o := decoded.(type) {
-		case *rbac.RoleList:
-			for _, item := range o.Items {
-				if item.Name == name {
-					JSON(w, http.StatusOK, item)
-					return
-				}
-			}
-		}
-	}
+	//if group == "rbac" && version == "v1" {
+	//	switch o := decoded.(type) {
+	//	case *rbacv1.RoleList:
+	//		for _, item := range o.Items {
+	//			if item.Name == name {
+	//				JSON(w, http.StatusOK, item)
+	//				return
+	//			}
+	//		}
+	//	}
+	//}
 
 	log.Printf("unknown type in group=%s version=%s: %T\n", group, version, decoded)
 	JSON(w, http.StatusNotFound, errorNotFound)
@@ -1359,6 +1483,48 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		err := apisrbacv1.Convert_v1_Role_To_rbac_Role(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert role")
+		}
+		object = converted
+	case *rbacv1.RoleBindingList:
+		converted := &rbac.RoleBindingList{}
+		err := apisrbacv1.Convert_v1_RoleBindingList_To_rbac_RoleBindingList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert rolebinding list")
+		}
+		object = converted
+	case *rbacv1.RoleBinding:
+		converted := &rbac.RoleBinding{}
+		err := apisrbacv1.Convert_v1_RoleBinding_To_rbac_RoleBinding(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert rolebinding")
+		}
+		object = converted
+	case *rbacv1.ClusterRoleList:
+		converted := &rbac.ClusterRoleList{}
+		err := apisrbacv1.Convert_v1_ClusterRoleList_To_rbac_ClusterRoleList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert clusterrole list")
+		}
+		object = converted
+	case *rbacv1.ClusterRole:
+		converted := &rbac.ClusterRole{}
+		err := apisrbacv1.Convert_v1_ClusterRole_To_rbac_ClusterRole(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert clusterrole")
+		}
+		object = converted
+	case *rbacv1.ClusterRoleBindingList:
+		converted := &rbac.ClusterRoleBindingList{}
+		err := apisrbacv1.Convert_v1_ClusterRoleBindingList_To_rbac_ClusterRoleBindingList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert clusterrolebinding list")
+		}
+		object = converted
+	case *rbacv1.ClusterRoleBinding:
+		converted := &rbac.ClusterRoleBinding{}
+		err := apisrbacv1.Convert_v1_ClusterRoleBinding_To_rbac_ClusterRoleBinding(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert clusterrolebinding")
 		}
 		object = converted
 	default:
