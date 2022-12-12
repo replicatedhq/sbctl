@@ -25,6 +25,7 @@ import (
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
+	rbacv1 "k8s.io/api/rbac/v1"
 	storagev1 "k8s.io/api/storage/v1"
 	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
@@ -213,7 +214,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	var result runtime.Object
 	filenames := []string{}
 	switch resource {
-	case "namespaces", "nodes", "persistentvolumes":
+	case "namespaces", "nodes", "persistentvolumes", "clusterroles", "clusterrolebindings":
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 	case "pods":
 		result = k8s.GetEmptyPodList()
@@ -599,6 +600,7 @@ func (h handler) getAPIByGroupAndVersion(w http.ResponseWriter, r *http.Request)
 	JSON(w, http.StatusNotFound, errorNotFound)
 }
 
+// This one below here needs to stay complete:
 func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIsClusterResources")
 
@@ -737,6 +739,68 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "roles":
+		result = &rbacv1.RoleList{
+			Items: []rbacv1.Role{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "RoleList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get roles files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "clusterroles":
+		result = &rbacv1.ClusterRoleList{
+			Items: []rbacv1.ClusterRole{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "ClusterRoleList",
+		})
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
+		if err != nil {
+			log.Println("failed to get clusterrole files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "rolebindings":
+		result = &rbacv1.RoleBindingList{
+			Items: []rbacv1.RoleBinding{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "RoleBindingList",
+		})
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Println("failed to get rolebindings files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	case "clusterrolebindings":
+		result = &rbacv1.ClusterRoleBindingList{
+			Items: []rbacv1.ClusterRoleBinding{},
+		}
+		result.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   group,
+			Version: version,
+			Kind:    "ClusterRoleBindingList",
+		})
+		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
+		if err != nil {
+			log.Println("failed to get cluster-role-binding files from dir", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -783,6 +847,12 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			r.Items = append(r.Items, o.Items...)
 		case *networkingv1.IngressList:
 			r := result.(*networkingv1.IngressList)
+			r.Items = append(r.Items, o.Items...)
+		case *rbacv1.RoleList:
+			r := result.(*rbacv1.RoleList)
+			r.Items = append(r.Items, o.Items...)
+		case *rbacv1.RoleBindingList:
+			r := result.(*rbacv1.RoleBindingList)
 			r.Items = append(r.Items, o.Items...)
 		default:
 			log.Println("wrong gvk is found", gvk)
