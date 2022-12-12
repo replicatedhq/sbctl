@@ -8,7 +8,6 @@ var (
 		"storageclasses":            "storage-classes",
 		"ingresses":                 "ingress",
 		"customresourcedefinitions": "custom-resource-definitions",
-		"clusterrolebindings":       "clusterRoleBindings",
 	}
 )
 
