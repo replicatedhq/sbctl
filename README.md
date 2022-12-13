@@ -2,19 +2,19 @@
 
 ### How to install:
 
-Download the release binary and untar it to the /usr/bin/ directory:
+Download the release binary and untar it to a directory in your `PATH`:
 ```
-$ wget https://github.com/replicatedhq/sbctl/releases/download/{{ VERSION_NUMBER_GOES_HERE }}/sbctl_darwin_amd64.tar.gz
-$ tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/bin/
+wget https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_amd64.tar.gz
+tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/local/bin/
 ```
-Restart your shell and proceed to "How to Use"
+Restart your shell and proceed to "How to Use".
 
 ### How to Use:
 
 Start the local API server using a support bundle and then run the `export` command that comes up to make kubectl target your support bundles API server
 
 ```
-$ sbctl serve --support-bundle-location=/Users/username/Downloads/support-bundle-XXXX-XX-XX
+sbctl serve --support-bundle-location=/Users/username/Downloads/support-bundle-XXXX-XX-XX
 
 Server is running
 
@@ -25,6 +25,7 @@ Using `kubectl` should now auth using the generated kubeconfig file.  When done,
 
 ```
 $ kubectl get ns
+
 NAME                          STATUS   AGE
 kube-system                   Active   204d
 default                       Active   204d
@@ -154,7 +155,7 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
 ```
 
 
-### Interractive:
+### Interactive:
 
 Start the interactive shell
 ```
