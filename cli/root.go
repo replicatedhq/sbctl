@@ -8,9 +8,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+var version = "0.0.1"
+
 func RootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "sbctl",
+		Version:      version,
 		Short:        "Run commands against a support bundle",
 		Long:         `Run commands against a support bundle`,
 		SilenceUsage: true,
@@ -34,7 +37,8 @@ func RootCmd() *cobra.Command {
 	return cmd
 }
 
-func InitAndExecute() {
+func InitAndExecute(v string) {
+	version = v
 	if err := RootCmd().Execute(); err != nil {
 		os.Exit(1)
 	}

@@ -16,7 +16,6 @@ builds:
       - CGO_ENABLED=0
       - GO111MODULE=on
     main: sbctl.go
-    ldflags: -s -w
     binary: sbctl
     hooks: {}
 
