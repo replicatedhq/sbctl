@@ -3,10 +3,21 @@
 ### How to install:
 
 Download the release binary and untar it to a directory in your `PATH`:
+
+#### Intel CPU / `amd64`
+
 ```
 wget https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_amd64.tar.gz
 tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/local/bin/
 ```
+
+#### Apple M1 CPU / `arm64`
+
+```
+wget https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_arm64.tar.gz
+tar -xzf sbctl_darwin_arm64.tar.gz -C /usr/local/bin/
+```
+
 Restart your shell and proceed to "How to Use".
 
 ### How to Use:
