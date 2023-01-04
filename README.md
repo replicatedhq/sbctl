@@ -1,21 +1,25 @@
 # Command line tool for examining K8s resources in Troubleshoot's support bundles
 
-### How to install:
+### How to install (Mac):
 
-Download the release binary and untar it to a directory in your `PATH`:
+Download the release binary and untar it to a directory in your `PATH` (you'll need to enter your `sudo` password for the last `mv`):
 
 #### Intel CPU / `amd64`
 
 ```
-wget https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_amd64.tar.gz
-tar -xzf sbctl_darwin_amd64.tar.gz -C /usr/local/bin/
+curl -LO https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_amd64.tar.gz
+tar -xzf sbctl_darwin_amd64.tar.gz -C /tmp sbctl
+rm -f sbctl_darwin_amd64.tar.gz
+sudo mv /tmp/sbctl /usr/local/bin/
 ```
 
 #### Apple M1 CPU / `arm64`
 
 ```
-wget https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_arm64.tar.gz
-tar -xzf sbctl_darwin_arm64.tar.gz -C /usr/local/bin/
+curl -LO https://github.com/replicatedhq/sbctl/releases/latest/download/sbctl_darwin_arm64.tar.gz
+tar -xzf sbctl_darwin_arm64.tar.gz -C /tmp sbctl
+rm -f sbctl_darwin_arm64.tar.gz
+sudo mv /tmp/sbctl /usr/local/bin/
 ```
 
 Restart your shell and proceed to "How to Use".
