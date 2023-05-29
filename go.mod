@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/antzucaro/matchr v0.0.0-20210222213004-b04723ef80f0
-	github.com/creack/pty v1.1.11
+	github.com/creack/pty v1.1.18
 	github.com/gorilla/mux v1.8.0
 	github.com/onsi/ginkgo/v2 v2.1.3
 	github.com/onsi/gomega v1.19.0
