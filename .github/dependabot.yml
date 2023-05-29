@@ -7,11 +7,10 @@ updates:
   - package-ecosystem: "gomod" # See documentation for possible values
     directory: "/" # Location of package manifests
     labels:
-      - "dependencies"
-      - "go"
       - "type::chore"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    open-pull-requests-limit: 20
       
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -19,8 +18,6 @@ updates:
     # default location of `.github/workflows`
     directory: "/"
     labels:
-      - "dependencies"
-      - "github-actions"
       - "type::chore"
     schedule:
       interval: "weekly"
