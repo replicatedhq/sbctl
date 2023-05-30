@@ -12,7 +12,7 @@ require (
 	github.com/sirupsen/logrus v1.9.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.15.0
-	golang.org/x/term v0.5.0
+	golang.org/x/term v0.8.0
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v0.23.3
 	k8s.io/apiextensions-apiserver v0.23.0
@@ -91,7 +91,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20221014153046-6fdb5e3db783 // indirect
-	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	golang.org/x/time v0.1.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
