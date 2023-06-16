@@ -1,5 +1,12 @@
 package util
 
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+)
+
 var (
 	// sbResourceCompatibilityMap
 	sbResourceCompatibilityMap = map[string]string{
@@ -18,4 +25,22 @@ func GetSBCompatibleResourceName(resource string) string {
 		return val
 	}
 	return resource
+}
+
+func GetOpenAIKey() (string, error) {
+	apiKey := os.Getenv("OPENAI_API_KEY")
+	if apiKey == "" {
+		return "", fmt.Errorf("OPENAPI_API_KEY environment variable is not set")
+	}
+	return apiKey, nil
+}
+
+func GetGithubIssue() string {
+	filePath := "github.yaml"
+	content, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		log.Fatalf("Failed to read file: %v", err)
+	}
+
+	return string(content)
 }
