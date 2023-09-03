@@ -1,6 +1,6 @@
 module github.com/replicatedhq/sbctl
 
-go 1.17
+go 1.20
 
 require (
 	github.com/antzucaro/matchr v0.0.0-20210222213004-b04723ef80f0
