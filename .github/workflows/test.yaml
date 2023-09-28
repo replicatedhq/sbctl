@@ -17,6 +17,6 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
         shell: bash
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: make build ginkgo test
