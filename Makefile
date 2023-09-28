@@ -5,10 +5,13 @@ BUILDPATHS = ./pkg/... ./cli/... ./tests/...
 build:
 	go build -o bin/sbctl sbctl.go
 
+# Install/upgrade ginkgo. This version must be the same as
+# the one on on go.mod. We'll rely on dependabot to upgrade go.mod
+.PHONY: ginkgo
 ginkgo:
-	go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.1.3
-	go get github.com/onsi/gomega/...@v1.19.0
+	go install github.com/onsi/ginkgo/v2/ginkgo
 
+.PHONY: test
 test:
 	ginkgo -v ./tests/...
 
@@ -19,3 +22,8 @@ fmt:
 .PHONY: vet
 vet:
 	go vet ${BUILDFLAGS} ${BUILDPATHS}
+
+# Compile and install sbctl locally in you GOBIN path
+.PHONY: install
+install:
+	go install sbctl.go
