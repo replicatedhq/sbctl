@@ -2,7 +2,6 @@ package tests
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -60,7 +59,7 @@ var _ = AfterSuite(func() {
 })
 
 func getAPIEndpoint(filename string) (string, error) {
-	configData, err := ioutil.ReadFile(filename)
+	configData, err := os.ReadFile(filename)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to read config data")
 	}
