@@ -130,7 +130,7 @@ func ShellCmd() *cobra.Command {
 					}
 				}
 			}()
-			ch <- syscall.SIGWINCH                        // Initial resize.
+			ch <- syscall.SIGWINCH // Initial resize.
 			defer func() { signal.Stop(ch); close(ch) }()
 
 			// Set stdin to raw mode.
@@ -146,7 +146,7 @@ func ShellCmd() *cobra.Command {
 			// Setup the shell
 			setupCmd := fmt.Sprintf("export KUBECONFIG=%s\n", kubeConfig)
 			io.WriteString(shellPty, setupCmd)
-			io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd)))  // Don't print to screen, terminal will echo anyway
+			io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd))) // Don't print to screen, terminal will echo anyway
 
 			// Copy stdin to the pty and the pty to stdout.
 			go func() { _, _ = io.Copy(shellPty, os.Stdin) }()
