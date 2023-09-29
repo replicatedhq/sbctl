@@ -2,17 +2,17 @@ BUILDFLAGS = -tags "netgo containers_image_ostree_stub exclude_graphdriver_devic
 BUILDPATHS = ./pkg/... ./cli/... ./tests/...
 
 .PHONY: build
-build:
+build: fmt vet
 	go build -o bin/sbctl sbctl.go
 
 # Install/upgrade ginkgo. This version must be the same as
-# the one on on go.mod. We'll rely on dependabot to upgrade go.mod
+# the one on go.mod. We'll rely on dependabot to upgrade go.mod
 .PHONY: ginkgo
 ginkgo:
 	go install github.com/onsi/ginkgo/v2/ginkgo
 
 .PHONY: test
-test:
+test: fmt vet
 	ginkgo -v ./tests/...
 
 .PHONY: fmt
