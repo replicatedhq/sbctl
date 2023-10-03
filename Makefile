@@ -31,16 +31,16 @@ install:
 
 .PHONY: lint
 lint:
-ifeq (, $(shell which golangci-lint))
- $(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
-endif
+	ifeq (, $(shell which golangci-lint))
+		$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
+	endif
 	golangci-lint run --new -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
 
 .PHONY: lint-and-fix
 lint-and-fix:
-ifeq (, $(shell which golangci-lint))
- $(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
-endif
+	ifeq (, $(shell which golangci-lint))
+		$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
+	endif
 	golangci-lint run --new --fix -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
 
 .PHONY: install-golangci-lint
