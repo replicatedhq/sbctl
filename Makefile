@@ -43,6 +43,9 @@ lint-and-fix:
 	endif
 	golangci-lint run --new --fix -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
 
+# Not pinning to a particular version so as not to forget updating it
+# If unrelated warnings arise due to linter updates or newly introduced linters
+# we'll consider pinning.
 .PHONY: install-golangci-lint
 install-golangci-lint:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
