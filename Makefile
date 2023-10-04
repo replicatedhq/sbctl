@@ -1,4 +1,5 @@
-BUILDFLAGS = -tags "netgo containers_image_ostree_stub exclude_graphdriver_devicemapper exclude_graphdriver_btrfs containers_image_openpgp" -installsuffix netgo
+BUILDTAGS = "netgo containers_image_ostree_stub exclude_graphdriver_devicemapper exclude_graphdriver_btrfs containers_image_openpgp"
+BUILDFLAGS = -tags ${BUILDTAGS} -installsuffix netgo
 BUILDPATHS = ./pkg/... ./cli/... ./tests/...
 
 .PHONY: build
@@ -26,4 +27,25 @@ vet:
 # Compile and install sbctl locally in you GOBIN path
 .PHONY: install
 install:
-	go install sbctl.go
+	go install ${BUILDFLAGS} sbctl.go
+
+.PHONY: lint
+lint:
+	ifeq (, $(shell which golangci-lint))
+		$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
+	endif
+	golangci-lint run --new -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
+
+.PHONY: lint-and-fix
+lint-and-fix:
+	ifeq (, $(shell which golangci-lint))
+		$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
+	endif
+	golangci-lint run --new --fix -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
+
+# Not pinning to a particular version so as not to forget updating it
+# If unrelated warnings arise due to linter updates or newly introduced linters
+# we'll consider pinning.
+.PHONY: install-golangci-lint
+install-golangci-lint:
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest

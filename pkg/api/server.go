@@ -155,7 +155,7 @@ func (h handler) getAPI(w http.ResponseWriter, r *http.Request) {
 func (h handler) getAPIV1(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIV1")
 
-	data, err := ioutil.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "resources.json"))
+	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "resources.json"))
 	if err != nil {
 		log.Println("failed to load data", err)
 		if os.IsNotExist(err) {
@@ -264,7 +264,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	}
 
 	for _, fileName := range filenames {
-		data, err := ioutil.ReadFile(fileName)
+		data, err := os.ReadFile(fileName)
 		if err != nil {
 			log.Println("failed to load file", err)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -336,7 +336,7 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 	name := mux.Vars(r)["name"]
 
 	filename := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {
@@ -407,7 +407,7 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
-	data, err := ioutil.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {
@@ -455,7 +455,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 	name := mux.Vars(r)["name"]
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
-	data, err := ioutil.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {
@@ -521,7 +521,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 func (h handler) getAPIs(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIs")
 
-	data, err := ioutil.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "groups.json"))
+	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "groups.json"))
 	if err != nil {
 		log.Println("failed to load data", err)
 		if os.IsNotExist(err) {
@@ -563,7 +563,7 @@ func (h handler) getAPIByGroupAndVersion(w http.ResponseWriter, r *http.Request)
 	group := mux.Vars(r)["group"]
 	version := mux.Vars(r)["version"]
 
-	data, err := ioutil.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "resources.json"))
+	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "resources.json"))
 	if err != nil {
 		log.Println("failed to load data", err)
 		if os.IsNotExist(err) {
@@ -804,7 +804,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	}
 
 	for _, fileName := range filenames {
-		data, err := ioutil.ReadFile(fileName)
+		data, err := os.ReadFile(fileName)
 		if err != nil {
 			log.Println("failed to load file", err)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -879,7 +879,7 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
-	data, err := ioutil.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {
@@ -924,7 +924,7 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
-	data, err := ioutil.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {
@@ -970,7 +970,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	}
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
-	data, err := ioutil.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {

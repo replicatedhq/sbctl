@@ -6,3 +6,6 @@ dist
 .vscode
 .idea
 __debug_bin
+
+# Ignore local pre-commit config
+.pre-commit-config.yaml

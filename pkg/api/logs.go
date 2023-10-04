@@ -2,7 +2,6 @@ package api
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -27,13 +26,13 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 	}
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, "logs", namespace, name, logFileName)
-	data, err := ioutil.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Println("failed to load file", err)
 		if os.IsNotExist(err) {
 			// try reading from -logs-errors.log file
 			errFileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, "logs", namespace, name, fmt.Sprintf("%s-logs-errors.log", container))
-			data, err = ioutil.ReadFile(errFileName)
+			data, err = os.ReadFile(errFileName)
 			if err != nil {
 				if os.IsNotExist(err) {
 					PlainText(w, http.StatusNotFound, []byte(fmt.Sprintf("log files not found in support-bundle.\n%v\n%v", fileName, errFileName)))
