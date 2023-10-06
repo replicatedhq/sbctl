@@ -51,6 +51,11 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 
 func PlainText(w http.ResponseWriter, responseCode int, responseBody []byte) {
 	w.Header().Set("Content-Type", "text/plain")
-	w.Write(responseBody)
-	w.WriteHeader(responseCode)
+	_, err := w.Write(responseBody)
+	if err != nil {
+		log.Error("Failed to write response", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(responseCode)
+	}
 }

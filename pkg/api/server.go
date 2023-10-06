@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"os"
@@ -97,8 +96,9 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 	r.PathPrefix("/").HandlerFunc(h.getNotFound)
 
 	srv := &http.Server{
-		Handler: handlers.LoggingHandler(logOutput, r), // Handler with logging
-		Addr:    localServerEndPoint,
+		Handler:           handlers.LoggingHandler(logOutput, r), // Handler with logging
+		Addr:              localServerEndPoint,
+		ReadHeaderTimeout: 3 * time.Second,
 	}
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:", localServerEndPoint))
 	if err != nil {
@@ -1041,7 +1041,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	}
 
 	if group == "batch" && version == "v1beta1" {
-		switch o := decoded.(type) {
+		switch o := decoded.(type) { // nolint: gocritic
 		case *batchv1beta1.CronJobList:
 			for _, item := range o.Items {
 				if item.Name == name {
@@ -1053,7 +1053,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	}
 
 	if group == "networking" && version == "v1" {
-		switch o := decoded.(type) {
+		switch o := decoded.(type) { // nolint: gocritic
 		case *networkingv1.IngressList:
 			for _, item := range o.Items {
 				if item.Name == name {
@@ -1092,14 +1092,19 @@ func JSON(w http.ResponseWriter, code int, payload interface{}) {
 
 	w.Header().Set("Content-Type", "application/json")
 
-	w.WriteHeader(code)
-	w.Write(response)
+	_, err = w.Write(response)
+	if err != nil {
+		log.Errorf("Failed to write response: %v\n", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(code)
+	}
 }
 
 func getJSONFileListFromDir(dir string) ([]string, error) {
 	filenames := []string{}
 
-	files, err := ioutil.ReadDir(dir)
+	files, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to read dir")
 	}
@@ -1174,6 +1179,7 @@ func filterObjectsByFields(object runtime.Object, selector fields.Selector) runt
 	case *corev1.EventList:
 		filtered := &corev1.EventList{}
 		for _, item := range o.Items {
+			item := item
 			if selector.Matches(eventToSelectableFields(&item)) {
 				filtered.Items = append(filtered.Items, *item.DeepCopy())
 			}

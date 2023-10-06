@@ -22,9 +22,6 @@ var (
 )
 
 var (
-	describeHeaders = map[string]string{
-		"Content-Type": "application/json",
-	}
 	getHeaders = map[string]string{
 		"Content-Type": "application/json",
 		"Accept":       "application/json;as=Table;v=v1;g=meta.k8s.io,application/json;as=Table;v=v1beta1;g=meta.k8s.io,application/json",
@@ -43,7 +40,7 @@ var _ = BeforeSuite(func() {
 	Expect(clusterData.ClusterResourcesDir).To(Equal("support-bundle/cluster-resources"))
 	Expect(clusterData.ClusterInfoFile).To(Equal("support-bundle/cluster-info/cluster_version.json"))
 
-	kubeConfig, err := api.StartAPIServer(clusterData)
+	kubeConfig, err := api.StartAPIServer(clusterData, os.Stderr)
 	Expect(err).NotTo(HaveOccurred())
 	cleanup := func() error {
 		return os.RemoveAll(kubeConfig)

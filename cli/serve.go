@@ -25,8 +25,8 @@ func ServeCmd() *cobra.Command {
 		Long:          `Start API server`,
 		SilenceUsage:  true,
 		SilenceErrors: false,
-		PreRun: func(cmd *cobra.Command, args []string) {
-			viper.BindPFlags(cmd.Flags())
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return viper.BindPFlags(cmd.Flags())
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var kubeConfig string
@@ -104,7 +104,7 @@ func ServeCmd() *cobra.Command {
 			fmt.Printf("Server is running\n\n")
 			fmt.Printf("export KUBECONFIG=%s\n\n", kubeConfig)
 
-			<-make(chan struct{}, 0)
+			<-make(chan struct{})
 
 			return nil
 		},

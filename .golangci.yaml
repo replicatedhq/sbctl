@@ -7,7 +7,6 @@ run:
 linters:
   enable:
     - gocritic
-    - gocyclo
     - gofmt
     - gosec
     - govet
