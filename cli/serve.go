@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -95,7 +94,7 @@ func ServeCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
-			kubeConfig, err = api.StartAPIServer(clusterData)
+			kubeConfig, err = api.StartAPIServer(clusterData, os.Stderr)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
 
@@ -142,7 +141,7 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to read GQL response")
 	}
@@ -175,7 +174,7 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 		return "", errors.Errorf("unexpected status code: %v", resp.StatusCode)
 	}
 
-	tmpFile, err := ioutil.TempFile("", "sbctl-bundle-")
+	tmpFile, err := os.CreateTemp("", "sbctl-bundle-")
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create temp file")
 	}

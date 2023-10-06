@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/replicatedhq/sbctl/pkg/k8s"
@@ -68,13 +69,12 @@ type errorResponse struct {
 	Error string `json:"error"`
 }
 
-func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
+func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string, error) {
 	h := handler{
 		clusterData: clusterData,
 	}
 
 	r := mux.NewRouter()
-	r.Use(loggingMiddleware)
 
 	r.HandleFunc("/api", h.getAPI)
 	apiRouter := r.PathPrefix("/api").Subrouter()
@@ -97,17 +97,17 @@ func StartAPIServer(clusterData sbctl.ClusterData) (string, error) {
 	r.PathPrefix("/").HandlerFunc(h.getNotFound)
 
 	srv := &http.Server{
-		Handler: r,
+		Handler: handlers.LoggingHandler(logOutput, r), // Handler with logging
 		Addr:    localServerEndPoint,
 	}
-	listener, err := net.Listen("tcp", ":0")
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:", localServerEndPoint))
 	if err != nil {
 		return "", errors.Wrap(err, "listening on port")
 	}
 
-	go func() {
-		panic(srv.Serve(listener))
-	}()
+	go func(server *http.Server) {
+		panic(server.Serve(listener))
+	}(srv)
 
 	timeout := 10 * time.Second
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
@@ -218,7 +218,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 	case "pods":
 		result = k8s.GetEmptyPodList()
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get pod files from dir", err)
@@ -227,7 +227,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		}
 	case "events":
 		result = k8s.GetEmptyEventList()
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get event files from dir", err)
@@ -236,7 +236,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		}
 	case "limitranges":
 		result = k8s.GetEmptyLimitRangeList()
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get event files from dir", err)
@@ -245,7 +245,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		}
 	case "services":
 		result = k8s.GetEmptyServiceList()
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get service files from dir", err)
@@ -254,7 +254,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		}
 	case "persistentvolumeclaims":
 		result = k8s.GetEmptyPersistentVolumeClaimList()
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", sbctlutil.GetSBCompatibleResourceName(resource)))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get persistentvolumeclaim files from dir", err)
@@ -622,7 +622,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			Version: version,
 			Kind:    "JobList",
 		})
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get job files from dir", err)
@@ -638,7 +638,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			Version: version,
 			Kind:    "CronJobList",
 		})
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get cronjob files from dir", err)
@@ -654,7 +654,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			Version: version,
 			Kind:    "DeploymentList",
 		})
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get deployment files from dir", err)
@@ -670,7 +670,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			Version: version,
 			Kind:    "ReplicaSetList",
 		})
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get replicaset files from dir", err)
@@ -686,7 +686,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			Version: version,
 			Kind:    "StatefulSetList",
 		})
-		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s", resource))
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
 			log.Println("failed to get replicaset files from dir", err)
@@ -1080,7 +1080,6 @@ func (h handler) getNotFound(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Error(w, "", http.StatusNotFound)
-	return
 }
 
 func JSON(w http.ResponseWriter, code int, payload interface{}) {

@@ -3,7 +3,6 @@ package cli
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -35,12 +34,14 @@ func ShellCmd() *cobra.Command {
 			var bundleDir string
 			deleteBundleDir := false
 
-			logFile, err := ioutil.TempFile("", "sbctl-server-logs-")
+			logOutput := os.Stderr
+			logFile, err := os.CreateTemp("", "sbctl-server-logs-")
 			if err == nil {
 				fmt.Printf("API server logs will be written to %s\n", logFile.Name())
 				defer logFile.Close()
 				defer os.RemoveAll(logFile.Name())
 				log.SetOutput(logFile)
+				logOutput = logFile
 			}
 
 			go func() {
@@ -104,7 +105,7 @@ func ShellCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
-			kubeConfig, err = api.StartAPIServer(clusterData)
+			kubeConfig, err = api.StartAPIServer(clusterData, logOutput)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
 			}
