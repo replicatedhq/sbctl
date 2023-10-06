@@ -2,7 +2,7 @@
 
 run:
   allow-parallel-runners: true
-  timeout: 30s
+  timeout: 120s
 
 linters:
   enable:
