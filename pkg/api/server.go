@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	stdLog "log"
 	"net"
 	"net/http"
 	"os"
@@ -95,19 +96,27 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 
 	r.PathPrefix("/").HandlerFunc(h.getNotFound)
 
+	// Pipe the error server logs to the standard logger
+	srvLogsPipe := log.StandardLogger().WriterLevel(log.ErrorLevel)
 	srv := &http.Server{
 		Handler:           handlers.LoggingHandler(logOutput, r), // Handler with logging
 		Addr:              localServerEndPoint,
 		ReadHeaderTimeout: 3 * time.Second,
+		ErrorLog:          stdLog.New(srvLogsPipe, "", 0),
 	}
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:", localServerEndPoint))
 	if err != nil {
 		return "", errors.Wrap(err, "listening on port")
 	}
 
-	go func(server *http.Server) {
-		panic(server.Serve(listener))
-	}(srv)
+	go func(server *http.Server, logsPipe *io.PipeWriter) {
+		defer logsPipe.Close()
+
+		err := server.Serve(listener)
+		if !errors.Is(err, http.ErrServerClosed) {
+			log.Panic(err)
+		}
+	}(srv, srvLogsPipe)
 
 	timeout := 10 * time.Second
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
@@ -1091,13 +1100,11 @@ func JSON(w http.ResponseWriter, code int, payload interface{}) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
 
 	_, err = w.Write(response)
 	if err != nil {
 		log.Errorf("Failed to write response: %v\n", err)
-		w.WriteHeader(http.StatusInternalServerError)
-	} else {
-		w.WriteHeader(code)
 	}
 }
 
