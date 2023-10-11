@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/antzucaro/matchr v0.0.0-20210222213004-b04723ef80f0
 	github.com/creack/pty v1.1.18
+	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/onsi/ginkgo/v2 v2.9.4
 	github.com/onsi/gomega v1.27.6

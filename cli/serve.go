@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -26,8 +25,8 @@ func ServeCmd() *cobra.Command {
 		Long:          `Start API server`,
 		SilenceUsage:  true,
 		SilenceErrors: false,
-		PreRun: func(cmd *cobra.Command, args []string) {
-			viper.BindPFlags(cmd.Flags())
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return viper.BindPFlags(cmd.Flags())
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var kubeConfig string
@@ -95,7 +94,7 @@ func ServeCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
-			kubeConfig, err = api.StartAPIServer(clusterData)
+			kubeConfig, err = api.StartAPIServer(clusterData, os.Stderr)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
 
@@ -105,7 +104,7 @@ func ServeCmd() *cobra.Command {
 			fmt.Printf("Server is running\n\n")
 			fmt.Printf("export KUBECONFIG=%s\n\n", kubeConfig)
 
-			<-make(chan struct{}, 0)
+			<-make(chan struct{})
 
 			return nil
 		},
@@ -142,7 +141,7 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to read GQL response")
 	}
@@ -175,7 +174,7 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 		return "", errors.Errorf("unexpected status code: %v", resp.StatusCode)
 	}
 
-	tmpFile, err := ioutil.TempFile("", "sbctl-bundle-")
+	tmpFile, err := os.CreateTemp("", "sbctl-bundle-")
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create temp file")
 	}
