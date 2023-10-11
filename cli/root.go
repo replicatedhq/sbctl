@@ -14,8 +14,8 @@ func RootCmd() *cobra.Command {
 		Short:        "Run commands against a support bundle",
 		Long:         `Run commands against a support bundle`,
 		SilenceUsage: true,
-		PreRun: func(cmd *cobra.Command, args []string) {
-			viper.BindPFlags(cmd.Flags())
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return viper.BindPFlags(cmd.Flags())
 		},
 	}
 
@@ -26,8 +26,6 @@ func RootCmd() *cobra.Command {
 
 	cmd.AddCommand(ServeCmd())
 	cmd.AddCommand(ShellCmd())
-
-	viper.BindPFlags(cmd.Flags())
 
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 

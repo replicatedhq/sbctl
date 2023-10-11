@@ -3,8 +3,12 @@ BUILDFLAGS = -tags ${BUILDTAGS} -installsuffix netgo
 BUILDPATHS = ./pkg/... ./cli/... ./tests/...
 
 .PHONY: build
-build: fmt vet
+build: mod-tidy fmt vet
 	go build -o bin/sbctl sbctl.go
+
+.PHONY: mod-tidy
+mod-tidy:
+	go mod tidy
 
 # Install/upgrade ginkgo. This version must be the same as
 # the one on go.mod. We'll rely on dependabot to upgrade go.mod
@@ -31,16 +35,16 @@ install:
 
 .PHONY: lint
 lint:
-	ifeq (, $(shell which golangci-lint))
-		$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
-	endif
+ifeq (, $(shell which golangci-lint))
+	$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
+endif
 	golangci-lint run --new -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
 
 .PHONY: lint-and-fix
 lint-and-fix:
-	ifeq (, $(shell which golangci-lint))
-		$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
-	endif
+ifeq (, $(shell which golangci-lint))
+	$(error "Install golangci-lint by either running 'make install-golangci-lint' or by other means")
+endif
 	golangci-lint run --new --fix -c .golangci.yaml --build-tags ${BUILDTAGS} ${BUILDPATHS}
 
 # Not pinning to a particular version so as not to forget updating it
@@ -49,3 +53,12 @@ lint-and-fix:
 .PHONY: install-golangci-lint
 install-golangci-lint:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+.PHONY: scan
+scan:
+	trivy fs \
+		--scanners vuln \
+		--exit-code=1 \
+		--severity="HIGH,CRITICAL" \
+		--ignore-unfixed \
+		./

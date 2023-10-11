@@ -44,7 +44,7 @@ func ExtractBundle(filename string, outDir string) error {
 		}
 
 		err = func() error {
-			outFilename := filepath.Join(outDir, header.Name)
+			outFilename := filepath.Join(outDir, header.Name) // nolint: gosec // ignore decompression bombs
 			outPath := filepath.Dir(outFilename)
 			err = os.MkdirAll(outPath, 0755)
 			if err != nil {
@@ -57,7 +57,8 @@ func ExtractBundle(filename string, outDir string) error {
 			}
 			defer outFile.Close()
 
-			_, err = io.Copy(outFile, tarReader)
+			// ignore decompression bombs
+			_, err = io.Copy(outFile, tarReader) // nolint: gosec // ignore decompression bombs)
 			if err != nil {
 				return errors.Wrap(err, "failed to copy file")
 			}

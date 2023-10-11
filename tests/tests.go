@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -23,7 +23,7 @@ func HTTPExec(verb string, url string, headers map[string]string) (string, int, 
 	}
 	defer res.Body.Close()
 
-	data, err := ioutil.ReadAll(res.Body)
+	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		return "", 0, errors.Wrap(err, "failed to read response body")
 	}

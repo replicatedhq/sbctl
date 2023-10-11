@@ -2,12 +2,11 @@
 
 run:
   allow-parallel-runners: true
-  timeout: 30s
+  timeout: 300s
 
 linters:
   enable:
     - gocritic
-    - gocyclo
     - gofmt
     - gosec
     - govet

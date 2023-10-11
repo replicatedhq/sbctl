@@ -3,7 +3,6 @@ package cli
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -27,20 +26,22 @@ func ShellCmd() *cobra.Command {
 		Long:          `Start interractive shell`,
 		SilenceUsage:  true,
 		SilenceErrors: false,
-		PreRun: func(cmd *cobra.Command, args []string) {
-			viper.BindPFlags(cmd.Flags())
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return viper.BindPFlags(cmd.Flags())
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var kubeConfig string
 			var bundleDir string
 			deleteBundleDir := false
 
-			logFile, err := ioutil.TempFile("", "sbctl-server-logs-")
+			logOutput := os.Stderr
+			logFile, err := os.CreateTemp("", "sbctl-server-logs-")
 			if err == nil {
 				fmt.Printf("API server logs will be written to %s\n", logFile.Name())
 				defer logFile.Close()
 				defer os.RemoveAll(logFile.Name())
 				log.SetOutput(logFile)
+				logOutput = logFile
 			}
 
 			go func() {
@@ -51,7 +52,7 @@ func ShellCmd() *cobra.Command {
 					_ = os.RemoveAll(kubeConfig)
 				}
 				if deleteBundleDir && bundleDir != "" {
-					os.RemoveAll(bundleDir)
+					_ = os.RemoveAll(bundleDir)
 				}
 				os.Exit(0)
 			}()
@@ -104,7 +105,7 @@ func ShellCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
-			kubeConfig, err = api.StartAPIServer(clusterData)
+			kubeConfig, err = api.StartAPIServer(clusterData, logOutput)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
 			}
@@ -119,6 +120,9 @@ func ShellCmd() *cobra.Command {
 			shellExec.Env = os.Environ()
 			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
 			shellPty, err := pty.Start(shellExec)
+			if err != nil {
+				return errors.Wrap(err, "failed to start shell")
+			}
 
 			// Handle pty size.
 			ch := make(chan os.Signal, 1)
@@ -145,15 +149,14 @@ func ShellCmd() *cobra.Command {
 
 			// Setup the shell
 			setupCmd := fmt.Sprintf("export KUBECONFIG=%s\n", kubeConfig)
-			io.WriteString(shellPty, setupCmd)
-			io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd))) // Don't print to screen, terminal will echo anyway
+			_, _ = io.WriteString(shellPty, setupCmd)
+			_, _ = io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd))) // Don't print to screen, terminal will echo anyway
 
 			// Copy stdin to the pty and the pty to stdout.
 			go func() { _, _ = io.Copy(shellPty, os.Stdin) }()
 			go func() { _, _ = io.Copy(os.Stdout, shellPty) }()
 
-			shellExec.Wait()
-			return nil
+			return shellExec.Wait()
 		},
 	}
 
