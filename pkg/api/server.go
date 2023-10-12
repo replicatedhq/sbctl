@@ -175,8 +175,7 @@ func (h handler) getAPI(w http.ResponseWriter, r *http.Request) {
 
 func (h handler) getVersion(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getVersion")
-	log.Error("failed to load file: ", errors.New("test"))
-	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterInfoFile))
+	data, err := os.ReadFile(h.clusterData.ClusterInfoFile)
 	if err != nil {
 		log.Error("failed to load data: ", err)
 		if os.IsNotExist(err) {
