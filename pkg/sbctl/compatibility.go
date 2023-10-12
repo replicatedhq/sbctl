@@ -51,6 +51,7 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 			gvk := o.GetObjectKind().GroupVersionKind()
 			return o, &gvk, nil
 		}
+		log.Warn("could not decode data into an unstructured object: ", err)
 
 		// Try to decode object into an unstructured list
 		var vList []unstructured.Unstructured
@@ -63,7 +64,9 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 			list.Items = append(list.Items, vList...)
 			return &list, &gvk, nil
 		}
-
+		if err != nil {
+			log.Warn("could not decode data into an unstructured list object: ", err)
+		}
 		return nil, nil, errors.Wrap(err, "could not decode data into a k8s object")
 	}
 

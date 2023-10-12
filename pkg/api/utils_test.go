@@ -51,6 +51,13 @@ func Test_parseAcceptHeader(t *testing.T) {
 				"application/json": "",
 			},
 		},
+		{
+			name: "just a space",
+			headers: []string{
+				"   ",
+			},
+			want: map[string]string{},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

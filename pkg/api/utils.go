@@ -18,17 +18,17 @@ func parseAcceptHeader(headers []string) map[string]string {
 			// Split the header by semicolon
 			ss := strings.Split(dd, ";")
 			for _, v := range ss {
-				// Ignore empty keys
-				if v == "" {
-					continue
-				}
-
 				vv := strings.Split(v, "=")
 				if len(vv) == 0 {
 					continue
 				}
 
 				key := strings.TrimSpace(vv[0])
+
+				// Ignore empty keys
+				if key == "" {
+					continue
+				}
 
 				// If the key is present, skip it
 				_, ok := m[key]
