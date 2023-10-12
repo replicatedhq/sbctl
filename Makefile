@@ -19,6 +19,7 @@ ginkgo:
 .PHONY: test
 test: fmt vet
 	ginkgo -v ./tests/...
+	go test -v ${BUILDFLAGS} ./pkg/... ./cli/...
 
 .PHONY: fmt
 fmt:

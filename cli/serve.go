@@ -112,6 +112,7 @@ func ServeCmd() *cobra.Command {
 
 	cmd.Flags().StringP("support-bundle-location", "s", "", "path to support bundle archive, directory, or URL")
 	cmd.Flags().StringP("token", "t", "", "API token for authentication when fetching on-line bundles")
+	cmd.Flags().Bool("debug", false, "enable debug logging. This will include HTTP response bodies in logs.")
 	return cmd
 }
 

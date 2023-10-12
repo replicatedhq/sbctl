@@ -28,7 +28,7 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, "logs", namespace, name, logFileName)
 	data, err := os.ReadFile(fileName)
 	if err != nil {
-		log.Println("failed to load file", err)
+		log.Error("failed to load file :", err)
 		if os.IsNotExist(err) {
 			// try reading from -logs-errors.log file
 			errFileName := filepath.Join(h.clusterData.ClusterResourcesDir, resource, "logs", namespace, name, fmt.Sprintf("%s-logs-errors.log", container))
@@ -54,6 +54,6 @@ func PlainText(w http.ResponseWriter, responseCode int, responseBody []byte) {
 	w.WriteHeader(responseCode)
 	_, err := w.Write(responseBody)
 	if err != nil {
-		log.Error("Failed to write response", err)
+		log.Error("Failed to write response: ", err)
 	}
 }
