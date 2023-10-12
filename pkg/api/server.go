@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/golang/gddo/httputil/header"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
@@ -1574,7 +1575,10 @@ func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 		return nil, err
 	}
 
-	accepts := parseAcceptHeader(r.Header.Values("Accept"))
+	// TODO: github.com/golang/gddo is no longer maintained. We should
+	// replace it with something else. https://github.com/golang/go/issues/44417
+	// tracks a proposal to add this functionality to the standard library.
+	_, accepts := header.ParseValueAndParams(r.Header, "Accept")
 	g := accepts["g"]
 	if g == "" {
 		g = "meta.k8s.io"
