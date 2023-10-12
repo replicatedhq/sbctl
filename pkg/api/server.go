@@ -1141,6 +1141,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *appsv1.ReplicaSetList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1148,6 +1149,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *appsv1.DeploymentList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1155,6 +1157,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *appsv1.DaemonSetList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1162,6 +1165,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *appsv1.StatefulSetList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1174,6 +1178,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *batchv1.JobList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1181,6 +1186,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *batchv1.CronJobList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1193,6 +1199,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *batchv1beta1.CronJobList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1205,6 +1212,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *networkingv1.IngressList:
 			for _, item := range o.Items {
 				if item.Name == name {
+					item := item
 					setResponse(&item)
 					return
 				}
@@ -1219,6 +1227,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	} else {
 		for _, item := range uObjList.Items {
 			if item.GetName() == name {
+				item := item
 				setResponse(&item)
 				return
 			}
