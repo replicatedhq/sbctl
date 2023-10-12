@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/golang/gddo/httputil/header"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
@@ -22,6 +23,7 @@ import (
 	sbctlutil "github.com/replicatedhq/sbctl/pkg/util"
 	log "github.com/sirupsen/logrus"
 	appsv1 "k8s.io/api/apps/v1"
+	authorizationv1 "k8s.io/api/authorization/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 	corev1 "k8s.io/api/core/v1"
@@ -31,10 +33,12 @@ import (
 	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/version"
 	"k8s.io/apiserver/pkg/registry/generic"
 	apisapps "k8s.io/kubernetes/pkg/apis/apps"
 	apisappsv1 "k8s.io/kubernetes/pkg/apis/apps/v1"
@@ -63,6 +67,10 @@ var (
 type handler struct {
 	clusterData sbctl.ClusterData
 }
+type clusterVersion struct {
+	Info   *version.Info `json:"info"`
+	String string        `json:"string"`
+}
 
 // fake, kubectl can't parse this anyways
 type errorResponse struct {
@@ -75,6 +83,7 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 	}
 
 	r := mux.NewRouter()
+	r.Use(dumpRequestResponse)
 
 	r.HandleFunc("/api", h.getAPI)
 	apiRouter := r.PathPrefix("/api").Subrouter()
@@ -93,6 +102,8 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 	apisRouter.HandleFunc("/{group}/{version}/{resource}/{name}", h.getAPIsClusterResource)
 	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}", h.getAPIsNamespaceResources)
 	apisRouter.HandleFunc("/{group}/{version}/namespaces/{namespace}/{resource}/{name}", h.getAPIsNamespaceResource)
+
+	r.HandleFunc("/version", h.getVersion)
 
 	r.PathPrefix("/").HandlerFunc(h.getNotFound)
 
@@ -161,12 +172,36 @@ func (h handler) getAPI(w http.ResponseWriter, r *http.Request) {
 	JSON(w, http.StatusOK, apiVersions)
 }
 
+func (h handler) getVersion(w http.ResponseWriter, r *http.Request) {
+	log.Println("called getVersion")
+	data, err := os.ReadFile(h.clusterData.ClusterInfoFile)
+	if err != nil {
+		log.Error("failed to load data: ", err)
+		if os.IsNotExist(err) {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		return
+	}
+
+	var obj clusterVersion
+	err = json.Unmarshal(data, &obj)
+	if err != nil {
+		log.Errorf("unable to parse the server version: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	JSON(w, http.StatusOK, obj.Info)
+}
+
 func (h handler) getAPIV1(w http.ResponseWriter, r *http.Request) {
 	log.Println("called getAPIV1")
 
 	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "resources.json"))
 	if err != nil {
-		log.Println("failed to load data", err)
+		log.Error("failed to load data: ", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -185,7 +220,7 @@ func (h handler) getAPIV1(w http.ResponseWriter, r *http.Request) {
 
 	err = json.Unmarshal(data, &allResources)
 	if err != nil {
-		log.Println("failed to unmarshal data", err)
+		log.Error("failed to unmarshal data: ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -208,14 +243,14 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 
 	fieldSelector, err := fields.ParseSelector(r.URL.Query().Get("fieldSelector"))
 	if err != nil {
-		log.Println("failed to parse fieldSelector", r.URL.Query().Get("fieldSelector"), ":", err)
+		log.Error("failed to parse fieldSelector ", r.URL.Query().Get("fieldSelector"), ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	labelSelector, err := fields.ParseSelector(r.URL.Query().Get("labelSelector"))
 	if err != nil {
-		log.Println("failed to parse labelSelector", r.URL.Query().Get("labelSelector"), ":", err)
+		log.Error("failed to parse labelSelector ", r.URL.Query().Get("labelSelector"), ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -230,7 +265,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get pod files from dir", err)
+			log.Error("failed to get pod files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -239,7 +274,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get event files from dir", err)
+			log.Error("failed to get event files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -248,7 +283,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get event files from dir", err)
+			log.Error("failed to get event files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -257,7 +292,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get service files from dir", err)
+			log.Error("failed to get service files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -266,23 +301,28 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get persistentvolumeclaim files from dir", err)
+			log.Error("failed to get persistentvolumeclaim files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	}
 
 	for _, fileName := range filenames {
+		// If we know the file does not exist, just respond with an empty list
+		if !fileExists(fileName) {
+			continue
+		}
+
 		data, err := os.ReadFile(fileName)
 		if err != nil {
-			log.Println("failed to load file", err)
+			log.Error("failed to load file: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		decoded, gvk, err := sbctl.Decode(resource, data)
+		decoded, _, err := sbctl.Decode(resource, data)
 		if err != nil {
-			log.Println("failed to decode wrapped", resource, ":", err)
+			log.Error("failed to decode wrapped ", resource, ": ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -290,14 +330,14 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 		// TODO: is this an AND or an OR
 		decoded, err = filterObjectsByLabels(decoded, labelSelector)
 		if err != nil {
-			log.Println("failed to filter by labels", err)
+			log.Error("failed to filter by labels: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
 		decoded = filterObjectsByFields(decoded, fieldSelector)
 
-		// The switch below is incomplete, so let's skip it if we are only deling with 1 list of items
+		// The switch below is incomplete, so let's skip it if we are only dealing with 1 list of items
 		if len(filenames) == 1 {
 			result = decoded
 			break
@@ -320,16 +360,30 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			r := result.(*corev1.PersistentVolumeClaimList)
 			r.Items = append(r.Items, o.Items...)
 		default:
-			log.Println("wrong gvk is found", gvk)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+			result, err = sbctl.ToUnstructuredList(decoded)
+			if err != nil {
+				log.Error("failed to convert type to unstructured: ", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 		}
 	}
 
+	if result == nil {
+		obj := unstructured.UnstructuredList{}
+		obj.SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   mux.Vars(r)["group"],
+			Version: mux.Vars(r)["version"],
+			Kind:    resource,
+		})
+
+		result = &obj
+	}
+
 	if asTable {
-		table, err := toTable(result)
+		table, err := toTable(result, r)
 		if err != nil {
-			log.Println("could not convert to table:", err)
+			log.Error("could not convert to table: ", err)
 		} else {
 			result = table
 		}
@@ -347,7 +401,7 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 	filename := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
 	data, err := os.ReadFile(filename)
 	if err != nil {
-		log.Println("failed to load file", err)
+		log.Error("failed to load file: ", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -358,7 +412,7 @@ func (h handler) getAPIV1ClusterResource(w http.ResponseWriter, r *http.Request)
 
 	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode wrapped", resource, ":", err)
+		log.Error("failed to decode wrapped ", resource, ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -402,52 +456,60 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 
 	fieldSelector, err := fields.ParseSelector(r.URL.Query().Get("fieldSelector"))
 	if err != nil {
-		log.Println("failed to parse fieldSelector", fieldSelector, ":", err)
+		log.Error("failed to parse fieldSelector ", fieldSelector, ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	labelSelector, err := fields.ParseSelector(r.URL.Query().Get("labelSelector"))
 	if err != nil {
-		log.Println("failed to parse labelSelector", r.URL.Query().Get("labelSelector"), ":", err)
+		log.Error("failed to parse labelSelector ", r.URL.Query().Get("labelSelector"), ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
-	data, err := os.ReadFile(fileName)
-	if err != nil {
-		log.Println("failed to load file", err)
-		if os.IsNotExist(err) {
-			w.WriteHeader(http.StatusNotFound)
-		} else {
+	var decoded runtime.Object
+	// If we know the file does not exist, just respond with an empty list
+	if !fileExists(fileName) {
+		obj := unstructured.UnstructuredList{}
+		obj.SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   mux.Vars(r)["group"],
+			Version: mux.Vars(r)["version"],
+			Kind:    resource,
+		})
+		decoded = &obj
+	} else {
+		data, err := os.ReadFile(fileName)
+		if err != nil {
+			log.Error("failed to load file: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
-		return
-	}
 
-	decoded, _, err := sbctl.Decode(resource, data)
-	if err != nil {
-		log.Println("failed to decode wrapped", resource, ":", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+		decoded, _, err = sbctl.Decode(resource, data)
+		if err != nil {
+			log.Error("failed to decode wrapped ", resource, ": ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
-	// TODO: is this an AND or an OR
-	decoded, err = filterObjectsByLabels(decoded, labelSelector)
-	if err != nil {
-		log.Println("failed to filter by labels", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+		// TODO: is this an AND or an OR
+		decoded, err = filterObjectsByLabels(decoded, labelSelector)
+		if err != nil {
+			log.Error("failed to filter by labels: ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
-	decoded = filterObjectsByFields(decoded, fieldSelector)
+		decoded = filterObjectsByFields(decoded, fieldSelector)
+	}
 
 	if asTable {
-		table, err := toTable(decoded)
+		table, err := toTable(decoded, r)
 		if err != nil {
-			log.Println("could not convert to table:", err)
+			log.Warn("could not convert to table: ", err)
 		} else {
 			decoded = table
 		}
@@ -466,7 +528,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 
 	data, err := os.ReadFile(fileName)
 	if err != nil {
-		log.Println("failed to load file", err)
+		log.Error("failed to load file: ", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -477,7 +539,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 
 	decoded, gvk, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode wrapped", resource, ":", err)
+		log.Error("failed to decode wrapped ", resource, ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -519,9 +581,18 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 			}
 		}
 	default:
-		log.Println("wrong gvk is found", gvk)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		uObjList, err := sbctl.ToUnstructuredList(decoded)
+		if err != nil {
+			log.Error("failed to convert type to unstructured: ", gvk)
+			return
+		} else {
+			for _, item := range uObjList.Items {
+				if item.GetName() == name {
+					JSON(w, http.StatusOK, item)
+					return
+				}
+			}
+		}
 	}
 
 	JSON(w, http.StatusNotFound, errorNotFound)
@@ -532,7 +603,7 @@ func (h handler) getAPIs(w http.ResponseWriter, r *http.Request) {
 
 	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "groups.json"))
 	if err != nil {
-		log.Println("failed to load data", err)
+		log.Error("failed to load data: ", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -544,7 +615,7 @@ func (h handler) getAPIs(w http.ResponseWriter, r *http.Request) {
 	allGroups := []metav1.APIGroup{}
 	err = json.Unmarshal(data, &allGroups)
 	if err != nil {
-		log.Println("failed to unmarshal data", err)
+		log.Error("failed to unmarshal data: ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -574,7 +645,7 @@ func (h handler) getAPIByGroupAndVersion(w http.ResponseWriter, r *http.Request)
 
 	data, err := os.ReadFile(filepath.Join(h.clusterData.ClusterResourcesDir, "resources.json"))
 	if err != nil {
-		log.Println("failed to load data", err)
+		log.Error("failed to load data: ", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -593,7 +664,7 @@ func (h handler) getAPIByGroupAndVersion(w http.ResponseWriter, r *http.Request)
 
 	err = json.Unmarshal(data, &allResources)
 	if err != nil {
-		log.Println("failed to unmarshal data", err)
+		log.Error("failed to unmarshal data: ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -634,7 +705,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get job files from dir", err)
+			log.Error("failed to get job files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -650,7 +721,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get cronjob files from dir", err)
+			log.Error("failed to get cronjob files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -666,7 +737,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get deployment files from dir", err)
+			log.Error("failed to get deployment files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -682,7 +753,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get replicaset files from dir", err)
+			log.Error("failed to get replicaset files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -698,7 +769,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, resource)
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get replicaset files from dir", err)
+			log.Error("failed to get replicaset files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -713,7 +784,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		})
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 		if err != nil {
-			log.Println("failed to get storageclasses files from dir", err)
+			log.Error("failed to get storageclasses files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -728,7 +799,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		})
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 		if err != nil {
-			log.Println("failed to get customresourcedefinitions files from dir", err)
+			log.Error("failed to get customresourcedefinitions files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -744,7 +815,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get ingresses files from dir", err)
+			log.Error("failed to get ingresses files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -760,7 +831,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get roles files from dir", err)
+			log.Error("failed to get roles files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -775,7 +846,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		})
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 		if err != nil {
-			log.Println("failed to get clusterrole files from dir", err)
+			log.Error("failed to get clusterrole files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -791,7 +862,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
 		filenames, err = getJSONFileListFromDir(dirName)
 		if err != nil {
-			log.Println("failed to get rolebindings files from dir", err)
+			log.Error("failed to get rolebindings files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -806,23 +877,49 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		})
 		filenames = []string{filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))}
 		if err != nil {
-			log.Println("failed to get cluster-role-binding files from dir", err)
+			log.Error("failed to get cluster-role-binding files from dir: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "selfsubjectaccessreviews":
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			log.Error("failed to read request body: ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		decoded, gvk, err := sbctl.Decode(resource, body)
+		if err != nil {
+			log.Error("failed to decode wrapped ", resource, ": ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		if selfReview, ok := decoded.(*authorizationv1.SelfSubjectAccessReview); ok {
+			selfReview.Status.Allowed = true // In sbctl, we always allow self access reviews
+			JSON(w, http.StatusOK, selfReview)
+		} else {
+			log.Warnf("We do not know gvk: %s\n", gvk)
+			JSON(w, http.StatusNotFound, errorNotFound)
+		}
+		return
 	}
 
 	for _, fileName := range filenames {
+		// If we know the file does not exist, just respond with an empty list
+		if !fileExists(fileName) {
+			continue
+		}
+
 		data, err := os.ReadFile(fileName)
 		if err != nil {
-			log.Println("failed to load file", err)
+			log.Error("failed to load file: ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		decoded, gvk, err := sbctl.Decode(resource, data)
+		decoded, _, err := sbctl.Decode(resource, data)
 		if err != nil {
-			log.Println("failed to decode wrapped", resource, ":", err)
+			log.Error("failed to decode wrapped ", resource, ": ", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -864,16 +961,30 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			r := result.(*rbacv1.RoleBindingList)
 			r.Items = append(r.Items, o.Items...)
 		default:
-			log.Println("wrong gvk is found", gvk)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+			result, err = sbctl.ToUnstructuredList(decoded)
+			if err != nil {
+				log.Error("failed to convert type to unstructured list: ", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 		}
 	}
 
+	if result == nil {
+		obj := unstructured.UnstructuredList{}
+		obj.SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   mux.Vars(r)["group"],
+			Version: mux.Vars(r)["version"],
+			Kind:    resource,
+		})
+
+		result = &obj
+	}
+
 	if asTable {
-		table, err := toTable(result)
+		table, err := toTable(result, r)
 		if err != nil {
-			log.Println("could not convert to table:", err)
+			log.Warn("could not convert to table:", err)
 		} else {
 			result = table
 		}
@@ -890,7 +1001,7 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
 	data, err := os.ReadFile(fileName)
 	if err != nil {
-		log.Println("failed to load file", err)
+		log.Error("failed to load file", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -901,7 +1012,7 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 
 	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode wrapped", resource, ":", err)
+		log.Error("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -933,28 +1044,44 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
-	data, err := os.ReadFile(fileName)
-	if err != nil {
-		log.Println("failed to load file", err)
-		if os.IsNotExist(err) {
-			w.WriteHeader(http.StatusNotFound)
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-		}
-		return
+
+	// Check if its in custom resources dir
+	if !fileExists(fileName) {
+		dirName := fmt.Sprintf("%s.%s", resource, mux.Vars(r)["group"])
+		fileName = filepath.Join(h.clusterData.ClusterResourcesDir, "custom-resources", dirName, fmt.Sprintf("%s.json", namespace))
 	}
 
-	decoded, _, err := sbctl.Decode(resource, data)
-	if err != nil {
-		log.Println("failed to decode wrapped", resource, ":", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	var decoded runtime.Object
+	// If the file does not exist, return an empty list
+	if fileExists(fileName) {
+		data, err := os.ReadFile(fileName)
+		if err != nil {
+			log.Error("failed to load file: ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		decoded, _, err = sbctl.Decode(resource, data)
+		if err != nil {
+			log.Error("failed to decode wrapped ", resource, ": ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	} else {
+		obj := unstructured.UnstructuredList{}
+		obj.SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   mux.Vars(r)["group"],
+			Version: mux.Vars(r)["version"],
+			Kind:    resource,
+		})
+
+		decoded = &obj
 	}
 
 	if asTable {
-		table, err := toTable(decoded)
+		table, err := toTable(decoded, r)
 		if err != nil {
-			log.Println("could not convert to table:", err)
+			log.Warn("could not convert to table: ", err)
 		} else {
 			decoded = table
 		}
@@ -974,14 +1101,30 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
-	if asTable {
-		log.Printf("TODO: as=Table is not yet implemeted")
+
+	setResponse := func(d runtime.Object) {
+		if asTable {
+			table, err := toTable(d, r)
+			if err != nil {
+				log.Warn("could not convert to table: ", err)
+			} else {
+				d = table
+			}
+		}
+		JSON(w, http.StatusOK, d)
 	}
 
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
+
+	// Check if its in custom resources dir
+	if !fileExists(fileName) {
+		dirName := fmt.Sprintf("%s.%s", resource, mux.Vars(r)["group"])
+		fileName = filepath.Join(h.clusterData.ClusterResourcesDir, "custom-resources", dirName, fmt.Sprintf("%s.json", namespace))
+	}
+
 	data, err := os.ReadFile(fileName)
 	if err != nil {
-		log.Println("failed to load file", err)
+		log.Error("failed to load file: ", err)
 		if os.IsNotExist(err) {
 			w.WriteHeader(http.StatusNotFound)
 		} else {
@@ -992,7 +1135,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 
 	decoded, _, err := sbctl.Decode(resource, data)
 	if err != nil {
-		log.Println("failed to decode wrapped", resource, ":", err)
+		log.Error("failed to decode wrapped ", resource, ": ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -1002,28 +1145,32 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *appsv1.ReplicaSetList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
 		case *appsv1.DeploymentList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
 		case *appsv1.DaemonSetList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
 		case *appsv1.StatefulSetList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
@@ -1035,14 +1182,16 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *batchv1.JobList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
 		case *batchv1.CronJobList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
@@ -1054,7 +1203,8 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *batchv1beta1.CronJobList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
 			}
@@ -1066,9 +1216,24 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 		case *networkingv1.IngressList:
 			for _, item := range o.Items {
 				if item.Name == name {
-					JSON(w, http.StatusOK, item)
+					item := item
+					setResponse(&item)
 					return
 				}
+			}
+		}
+	}
+
+	uObjList, err := sbctl.ToUnstructuredList(decoded)
+	if err != nil {
+		log.Error("failed to convert type to unstructured list: ", err)
+		return
+	} else {
+		for _, item := range uObjList.Items {
+			if item.GetName() == name {
+				item := item
+				setResponse(&item)
+				return
 			}
 		}
 	}
@@ -1085,13 +1250,25 @@ func (h handler) getNotFound(w http.ResponseWriter, r *http.Request) {
 
 	body := b.Bytes()
 	if len(body) > 0 {
-		log.Printf("body:%s\n", body)
+		log.Printf("body: %s\n", body)
 	}
 
 	http.Error(w, "", http.StatusNotFound)
 }
 
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if err != nil {
+		return false
+	}
+	return !info.IsDir()
+}
+
 func JSON(w http.ResponseWriter, code int, payload interface{}) {
+	if obj, ok := interface{}(payload).(runtime.Object); ok {
+		log.Printf("Reponse GVK: (%s)\n", obj.GetObjectKind().GroupVersionKind())
+	}
+
 	response, err := json.Marshal(payload)
 	if err != nil {
 		log.Printf("failed to marshal payload: %v\n", err)
@@ -1223,7 +1400,7 @@ func eventToSelectableFields(event *corev1.Event) fields.Set {
 	return generic.MergeFieldsSets(specificFieldsSet, objectMetaFieldsSet)
 }
 
-func toTable(object runtime.Object) (runtime.Object, error) {
+func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 	switch o := object.(type) {
 	case *corev1.PodList:
 		converted := &apicore.PodList{}
@@ -1386,9 +1563,6 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 			return nil, errors.Wrap(err, "failed to convert ingress list")
 		}
 		object = converted
-	default:
-		// no conversion needed
-		log.Printf("can't convert %T to build table\n", o)
 	}
 
 	ctx := context.TODO()
@@ -1398,12 +1572,26 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 	}
 	table, err := tableConvertor.ConvertToTable(ctx, object, tableOptions)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not convert to table")
+		return nil, err
+	}
+
+	// TODO: github.com/golang/gddo is no longer maintained. We should
+	// replace it with something else. https://github.com/golang/go/issues/44417
+	// tracks a proposal to add this functionality to the standard library.
+	_, accepts := header.ParseValueAndParams(r.Header, "Accept")
+	g := accepts["g"]
+	if g == "" {
+		g = "meta.k8s.io"
+	}
+
+	v := accepts["v"]
+	if v == "" {
+		v = "v1"
 	}
 
 	table.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "meta.k8s.io",
-		Version: "v1",
+		Group:   g,
+		Version: v,
 		Kind:    "Table",
 	})
 	for i := range table.Rows {
@@ -1415,12 +1603,17 @@ func toTable(object runtime.Object) (runtime.Object, error) {
 		// TODO: turn this into an internal type and do conversion in order to get object kind automatically set?
 		partial := meta.AsPartialObjectMetadata(m)
 		partial.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
-			Group:   "meta.k8s.io",
-			Version: "v1",
+			Group:   g,
+			Version: v,
 			Kind:    "PartialObjectMetadata",
 		})
 		row.Object.Object = partial
 	}
 
 	return table, nil
+}
+
+func LogAsJSON(prefix string, o interface{}) {
+	b, _ := json.MarshalIndent(o, "", "  ")
+	log.Printf("%s\n", string(b))
 }

@@ -1,6 +1,7 @@
 package sbctl
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/pkg/errors"
@@ -11,6 +12,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	storagev1 "k8s.io/api/storage/v1"
 	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
@@ -22,21 +24,50 @@ func init() {
 }
 
 func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionKind, error) {
+	originalData := data
 	decode := scheme.Codecs.UniversalDeserializer().Decode
 	decoded, gvk, err := decode(data, nil, nil)
 	if err == nil {
 		return decoded, gvk, nil
 	}
 
-	log.Println("failed to decode file, will try addind list GVK", err)
+	log.Warn("could not to decode data, will try adding list GVK", err)
 	data, err = wrapListData(resource, data)
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "failed to wrap data")
+		log.Warn(err)
+	} else {
+		decoded, gvk, err = decode(data, nil, nil)
+		if err != nil {
+			log.Warn("could not decode wrapped data: ", err)
+		}
 	}
 
-	decoded, gvk, err = decode(data, nil, nil)
-	if err != nil {
-		return nil, nil, errors.Wrap(err, "failed to decode wrapped data")
+	if decoded == nil {
+		// Try to decode object into an unstructured object
+		var v unstructured.Unstructured
+		err = json.Unmarshal(originalData, &v)
+		if err == nil {
+			o := v.DeepCopyObject()
+			gvk := o.GetObjectKind().GroupVersionKind()
+			return o, &gvk, nil
+		}
+		log.Warn("could not decode data into an unstructured object: ", err)
+
+		// Try to decode object into an unstructured list
+		var vList []unstructured.Unstructured
+		err = json.Unmarshal(originalData, &vList)
+		if err == nil && len(vList) > 0 {
+			o := vList[0].DeepCopyObject()
+			gvk := o.GetObjectKind().GroupVersionKind()
+			list := unstructured.UnstructuredList{}
+			list.SetGroupVersionKind(gvk)
+			list.Items = append(list.Items, vList...)
+			return &list, &gvk, nil
+		}
+		if err != nil {
+			log.Warn("could not decode data into an unstructured list object: ", err)
+		}
+		return nil, nil, errors.Wrap(err, "could not decode data into a k8s object")
 	}
 
 	switch o := decoded.(type) {
@@ -223,4 +254,22 @@ func wrapListData(resource string, data []byte) ([]byte, error) {
 		},
 		"items": %s
 	}`, kind, apiVersion, data)), nil
+}
+
+func ToUnstructured(o runtime.Object) (*unstructured.Unstructured, error) {
+	data, err := runtime.DefaultUnstructuredConverter.ToUnstructured(o)
+	if err != nil {
+		return nil, err
+	}
+
+	return &unstructured.Unstructured{Object: data}, nil
+}
+
+func ToUnstructuredList(o runtime.Object) (*unstructured.UnstructuredList, error) {
+	obj, err := ToUnstructured(o)
+	if err != nil {
+		return nil, err
+	}
+
+	return obj.ToList()
 }
