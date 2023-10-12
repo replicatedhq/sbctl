@@ -67,7 +67,6 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 		return nil, nil, errors.Wrap(err, "could not decode data into a k8s object")
 	}
 
-	// TODO: Implement a catch-all for all resources
 	switch o := decoded.(type) {
 	case *corev1.EventList:
 		for i := range o.Items {
