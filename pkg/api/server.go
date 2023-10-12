@@ -63,20 +63,18 @@ var (
 	}
 )
 
-type (
-	handler struct {
-		clusterData sbctl.ClusterData
-	}
-	clusterVersion struct {
-		Info   *version.Info `json:"info"`
-		String string        `json:"string"`
-	}
+type handler struct {
+	clusterData sbctl.ClusterData
+}
+type clusterVersion struct {
+	Info   *version.Info `json:"info"`
+	String string        `json:"string"`
+}
 
-	// fake, kubectl can't parse this anyways
-	errorResponse struct {
-		Error string `json:"error"`
-	}
-)
+// fake, kubectl can't parse this anyways
+type errorResponse struct {
+	Error string `json:"error"`
+}
 
 func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string, error) {
 	h := handler{
@@ -311,15 +309,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	for _, fileName := range filenames {
 		// If we know the file does not exist, just respond with an empty list
 		if !fileExists(fileName) {
-			obj := unstructured.UnstructuredList{}
-			obj.SetGroupVersionKind(schema.GroupVersionKind{
-				Group:   mux.Vars(r)["group"],
-				Version: mux.Vars(r)["version"],
-				Kind:    resource,
-			})
-
-			result = &obj
-			break
+			continue
 		}
 
 		data, err := os.ReadFile(fileName)
@@ -376,6 +366,17 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 				return
 			}
 		}
+	}
+
+	if result == nil {
+		obj := unstructured.UnstructuredList{}
+		obj.SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   mux.Vars(r)["group"],
+			Version: mux.Vars(r)["version"],
+			Kind:    resource,
+		})
+
+		result = &obj
 	}
 
 	if asTable {
@@ -905,15 +906,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	for _, fileName := range filenames {
 		// If we know the file does not exist, just respond with an empty list
 		if !fileExists(fileName) {
-			obj := unstructured.UnstructuredList{}
-			obj.SetGroupVersionKind(schema.GroupVersionKind{
-				Group:   mux.Vars(r)["group"],
-				Version: mux.Vars(r)["version"],
-				Kind:    resource,
-			})
-
-			result = &obj
-			break
+			continue
 		}
 
 		data, err := os.ReadFile(fileName)
@@ -974,6 +967,17 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 				return
 			}
 		}
+	}
+
+	if result == nil {
+		obj := unstructured.UnstructuredList{}
+		obj.SetGroupVersionKind(schema.GroupVersionKind{
+			Group:   mux.Vars(r)["group"],
+			Version: mux.Vars(r)["version"],
+			Kind:    resource,
+		})
+
+		result = &obj
 	}
 
 	if asTable {

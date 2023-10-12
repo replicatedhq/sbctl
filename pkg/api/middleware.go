@@ -58,17 +58,19 @@ func (w *requestResponseDumper) Write(b []byte) (int, error) {
 }
 
 func (w *requestResponseDumper) Flush() {
-	w.ResponseWriter.(http.Flusher).Flush()
+	if flusher, ok := w.ResponseWriter.(http.Flusher); ok {
+		flusher.Flush()
+	}
 }
 
 func (w *requestResponseDumper) Hijack() (net.Conn, *bufio.ReadWriter, error) {
 	return w.ResponseWriter.(http.Hijacker).Hijack()
 }
 
-func logObject(prefix string, o any) {
+func logObject(prefix string, o interface{}) {
 	switch v := o.(type) {
 	case string:
-		m := map[string]any{}
+		m := map[string]interface{}{}
 		err := json.Unmarshal([]byte(v), &m)
 		if err == nil {
 			logAsJSON(prefix, m)
@@ -76,7 +78,7 @@ func logObject(prefix string, o any) {
 			log.Printf("%s: %v\n", prefix, o)
 		}
 	case []uint8:
-		m := map[string]any{}
+		m := map[string]interface{}{}
 		err := json.Unmarshal(v, &m)
 		if err == nil {
 			logAsJSON(prefix, m)
@@ -88,7 +90,7 @@ func logObject(prefix string, o any) {
 	}
 }
 
-func logAsJSON(prefix string, o any) {
+func logAsJSON(prefix string, o interface{}) {
 	data, err := json.MarshalIndent(o, "", "  ")
 	if err == nil {
 		log.Printf("%s: %s\n", prefix, data)
