@@ -3,6 +3,7 @@ package sbctl
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
 
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -272,4 +273,12 @@ func ToUnstructuredList(o runtime.Object) (*unstructured.UnstructuredList, error
 	}
 
 	return obj.ToList()
+}
+
+func SortUnstructuredList(list *unstructured.UnstructuredList) {
+	sort.Slice(list.Items, func(i, j int) bool {
+		iT := list.Items[i].GetCreationTimestamp()
+		jT := list.Items[j].GetCreationTimestamp()
+		return iT.Before(&jT)
+	})
 }

@@ -691,7 +691,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 
 	var result runtime.Object
 	var err error
-	filenames := []string{}
+	var filenames []string
 	switch resource {
 	case "jobs":
 		result = &batchv1.JobList{
@@ -942,6 +942,19 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 		// No need to do type conversions if only one file is returned.
 		// This will always be the case for cluster level resources, and sometimes for namespaced resources.
 		if len(filenames) == 1 {
+			if asTable {
+				if list, ok := decoded.(*unstructured.UnstructuredList); ok {
+					sbctl.SortUnstructuredList(list)
+					decoded = list
+				}
+
+				table, err := toTable(decoded, r)
+				if err != nil {
+					log.Warn("could not convert to table:", err)
+				} else {
+					decoded = table
+				}
+			}
 			JSON(w, http.StatusOK, decoded)
 			return
 		}
@@ -997,6 +1010,11 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 	}
 
 	if asTable {
+		if list, ok := result.(*unstructured.UnstructuredList); ok {
+			sbctl.SortUnstructuredList(list)
+			result = list
+		}
+
 		table, err := toTable(result, r)
 		if err != nil {
 			log.Warn("could not convert to table:", err)
