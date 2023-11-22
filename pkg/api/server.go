@@ -1299,10 +1299,7 @@ func fileExists(filename string) bool {
 
 func pathExists(filename string) bool {
 	_, err := os.Stat(filename)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func JSON(w http.ResponseWriter, code int, payload interface{}) {
