@@ -31,7 +31,7 @@ vet:
 
 # Compile and install sbctl locally in you GOBIN path
 .PHONY: install
-install:
+install: build
 	go install ${BUILDFLAGS} sbctl.go
 
 .PHONY: lint
