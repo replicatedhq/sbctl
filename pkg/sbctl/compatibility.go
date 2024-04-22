@@ -184,6 +184,13 @@ func Decode(resource string, data []byte) (runtime.Object, *schema.GroupVersionK
 				Version: "v1",
 			})
 		}
+	case *corev1.ConfigMapList:
+		for i := range o.Items {
+			o.Items[i].GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+				Kind:    "ConfigMap",
+				Version: "v1",
+			})
+		}
 	}
 
 	return decoded, gvk, nil

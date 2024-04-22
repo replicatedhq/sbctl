@@ -59,3 +59,14 @@ func GetEmptyPersistentVolumeClaimList() *corev1.PersistentVolumeClaimList {
 	})
 	return r
 }
+
+func GetEmptyConfigMapList() *corev1.ConfigMapList {
+	r := &corev1.ConfigMapList{
+		Items: []corev1.ConfigMap{},
+	}
+	r.GetObjectKind().SetGroupVersionKind(schema.GroupVersionKind{
+		Version: "v1",
+		Kind:    "ConfigMapList",
+	})
+	return r
+}
