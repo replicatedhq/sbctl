@@ -1,0 +1,47 @@
+{
+  "kind": "ConfigMapList",
+  "apiVersion": "v1",
+  "metadata": {
+    "resourceVersion": "32367473"
+  },
+  "items": [
+    {
+      "kind": "ConfigMap",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "kube-root-ca.crt",
+        "namespace": "kube-node-lease",
+        "uid": "01acb543-79cc-4e17-a3de-e846b80a20f9",
+        "resourceVersion": "332",
+        "creationTimestamp": "2024-02-17T05:55:36Z",
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        },
+        "managedFields": [
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "v1",
+            "time": "2024-02-17T05:55:36Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:data": {
+                ".": {},
+                "f:ca.crt": {}
+              },
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubernetes.io/description": {}
+                }
+              }
+            }
+          }
+        ]
+      },
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIIaDHtQlkhzfMwDQYJKoZIhvcNAQELBQAwFTETMBEGA1UE\nAxMKa3ViZXJuZXRlczAeFw0yNDAyMTcwNTQ5NTdaFw0zNDAyMTQwNTU0NTdaMBUx\nEzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK\nAoIBAQDH/Q7uWgAMLl/KKv4jL9N+eRdcvU00S08IWF81aAW9vCKkrn9fUhdjznP0\njHXhTnRIyOjkLsRif60pFM9eziHPHMLMlwqvPzVq4RPtOJCLGvWsdm18DTzBIM0v\ncvj3ZhCHqwNoHpEcmeLcIPZhXUTP9P/HymHN7McPWlCubkUK0Rd3ZJcZTwlzNiSV\nLVm34/28sY0zQZslDKIz3prUQ9r4LtEX4Vj56Zj4H+DH+82JpIh3CQ2BCiLzUzrg\n5c1L4uQ6FKj9FH/Hgyz2ttVcCU38ObgX1ASaBXZtsHZPY07S7GLi6czrdcxdSEvb\nZDeCuG5c/4M0dP6Skz07sr3tF26tAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAP\nBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSzYh2i904R82VVx7d3syCW0ZkS7DAV\nBgNVHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQC+T2TvKB/V\ncPQ5QIeSNEolAe/B5MoSCao+WZTpo9P46Xq5kU9pGUVRFPi1/fVdHSgd1ZuRUPxl\n83GVy4Wsf2squXW8IrYFMeX2jZKVEGh6roAb4wUexTpouSyv+5Mln5Ov/dt8oV1a\nMUeRfWUiDlwunEX9Luly6BITE9uB5m3VR4GxlnuFL4f92rurXXNVoGMBwJohaYSj\nwYoZ+HvG2rl8aB7pnjiypAcZUpBtB9xkY4wtTOZ1lrR5jXjAYwDh4N1TvSRsSk60\nLUpoWZ+nAq3qvKoe1/511lKNWYvHW6cx//Bn3MZKfILInBLA0VK0OJJ0x+Kh6TFl\nV77zhWyQ9IXN\n-----END CERTIFICATE-----\n"
+      }
+    }
+  ]
+}

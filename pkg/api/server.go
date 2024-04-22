@@ -305,6 +305,15 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	case "configmaps":
+		result = k8s.GetEmptyConfigMapList()
+		dirName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource))
+		filenames, err = getJSONFileListFromDir(dirName)
+		if err != nil {
+			log.Error("failed to get configmap files from dir: ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	for _, fileName := range filenames {
@@ -358,6 +367,9 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 			r.Items = append(r.Items, o.Items...)
 		case *corev1.PersistentVolumeClaimList:
 			r := result.(*corev1.PersistentVolumeClaimList)
+			r.Items = append(r.Items, o.Items...)
+		case *corev1.ConfigMapList:
+			r := result.(*corev1.ConfigMapList)
 			r.Items = append(r.Items, o.Items...)
 		default:
 			result, err = sbctl.ToUnstructuredList(decoded)
@@ -574,6 +586,13 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 			}
 		}
 	case *corev1.PersistentVolumeClaimList:
+		for _, item := range o.Items {
+			if item.Name == name {
+				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	case *corev1.ConfigMapList:
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
@@ -1599,6 +1618,13 @@ func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 		err := apinetworkingv1.Convert_v1_IngressList_To_networking_IngressList(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert ingress list")
+		}
+		object = converted
+	case *corev1.ConfigMapList:
+		converted := &apicore.ConfigMapList{}
+		err := apicorev1.Convert_v1_ConfigMapList_To_core_ConfigMapList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert configmap list")
 		}
 		object = converted
 	}
