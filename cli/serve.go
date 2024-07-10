@@ -123,12 +123,11 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 	}
 
 	_, slug := path.Split(parsedUrl.Path)
-
-	gqlUrl := "https://g.replicated.com/graphql"
-	gqlReqest := "{\"operationName\":\"supportBundleForSlug\",\"variables\":{\"slug\":\"%s\"},\"query\":\"query supportBundleForSlug($slug: String!) {\\n  supportBundleForSlug(slug: $slug) {\\n    bundle { signedUri } } } \"}"
-	gqlReqest = fmt.Sprintf(gqlReqest, slug)
-
-	req, err := http.NewRequest("POST", gqlUrl, strings.NewReader(gqlReqest))
+	if slug == "" {
+		return "", errors.New("failed to extract slug from URL")
+	}
+	sbEndpoint := fmt.Sprintf("https://api.replicated.com/vendor/v3/supportbundle/%s", slug)
+	req, err := http.NewRequest("GET", sbEndpoint, nil)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create HTTP request")
 	}
@@ -152,20 +151,16 @@ func downloadAndExtractBundle(bundleUrl string, token string) (string, error) {
 	}
 
 	bundleObj := struct {
-		Data struct {
-			SupportBundleForSlug struct {
-				Bundle struct {
-					SignedUri string `json:"signedUri"`
-				} `json:"bundle"`
-			} `json:"supportBundleForSlug"`
-		} `json:"data"`
+		Bundle struct {
+			SignedUri string `json:"signedUri"`
+		} `json:"bundle"`
 	}{}
 	err = json.Unmarshal(body, &bundleObj)
 	if err != nil {
 		return "", errors.Wrapf(err, "failed to unmarshal response: %s", body)
 	}
 
-	resp, err = http.Get(bundleObj.Data.SupportBundleForSlug.Bundle.SignedUri)
+	resp, err = http.Get(bundleObj.Bundle.SignedUri)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to execute signed URL request")
 	}
