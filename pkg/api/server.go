@@ -930,12 +930,20 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			dirName = filepath.Join(h.clusterData.ClusterResourcesDir, "custom-resources", g)
 		}
 
-		filenames, err = getJSONFileListFromDir(dirName)
-		if err != nil {
-			log.Errorf("failed to get %s files from dir: %v\n", resource, err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+		filenames, _ = getJSONFileListFromDir(dirName)
+
+		// cluster-scoped resources have no directory
+		// e.g.
+		/* 		├── clusterconfigs.k0s.k0sproject.io
+		   		│   ├── kube-system.json
+		   		│   └── kube-system.yaml
+		   		├── installations.embeddedcluster.replicated.com.json
+		   		├── installations.embeddedcluster.replicated.com.yaml */
+		if len(filenames) == 0 {
+			filename := dirName + ".json"
+			filenames = append(filenames, filename)
 		}
+
 	}
 
 	for _, fileName := range filenames {
