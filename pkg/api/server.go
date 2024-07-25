@@ -1058,7 +1058,25 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
+	group := mux.Vars(r)["group"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
+	setResponse := func(d runtime.Object) {
+		if asTable {
+			table, err := toTable(d, r)
+			if err != nil {
+				log.Warn("could not convert to table: ", err)
+			} else {
+				d = table
+			}
+		}
+		JSON(w, http.StatusOK, d)
+	}
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName(resource)))
+
+	if !fileExists(fileName) {
+		fileName = filepath.Join(h.clusterData.ClusterResourcesDir, "custom-resources", fmt.Sprintf("%s.%s.json", resource, group))
+	}
+
 	data, err := readFileAndLog(fileName)
 	if err != nil {
 		log.Error("failed to load file", err)
@@ -1070,7 +1088,7 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	decoded, _, err := sbctl.Decode(resource, data)
+	decoded, gvk, err := sbctl.Decode(resource, data)
 	if err != nil {
 		log.Error("failed to decode wrapped", resource, ":", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -1089,6 +1107,19 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 		for _, item := range o.Items {
 			if item.Name == name {
 				JSON(w, http.StatusOK, item)
+				return
+			}
+		}
+	default:
+		uObjList, err := sbctl.ToUnstructuredList(decoded)
+		if err != nil {
+			log.Error("failed to convert type to unstructured: ", gvk)
+			return
+		}
+		for _, item := range uObjList.Items {
+			if item.GetName() == name {
+				item := item
+				setResponse(&item)
 				return
 			}
 		}
