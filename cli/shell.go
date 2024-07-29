@@ -24,6 +24,7 @@ func ShellCmd() *cobra.Command {
 		Use:           "shell",
 		Short:         "Start interractive shell",
 		Long:          `Start interractive shell`,
+		Args:          cobra.MaximumNArgs(1),
 		SilenceUsage:  true,
 		SilenceErrors: false,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
@@ -61,6 +62,9 @@ func ShellCmd() *cobra.Command {
 
 			// This only works with generated config, so let's make sure we don't mess up user's real files.
 			bundleLocation := v.GetString("support-bundle-location")
+			if len(args) > 0 && args[0] != "" {
+				bundleLocation = args[0]
+			}
 			if bundleLocation == "" {
 				return errors.New("support-bundle-location is required")
 			}
