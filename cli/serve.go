@@ -23,6 +23,7 @@ func ServeCmd() *cobra.Command {
 		Use:           "serve",
 		Short:         "Start API server",
 		Long:          `Start API server`,
+		Args:          cobra.MaximumNArgs(1),
 		SilenceUsage:  true,
 		SilenceErrors: false,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
@@ -50,6 +51,9 @@ func ServeCmd() *cobra.Command {
 
 			// This only works with generated config, so let's make sure we don't mess up user's real files.
 			bundleLocation := v.GetString("support-bundle-location")
+			if len(args) > 0 && args[0] != "" {
+				bundleLocation = args[0]
+			}
 			if bundleLocation == "" {
 				return errors.New("support-bundle-location is required")
 			}
