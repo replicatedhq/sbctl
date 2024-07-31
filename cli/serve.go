@@ -27,6 +27,7 @@ func ServeCmd() *cobra.Command {
 		SilenceUsage:  true,
 		SilenceErrors: false,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			viper.SetEnvPrefix("sbctl")
 			return viper.BindPFlags(cmd.Flags())
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
