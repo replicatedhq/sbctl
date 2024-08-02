@@ -71,6 +71,7 @@ func ServeCmd() *cobra.Command {
 				if err != nil {
 					return errors.Wrap(err, "failed to stat input path")
 				}
+				fmt.Printf("Bundle extracted to %s\n", dir)
 				bundleDir = dir
 				deleteBundleDir = true
 			} else {
