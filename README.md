@@ -26,14 +26,31 @@ Restart your shell and proceed to "How to Use".
 
 ### How to Use:
 
+#### Start server in foreground
 Start the local API server using a support bundle and then run the `export` command that comes up to make kubectl target your support bundles API server
 
 ```
-sbctl serve --support-bundle-location=/Users/username/Downloads/support-bundle-XXXX-XX-XX
+sbctl serve /Users/username/Downloads/support-bundle-XXXX-XX-XX
 
 Server is running
 
 export KUBECONFIG=/var/folders/g2/XXXXXXXXXXX/T/local-kubeconfig-XXXXX
+```
+
+#### Start sbctl shell
+Start the local API server and create a shell that has `KUBECONFIG` set. With this you can use `kubectl` commands immediately without the need to run `export`. In this example we also show how to download the support bundle from a remote location. We can choose to use `--token=<token>` cli option to pass in an auth token or export `SBCTL_TOKEN=<token>`. In this example I have `SBCTL_TOKEN` in the environment
+
+```
+export SBCTL_TOKEN=<token>
+```
+
+Now launch the shell
+```
+sbctl shell https://vendor.replicated.com/troubleshoot/analyze/2024-08-02@00:01
+API server logs will be written to /var/folders/19/bp6c9chj0sgcpcxmxxl69s040000gn/T/sbctl-server-logs-1413638036
+Downloading bundle
+Bundle extracted to /var/folders/19/bp6c9chj0sgcpcxmxxl69s040000gn/T/sbctl-2353785059
+Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server
 ```
 
 Using `kubectl` should now auth using the generated kubeconfig file.  When done, CTRL^C to shut down the API server.
