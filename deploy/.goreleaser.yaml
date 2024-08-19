@@ -3,15 +3,14 @@ release:
   github:
     owner: replicatedhq
     name: sbctl
-  prerelease: "true"
 builds:
   - id: sbctl
     goos:
-    - linux
-    - darwin
+      - linux
+      - darwin
     goarch:
-    - amd64
-    - arm64
+      - amd64
+      - arm64
     env:
       - CGO_ENABLED=0
       - GO111MODULE=on
@@ -25,7 +24,7 @@ archives:
     builds:
       - sbctl
     format: tar.gz
-    name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}'
+    name_template: "{{ .Binary }}_{{ .Os }}_{{ .Arch }}"
     files:
       - licence*
       - LICENCE*
