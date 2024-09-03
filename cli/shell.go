@@ -19,11 +19,6 @@ import (
 	"golang.org/x/term"
 )
 
-// Convert uintptr to int safely
-func fdToInt(fd uintptr) int {
-	return int(fd)
-}
-
 func ShellCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:           "shell",
@@ -149,12 +144,12 @@ func ShellCmd() *cobra.Command {
 			defer func() { signal.Stop(ch); close(ch) }()
 
 			// Set stdin to raw mode.
-			oldState, err := term.MakeRaw(fdToInt(os.Stdin.Fd()))
+			oldState, err := term.MakeRaw(syscall.Stdin)
 			if err != nil {
 				panic(err)
 			}
 			defer func() {
-				_ = term.Restore(fdToInt(os.Stdin.Fd()), oldState)
+				_ = term.Restore(syscall.Stdin, oldState)
 				fmt.Printf("sbctl shell exited\n")
 			}()
 
