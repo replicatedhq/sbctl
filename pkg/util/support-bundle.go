@@ -9,6 +9,7 @@ var (
 		"ingresses":                 "ingress",
 		"customresourcedefinitions": "custom-resource-definitions",
 		"clusterrolebindings":       "clusterRoleBindings",
+		"networkpolicies":           "network-policy",
 	}
 )
 
