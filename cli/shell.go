@@ -144,12 +144,12 @@ func ShellCmd() *cobra.Command {
 			defer func() { signal.Stop(ch); close(ch) }()
 
 			// Set stdin to raw mode.
-			oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+			oldState, err := term.MakeRaw(syscall.Stdin)
 			if err != nil {
 				panic(err)
 			}
 			defer func() {
-				_ = term.Restore(int(os.Stdin.Fd()), oldState)
+				_ = term.Restore(syscall.Stdin, oldState)
 				fmt.Printf("sbctl shell exited\n")
 			}()
 
