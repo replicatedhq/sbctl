@@ -117,7 +117,5 @@ func downloadBundleToDisk(bundleUrl string, token string) (string, error) {
 		return "", errors.Wrap(err, "failed to copy bundle to file")
 	}
 
-	sbFile.Close()
-
 	return sbFile.Name(), nil
 }
