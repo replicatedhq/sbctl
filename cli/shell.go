@@ -144,7 +144,6 @@ func startShellAndWait(cmds ...string) error {
 
 	shellExec := exec.Command(shellCmd)
 	shellExec.Env = os.Environ()
-	// fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
 	shellPty, err := pty.Start(shellExec)
 	if err != nil {
 		return errors.Wrap(err, "failed to start shell")
