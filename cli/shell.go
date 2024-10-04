@@ -117,42 +117,6 @@ func ShellCmd() *cobra.Command {
 			}
 			defer os.RemoveAll(kubeConfig)
 
-			shellCmd := os.Getenv("SHELL")
-			if shellCmd == "" {
-				return errors.New("SHELL environment is required for shell command")
-			}
-
-			shellExec := exec.Command(shellCmd)
-			shellExec.Env = os.Environ()
-			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
-			shellPty, err := pty.Start(shellExec)
-			if err != nil {
-				return errors.Wrap(err, "failed to start shell")
-			}
-
-			// Handle pty size.
-			ch := make(chan os.Signal, 1)
-			signal.Notify(ch, syscall.SIGWINCH)
-			go func() {
-				for range ch {
-					if err := pty.InheritSize(os.Stdin, shellPty); err != nil {
-						log.Printf("error resizing pty: %s", err)
-					}
-				}
-			}()
-			ch <- syscall.SIGWINCH // Initial resize.
-			defer func() { signal.Stop(ch); close(ch) }()
-
-			// Set stdin to raw mode.
-			oldState, err := term.MakeRaw(syscall.Stdin)
-			if err != nil {
-				panic(err)
-			}
-			defer func() {
-				_ = term.Restore(syscall.Stdin, oldState)
-				fmt.Printf("sbctl shell exited\n")
-			}()
-
 			cmds := []string{
 				fmt.Sprintf("export KUBECONFIG=%s", kubeConfig),
 			}
@@ -160,16 +124,8 @@ func ShellCmd() *cobra.Command {
 				cmds = append(cmds, fmt.Sprintf("cd %s", bundleDir))
 			}
 
-			// Setup the shell
-			setupCmd := strings.Join(cmds, "\n") + "\n"
-			_, _ = io.WriteString(shellPty, setupCmd)
-			_, _ = io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd))) // Don't print to screen, terminal will echo anyway
-
-			// Copy stdin to the pty and the pty to stdout.
-			go func() { _, _ = io.Copy(shellPty, os.Stdin) }()
-			go func() { _, _ = io.Copy(os.Stdout, shellPty) }()
-
-			return shellExec.Wait()
+			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
+			return startShellAndWait(cmds...)
 		},
 	}
 
@@ -178,4 +134,53 @@ func ShellCmd() *cobra.Command {
 	cmd.Flags().Bool("cd-bundle", false, "Change directory to the support bundle path after starting the shell")
 	cmd.Flags().Bool("debug", false, "enable debug logging. This will include HTTP response bodies in logs.")
 	return cmd
+}
+
+func startShellAndWait(cmds ...string) error {
+	shellCmd := os.Getenv("SHELL")
+	if shellCmd == "" {
+		return errors.New("SHELL environment is required for shell command")
+	}
+
+	shellExec := exec.Command(shellCmd)
+	shellExec.Env = os.Environ()
+	// fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
+	shellPty, err := pty.Start(shellExec)
+	if err != nil {
+		return errors.Wrap(err, "failed to start shell")
+	}
+
+	// Handle pty size.
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, syscall.SIGWINCH)
+	go func() {
+		for range ch {
+			if err := pty.InheritSize(os.Stdin, shellPty); err != nil {
+				log.Printf("error resizing pty: %s", err)
+			}
+		}
+	}()
+	ch <- syscall.SIGWINCH // Initial resize.
+	defer func() { signal.Stop(ch); close(ch) }()
+
+	// Set stdin to raw mode.
+	oldState, err := term.MakeRaw(syscall.Stdin)
+	if err != nil {
+		panic(err)
+	}
+	defer func() {
+		_ = term.Restore(syscall.Stdin, oldState)
+		fmt.Printf("sbctl shell exited\n")
+	}()
+
+	// Setup the shell
+	setupCmd := strings.Join(cmds, "\n") + "\n"
+	_, _ = io.WriteString(shellPty, setupCmd)
+	_, _ = io.CopyN(io.Discard, shellPty, 2*int64(len(setupCmd))) // Don't print to screen, terminal will echo anyway
+
+	// Copy stdin to the pty and the pty to stdout.
+	go func() { _, _ = io.Copy(shellPty, os.Stdin) }()
+	go func() { _, _ = io.Copy(os.Stdout, shellPty) }()
+
+	return shellExec.Wait()
 }
