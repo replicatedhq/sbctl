@@ -37,25 +37,36 @@ func ShellCmd() *cobra.Command {
 			deleteBundleDir := false
 
 			logOutput := os.Stderr
-			logFile, err := os.CreateTemp("", "sbctl-server-logs-")
+			logFile, err := os.CreateTemp("", "sbctl-server-*.log")
 			if err == nil {
 				defer logFile.Close()
 				defer os.RemoveAll(logFile.Name())
+				fmt.Printf("SBCTL logs will be written to %s\n", logFile.Name())
 				log.SetOutput(logFile)
 				logOutput = logFile
 			}
 
-			go func() {
-				signalChan := make(chan os.Signal, 1)
-				signal.Notify(signalChan, os.Interrupt)
-				<-signalChan
+			cleanup := func() {
 				if kubeConfig != "" {
 					_ = os.RemoveAll(kubeConfig)
 				}
 				if deleteBundleDir && bundleDir != "" {
 					_ = os.RemoveAll(bundleDir)
 				}
+			}
+
+			go func() {
+				signalChan := make(chan os.Signal, 1)
+				// Handle Ctl-D to exit from shell
+				signal.Notify(signalChan, os.Interrupt)
+				<-signalChan
+				cleanup()
 				os.Exit(0)
+			}()
+
+			defer func() {
+				// exit from shell using "exit" command
+				cleanup()
 			}()
 
 			v := viper.GetViper()
@@ -117,9 +128,6 @@ func ShellCmd() *cobra.Command {
 				return startShellAndWait(fmt.Sprintf("cd %s", bundleDir))
 			}
 
-			if logFile != nil {
-				fmt.Printf("API server logs will be written to %s\n", logFile.Name())
-			}
 			kubeConfig, err = api.StartAPIServer(clusterData, logOutput)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
