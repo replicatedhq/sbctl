@@ -39,7 +39,6 @@ func ShellCmd() *cobra.Command {
 			logOutput := os.Stderr
 			logFile, err := os.CreateTemp("", "sbctl-server-logs-")
 			if err == nil {
-				fmt.Printf("API server logs will be written to %s\n", logFile.Name())
 				defer logFile.Close()
 				defer os.RemoveAll(logFile.Name())
 				log.SetOutput(logFile)
@@ -111,6 +110,16 @@ func ShellCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
+			// If we did not find cluster data, just don't start the API server
+			if clusterData.ClusterResourcesDir == "" {
+				fmt.Println("No cluster resources found in bundle")
+				fmt.Println("Starting new shell in downloaded bundle. Press Ctl-D when done to exit from the shell")
+				return startShellAndWait(fmt.Sprintf("cd %s", bundleDir))
+			}
+
+			if logFile != nil {
+				fmt.Printf("API server logs will be written to %s\n", logFile.Name())
+			}
 			kubeConfig, err = api.StartAPIServer(clusterData, logOutput)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
@@ -123,8 +132,7 @@ func ShellCmd() *cobra.Command {
 			if v.GetBool("cd-bundle") {
 				cmds = append(cmds, fmt.Sprintf("cd %s", bundleDir))
 			}
-
-			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server\n")
+			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to exit from the shell and stop sbctl server\n")
 			return startShellAndWait(cmds...)
 		},
 	}

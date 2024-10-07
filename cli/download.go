@@ -41,38 +41,16 @@ func DownloadCmd() *cobra.Command {
 			}
 
 			fmt.Println("Downloading bundle...")
-			if v.GetBool("shell") {
-				err := downloadBundleAndShell(bundleLocation, token)
-				if err != nil {
-					return err
-				}
-			} else {
-				file, err := downloadBundleToDisk(bundleLocation, token)
-				if err != nil {
-					return err
-				}
-				fmt.Println(file)
+			file, err := downloadBundleToDisk(bundleLocation, token)
+			if err != nil {
+				return err
 			}
-
+			fmt.Println(file)
 			return nil
 		},
 	}
 
-	cmd.Flags().Bool("shell", false, "Start shell in downloaded and extracted bundle directory. Delete the directory when shell exits.")
-
 	return cmd
-}
-
-func downloadBundleAndShell(bundleLocation, token string) error {
-	bundleDir, err := downloadAndExtractBundle(bundleLocation, token)
-	if err != nil {
-		return errors.Wrap(err, "failed to stat input path")
-	}
-	defer os.RemoveAll(bundleDir)
-	fmt.Printf("Bundle extracted to %s\n", bundleDir)
-
-	fmt.Printf("Starting new shell in downloaded bunde. Press Ctl-D when done to end the shell and the sbctl server\n")
-	return startShellAndWait(fmt.Sprintf("cd %s", bundleDir))
 }
 
 func downloadBundleToDisk(bundleUrl string, token string) (string, error) {

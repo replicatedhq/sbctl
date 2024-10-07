@@ -96,6 +96,12 @@ func ServeCmd() *cobra.Command {
 				return errors.Wrap(err, "failed to find cluster data")
 			}
 
+			// If we did not find cluster data, just don't start the API server
+			if clusterData.ClusterResourcesDir == "" {
+				fmt.Println("No cluster resources found in bundle")
+				return nil
+			}
+
 			kubeConfig, err = api.StartAPIServer(clusterData, os.Stderr)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
