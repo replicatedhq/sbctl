@@ -1465,6 +1465,15 @@ func filterObjectsByFields(object runtime.Object, selector fields.Selector) runt
 			}
 		}
 		return filtered
+	case *corev1.PodList:
+		filtered := &corev1.PodList{}
+		for _, item := range o.Items {
+			item := item
+			if selector.Matches(podToSelectableFields(&item)) {
+				filtered.Items = append(filtered.Items, *item.DeepCopy())
+			}
+		}
+		return filtered
 	default:
 		// TODO: do more
 	}
@@ -1492,6 +1501,16 @@ func eventToSelectableFields(event *corev1.Event) fields.Set {
 		"reportingComponent":             event.ReportingController, // use the core/v1 field name
 		"source":                         source,
 		"type":                           event.Type,
+	}
+	return generic.MergeFieldsSets(specificFieldsSet, objectMetaFieldsSet)
+}
+
+// podToSelectableFields extracts fields from a Pod object to be used for selection or filtering
+func podToSelectableFields(pod *corev1.Pod) fields.Set {
+	objectMetaFieldsSet := generic.ObjectMetaFieldsSet(&pod.ObjectMeta, true)
+	specificFieldsSet := fields.Set{
+		"spec.nodeName": pod.Spec.NodeName,
+		"status.phase":  string(pod.Status.Phase),
 	}
 	return generic.MergeFieldsSets(specificFieldsSet, objectMetaFieldsSet)
 }
