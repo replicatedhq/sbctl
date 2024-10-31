@@ -1559,6 +1559,20 @@ func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 			return nil, errors.Wrap(err, "failed to convert deployment")
 		}
 		object = converted
+	case *appsv1.StatefulSet:
+		converted := &apisapps.StatefulSet{}
+		err := apisappsv1.Convert_v1_StatefulSet_To_apps_StatefulSet(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert statefulset")
+		}
+		object = converted
+	case *appsv1.StatefulSetList:
+		converted := &apisapps.StatefulSetList{}
+		err := apisappsv1.Convert_v1_StatefulSetList_To_apps_StatefulSetList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert statefulset list")
+		}
+		object = converted
 	case *corev1.NamespaceList:
 		converted := &apicore.NamespaceList{}
 		err := apicorev1.Convert_v1_NamespaceList_To_core_NamespaceList(o, converted, nil)
