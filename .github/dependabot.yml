@@ -10,6 +10,7 @@ updates:
       - "dependencies"
       - "go"
       - "type::chore"
+      - "type::security"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
@@ -28,5 +29,6 @@ updates:
       - "dependencies"
       - "github-actions"
       - "type::chore"
+      - "type::security"
     schedule:
       interval: "weekly"
