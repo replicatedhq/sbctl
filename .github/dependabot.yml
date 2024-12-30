@@ -9,8 +9,8 @@ updates:
     labels:
       - "dependencies"
       - "go"
-      - "type::chore"
       - "type::security"
+      - "type::chore"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
@@ -28,7 +28,7 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
-      - "type::chore"
       - "type::security"
+      - "type::chore"
     schedule:
       interval: "weekly"
