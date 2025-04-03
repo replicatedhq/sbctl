@@ -1,6 +1,7 @@
 module github.com/replicatedhq/sbctl
 
 go 1.23.4
+toolchain go1.24.1
 
 require (
 	github.com/antzucaro/matchr v0.0.0-20210222213004-b04723ef80f0
@@ -9,7 +10,7 @@ require (
 	github.com/gorilla/handlers v1.5.2
 	github.com/gorilla/mux v1.8.1
 	github.com/onsi/ginkgo/v2 v2.23.3
-	github.com/onsi/gomega v1.36.3
+	github.com/onsi/gomega v1.37.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
