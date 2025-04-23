@@ -2,9 +2,12 @@ BUILDTAGS = "netgo containers_image_ostree_stub exclude_graphdriver_devicemapper
 BUILDFLAGS = -tags ${BUILDTAGS} -installsuffix netgo
 BUILDPATHS = ./pkg/... ./cli/... ./tests/...
 
+# Set version from git tag, or use "dev" if not a tagged commit
+VERSION ?= $(shell git describe --tags 2>/dev/null || echo "dev")
+
 .PHONY: build
 build: mod-tidy fmt vet
-	go build -o bin/sbctl sbctl.go
+	go build -o bin/sbctl -ldflags "-X github.com/replicatedhq/sbctl/cli.Version=${VERSION}" sbctl.go
 
 .PHONY: mod-tidy
 mod-tidy:
@@ -32,7 +35,7 @@ vet:
 # Compile and install sbctl locally in you GOBIN path
 .PHONY: install
 install: build
-	go install ${BUILDFLAGS} sbctl.go
+	go install ${BUILDFLAGS} -ldflags "-X github.com/replicatedhq/sbctl/cli.Version=${VERSION}" sbctl.go
 
 .PHONY: lint
 lint:
