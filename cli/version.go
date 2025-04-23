@@ -20,7 +20,7 @@ func VersionCmd() *cobra.Command {
 		Short: "Print the version of sbctl",
 		Long:  `Print the version of sbctl`,
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf("%s\n%s\n", Version, GoVersion)
+			fmt.Printf("sbctl version %s\ngo version %s\n", Version, GoVersion)
 		},
 	}
 

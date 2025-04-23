@@ -30,7 +30,11 @@ Restart your shell and proceed to "How to Use".
 ```
 sbctl version
 ```
-Displays the version of sbctl and the Go compiler version used to build the binary.
+Displays the version information in the format:
+```
+sbctl version [version-number]
+go version [go-version-number]
+```
 
 #### Start server in foreground
 Start the local API server using a support bundle and then run the `export` command that comes up to make kubectl target your support bundles API server
