@@ -1,0 +1,29 @@
+contents:
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  repositories:
+    - https://packages.wolfi.dev/os
+    - '@local ./packages'
+  packages:
+    - ca-certificates-bundle
+    - sbctl@local
+
+entrypoint:
+  command: /usr/bin/sbctl
+
+environment:
+  PATH: /usr/sbin:/sbin:/usr/bin:/bin
+
+accounts:
+  groups:
+    - groupname: nonroot
+      gid: 65532
+  users:
+    - username: nonroot
+      uid: 65532
+      gid: 65532
+  run-as: 65532
+
+# Add architecture support
+archs:
+  - x86_64
