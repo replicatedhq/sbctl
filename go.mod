@@ -1,7 +1,8 @@
 module github.com/replicatedhq/sbctl
 
-go 1.23.4
-toolchain go1.24.1
+go 1.24.0
+
+toolchain go1.24.4
 
 require (
 	github.com/antzucaro/matchr v0.0.0-20210222213004-b04723ef80f0
