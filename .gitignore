@@ -9,3 +9,8 @@ __debug_bin
 
 # Ignore local pre-commit config
 .pre-commit-config.yaml
+
+# Melange/Apko artifacts
+packages/
+*.tar
+*.spdx.json
