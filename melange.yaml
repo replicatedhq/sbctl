@@ -1,0 +1,43 @@
+package:
+  name: sbctl
+  version: 0.17.2
+  epoch: 0
+  description: "A command-line tool for examining Kubernetes resources in Troubleshoot's support bundles"
+  copyright:
+    - license: Apache-2.0
+      paths:
+        - "*"
+
+environment:
+  contents:
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    repositories:
+      - https://packages.wolfi.dev/os
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - build-base
+      - go
+
+pipeline:
+  - uses: git-checkout
+    with:
+      repository: https://github.com/replicatedhq/sbctl.git
+      tag: v${{package.version}}
+      expected-commit: 8b078adf1c89edf11e9efa69df3414af24bdf7be
+
+  - uses: go/build
+    with:
+      packages: .
+      output: sbctl
+      ldflags: -s -w
+      modroot: .
+
+  - uses: strip
+
+subpackages:
+  - name: sbctl-doc
+    description: sbctl documentation
+    pipeline:
+      - uses: split/manpages
