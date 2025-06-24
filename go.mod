@@ -24,7 +24,7 @@ require (
 	k8s.io/apiserver v0.33.0
 	k8s.io/client-go v0.33.0
 	k8s.io/kubectl v0.33.0
-	k8s.io/kubernetes v1.33.0
+	k8s.io/kubernetes v1.33.2
 )
 
 require (
