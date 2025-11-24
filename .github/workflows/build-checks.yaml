@@ -19,7 +19,7 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
         shell: bash
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: |
           make install-golangci-lint
           echo "golangci-lint path: $(which golangci-lint)"
@@ -38,14 +38,14 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
         shell: bash
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: make ginkgo test
 
   scan:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
         with:
