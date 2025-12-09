@@ -124,8 +124,12 @@ func ShellCmd() *cobra.Command {
 			// If we did not find cluster data, just don't start the API server
 			if clusterData.ClusterResourcesDir == "" {
 				fmt.Println("No cluster resources found in bundle")
+				cdCmd := fmt.Sprintf("cd %s", bundleDir)
+				if userCmd := v.GetString("command"); userCmd != "" {
+					return runShellCommand(cdCmd, userCmd)
+				}
 				fmt.Println("Starting new shell in downloaded bundle. Press Ctl-D when done to exit from the shell")
-				return startShellAndWait(fmt.Sprintf("cd %s", bundleDir))
+				return startShellAndWait(cdCmd)
 			}
 
 			kubeConfig, err = api.StartAPIServer(clusterData, logOutput)
@@ -140,6 +144,13 @@ func ShellCmd() *cobra.Command {
 			if v.GetBool("cd-bundle") {
 				cmds = append(cmds, fmt.Sprintf("cd %s", bundleDir))
 			}
+
+			// If a command is provided, run it non-interactively and exit
+			if userCmd := v.GetString("command"); userCmd != "" {
+				cmds = append(cmds, userCmd)
+				return runShellCommand(cmds...)
+			}
+
 			fmt.Printf("Starting new shell with KUBECONFIG. Press Ctl-D when done to exit from the shell and stop sbctl server\n")
 			return startShellAndWait(cmds...)
 		},
@@ -149,6 +160,7 @@ func ShellCmd() *cobra.Command {
 	cmd.Flags().StringP("token", "t", "", "API token for authentication when fetching on-line bundles")
 	cmd.Flags().Bool("cd-bundle", false, "Change directory to the support bundle path after starting the shell")
 	cmd.Flags().Bool("debug", false, "enable debug logging. This will include HTTP response bodies in logs.")
+	cmd.Flags().StringP("command", "c", "", "Run a command in the shell instead of starting an interactive session")
 	return cmd
 }
 
@@ -198,4 +210,22 @@ func startShellAndWait(cmds ...string) error {
 	go func() { _, _ = io.Copy(os.Stdout, shellPty) }()
 
 	return shellExec.Wait()
+}
+
+// runShellCommand runs commands non-interactively and returns the result
+func runShellCommand(cmds ...string) error {
+	shellCmd := os.Getenv("SHELL")
+	if shellCmd == "" {
+		shellCmd = "/bin/sh"
+	}
+
+	// Join all commands with semicolons to run them sequentially
+	fullCmd := strings.Join(cmds, "; ")
+
+	shellExec := exec.Command(shellCmd, "-c", fullCmd)
+	shellExec.Env = os.Environ()
+	shellExec.Stdout = os.Stdout
+	shellExec.Stderr = os.Stderr
+
+	return shellExec.Run()
 }
