@@ -1,12 +1,29 @@
-# https://golangci-lint.run/usage/configuration/#config-file
-
+version: "2"
 run:
   allow-parallel-runners: true
-  timeout: 300s
-
 linters:
   enable:
-    - gocritic
-    - gofmt
-    - gosec
     - govet
+    - ineffassign
+    - nolintlint
+    - staticcheck
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
