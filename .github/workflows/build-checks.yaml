@@ -6,31 +6,25 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+  lint:
+    runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.24"
-
-      - name: setup env
-        run: |
-          echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-        shell: bash
-
-      - uses: actions/checkout@v6
-      - run: |
-          make install-golangci-lint
-          echo "golangci-lint path: $(which golangci-lint)"
-          make lint build
+          go-version-file: go.mod
+      - uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          only-new-issues: true
+          args: --build-tags "netgo containers_image_ostree_stub exclude_graphdriver_devicemapper exclude_graphdriver_btrfs containers_image_openpgp"
 
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.24"
+          go-version-file: go.mod
 
       - name: setup env
         run: |
@@ -43,7 +37,7 @@ jobs:
       - run: make ginkgo test
 
   scan:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - name: Run Trivy vulnerability scanner in repo mode
