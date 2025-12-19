@@ -536,6 +536,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 	namespace := mux.Vars(r)["namespace"]
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
+	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table")
 	fileName := filepath.Join(h.clusterData.ClusterResourcesDir, sbctlutil.GetSBCompatibleResourceName(resource), fmt.Sprintf("%s.json", namespace))
 
 	data, err := readFileAndLog(fileName)
@@ -556,65 +557,87 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	var result runtime.Object
 	switch o := decoded.(type) {
 	case *corev1.EventList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
 			}
 		}
 	case *corev1.PodList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
 			}
 		}
 	case *corev1.LimitRangeList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
 			}
 		}
 	case *corev1.ServiceList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
 			}
 		}
 	case *corev1.PersistentVolumeClaimList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
 			}
 		}
 	case *corev1.ConfigMapList:
-		for _, item := range o.Items {
-			if item.Name == name {
-				JSON(w, http.StatusOK, item)
-				return
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
+			}
+		}
+	case *corev1.ResourceQuotaList:
+		for i := range o.Items {
+			if o.Items[i].Name == name {
+				result = &o.Items[i]
+				break
 			}
 		}
 	default:
 		uObjList, err := sbctl.ToUnstructuredList(decoded)
 		if err != nil {
 			log.Error("failed to convert type to unstructured: ", gvk)
+			JSON(w, http.StatusNotFound, errorNotFound)
 			return
-		} else {
-			for _, item := range uObjList.Items {
-				if item.GetName() == name {
-					JSON(w, http.StatusOK, item)
-					return
-				}
+		}
+		for i := range uObjList.Items {
+			if uObjList.Items[i].GetName() == name {
+				result = &uObjList.Items[i]
+				break
 			}
 		}
 	}
 
-	JSON(w, http.StatusNotFound, errorNotFound)
+	if result == nil {
+		JSON(w, http.StatusNotFound, errorNotFound)
+		return
+	}
+
+	if asTable {
+		table, err := toTable(result, r)
+		if err != nil {
+			log.Warn("could not convert to table: ", err)
+		} else {
+			result = table
+		}
+	}
+
+	JSON(w, http.StatusOK, result)
 }
 
 func (h handler) getAPIs(w http.ResponseWriter, r *http.Request) {
@@ -1697,6 +1720,20 @@ func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 		err := apicorev1.Convert_v1_ConfigMapList_To_core_ConfigMapList(o, converted, nil)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to convert configmap list")
+		}
+		object = converted
+	case *corev1.ResourceQuotaList:
+		converted := &apicore.ResourceQuotaList{}
+		err := apicorev1.Convert_v1_ResourceQuotaList_To_core_ResourceQuotaList(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert resourcequota list")
+		}
+		object = converted
+	case *corev1.ResourceQuota:
+		converted := &apicore.ResourceQuota{}
+		err := apicorev1.Convert_v1_ResourceQuota_To_core_ResourceQuota(o, converted, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to convert resourcequota")
 		}
 		object = converted
 	}
