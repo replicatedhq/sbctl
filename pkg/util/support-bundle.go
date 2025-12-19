@@ -10,6 +10,7 @@ var (
 		"customresourcedefinitions": "custom-resource-definitions",
 		"clusterrolebindings":       "clusterRoleBindings",
 		"networkpolicies":           "network-policy",
+		"resourcequotas":            "resource-quota",
 	}
 )
 
