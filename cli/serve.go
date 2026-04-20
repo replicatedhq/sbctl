@@ -56,9 +56,9 @@ func ServeCmd() *cobra.Command {
 			}
 
 			if strings.HasPrefix(bundleLocation, "http") {
-				token := v.GetString("token")
-				if token == "" {
-					return errors.New("token is required when downloading bundle")
+				token, err := resolveToken(v)
+				if err != nil {
+					return err
 				}
 
 				fmt.Printf("Downloading bundle\n")

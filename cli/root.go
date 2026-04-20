@@ -24,6 +24,8 @@ func RootCmd() *cobra.Command {
 		viper.AutomaticEnv()
 	})
 
+	cmd.PersistentFlags().String("profile", "", "Replicated CLI profile to use for authentication (defaults to profile set in ~/.replicated/config.yaml)")
+
 	cmd.AddCommand(ServeCmd())
 	cmd.AddCommand(ShellCmd())
 	cmd.AddCommand(DownloadCmd())

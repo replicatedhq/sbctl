@@ -35,9 +35,9 @@ func DownloadCmd() *cobra.Command {
 				return errors.New("support-bundle-location is required")
 			}
 
-			token := v.GetString("token")
-			if token == "" {
-				return errors.New("token is required when downloading bundle")
+			token, err := resolveToken(v)
+			if err != nil {
+				return err
 			}
 
 			fmt.Println("Downloading bundle...")
