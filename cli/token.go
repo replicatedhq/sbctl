@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/replicatedhq/sbctl/pkg/config"
 	"github.com/spf13/viper"
@@ -13,6 +14,11 @@ import (
 func resolveToken(v *viper.Viper) (string, error) {
 	if token := v.GetString("token"); token != "" {
 		return token, nil
+	}
+
+	replToken := os.Getenv("REPLICATED_API_TOKEN")
+	if replToken != "" {
+		return replToken, nil
 	}
 
 	profileName := v.GetString("profile")
