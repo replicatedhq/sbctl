@@ -3,6 +3,8 @@ package api
 import (
 	"bytes"
 	"context"
+	"crypto/subtle"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -77,13 +79,64 @@ type errorResponse struct {
 	Error string `json:"error"`
 }
 
-func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string, error) {
+// authMiddleware creates middleware that validates bearer token authentication
+// All endpoints require authentication when enabled
+func authMiddleware(expectedToken string) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Extract Authorization header
+			authHeader := r.Header.Get("Authorization")
+			if authHeader == "" {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				json.NewEncoder(w).Encode(errorResponse{
+					Error: "missing authorization header",
+				})
+				return
+			}
+
+			// Check for Bearer token format
+			const bearerPrefix = "Bearer "
+			if !strings.HasPrefix(authHeader, bearerPrefix) {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				json.NewEncoder(w).Encode(errorResponse{
+					Error: "invalid authorization format, expected 'Bearer <token>'",
+				})
+				return
+			}
+
+			// Extract token
+			token := strings.TrimPrefix(authHeader, bearerPrefix)
+
+			// Constant-time comparison to prevent timing attacks
+			if subtle.ConstantTimeCompare([]byte(token), []byte(expectedToken)) != 1 {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				json.NewEncoder(w).Encode(errorResponse{
+					Error: "invalid token",
+				})
+				return
+			}
+
+			// Token is valid, proceed to next handler
+			next.ServeHTTP(w, r)
+		})
+	}
+}
+
+func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer, authToken string, tlsCert *TLSCertificate) (string, error) {
 	h := handler{
 		clusterData: clusterData,
 	}
 
 	r := mux.NewRouter()
 	r.Use(dumpRequestResponse)
+
+	// Apply auth middleware if token is provided
+	if authToken != "" {
+		r.Use(authMiddleware(authToken))
+	}
 
 	r.HandleFunc("/api", h.getAPI)
 	apiRouter := r.PathPrefix("/api").Subrouter()
@@ -120,10 +173,32 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 		return "", errors.Wrap(err, "listening on port")
 	}
 
+	// Determine if we're using TLS
+	useTLS := tlsCert != nil
+	scheme := "http"
+	if useTLS {
+		scheme = "https"
+	}
+
 	go func(server *http.Server, logsPipe *io.PipeWriter) {
 		defer logsPipe.Close()
 
-		err := server.Serve(listener)
+		var err error
+		if useTLS {
+			// Create TLS config from certificate
+			cert, err := tls.X509KeyPair(tlsCert.CertPEM, tlsCert.KeyPEM)
+			if err != nil {
+				log.Panic(errors.Wrap(err, "failed to load TLS certificate"))
+			}
+			server.TLSConfig = &tls.Config{
+				Certificates: []tls.Certificate{cert},
+				MinVersion:   tls.VersionTLS12,
+			}
+			err = server.ServeTLS(listener, "", "")
+		} else {
+			err = server.Serve(listener)
+		}
+
 		if !errors.Is(err, http.ErrServerClosed) {
 			log.Panic(err)
 		}
@@ -133,11 +208,32 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
+	// Create HTTP client that skips TLS verification for health check
+	// This is safe because:
+	// 1. We're only connecting to localhost (127.0.0.1)
+	// 2. We're using a self-signed certificate we just generated
+	// 3. This is only for the initial health check, not for user traffic
+	httpClient := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true,
+			},
+		},
+	}
+
 WAIT_FOR_SERVER:
 	for {
 		select {
 		case <-time.After(1):
-			resp, err := http.Get(fmt.Sprintf("http://%s/api/v1", listener.Addr()))
+			req, err := http.NewRequest("GET", fmt.Sprintf("%s://%s/api/v1", scheme, listener.Addr()), nil)
+			if err != nil {
+				continue
+			}
+			// Add auth token to health check if auth is enabled
+			if authToken != "" {
+				req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", authToken))
+			}
+			resp, err := httpClient.Do(req)
 			if err == nil && resp.StatusCode == http.StatusOK {
 				break WAIT_FOR_SERVER
 			}
@@ -146,7 +242,7 @@ WAIT_FOR_SERVER:
 		}
 	}
 
-	configFile, err := createConfigFile(fmt.Sprintf("http://%s", listener.Addr()))
+	configFile, err := createConfigFile(fmt.Sprintf("%s://%s", scheme, listener.Addr()), authToken, tlsCert)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create clientset for local endpoint")
 	}

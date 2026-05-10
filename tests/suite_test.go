@@ -40,7 +40,7 @@ var _ = BeforeSuite(func() {
 	Expect(clusterData.ClusterResourcesDir).To(Equal("support-bundle/cluster-resources"))
 	Expect(clusterData.ClusterInfoFile).To(Equal("support-bundle/cluster-info/cluster_version.json"))
 
-	kubeConfig, err := api.StartAPIServer(clusterData, os.Stderr)
+	kubeConfig, err := api.StartAPIServer(clusterData, os.Stderr, "", nil)
 	Expect(err).NotTo(HaveOccurred())
 	cleanup := func() error {
 		return os.RemoveAll(kubeConfig)
