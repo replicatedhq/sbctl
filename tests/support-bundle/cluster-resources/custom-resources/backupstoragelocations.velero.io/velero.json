@@ -1,0 +1,20 @@
+[
+  {
+    "apiVersion": "velero.io/v1",
+    "kind": "BackupStorageLocation",
+    "metadata": {
+      "name": "default",
+      "namespace": "velero",
+      "creationTimestamp": "2022-04-11T22:51:33Z"
+    },
+    "spec": {
+      "default": true,
+      "provider": "aws",
+      "objectStorage": { "bucket": "velero-backups" }
+    },
+    "status": {
+      "phase": "Available",
+      "lastValidationTime": "2022-04-12T10:00:00Z"
+    }
+  }
+]
