@@ -31,6 +31,7 @@ import (
 	rbacv1 "k8s.io/api/rbac/v1"
 	storagev1 "k8s.io/api/storage/v1"
 	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apiextensions-apiserver/pkg/registry/customresource/tableconvertor"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -393,7 +394,7 @@ func (h handler) getAPIV1ClusterResources(w http.ResponseWriter, r *http.Request
 	}
 
 	if asTable {
-		table, err := toTable(result, r)
+		table, err := h.toTable(result, r)
 		if err != nil {
 			log.Error("could not convert to table: ", err)
 		} else {
@@ -519,7 +520,7 @@ func (h handler) getAPIV1NamespaceResources(w http.ResponseWriter, r *http.Reque
 	}
 
 	if asTable {
-		table, err := toTable(decoded, r)
+		table, err := h.toTable(decoded, r)
 		if err != nil {
 			log.Warn("could not convert to table: ", err)
 		} else {
@@ -629,7 +630,7 @@ func (h handler) getAPIV1NamespaceResource(w http.ResponseWriter, r *http.Reques
 	}
 
 	if asTable {
-		table, err := toTable(result, r)
+		table, err := h.toTable(result, r)
 		if err != nil {
 			log.Warn("could not convert to table: ", err)
 		} else {
@@ -998,7 +999,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 					decoded = list
 				}
 
-				table, err := toTable(decoded, r)
+				table, err := h.toTable(decoded, r)
 				if err != nil {
 					log.Warn("could not convert to table:", err)
 				} else {
@@ -1065,7 +1066,7 @@ func (h handler) getAPIsClusterResources(w http.ResponseWriter, r *http.Request)
 			result = list
 		}
 
-		table, err := toTable(result, r)
+		table, err := h.toTable(result, r)
 		if err != nil {
 			log.Warn("could not convert to table:", err)
 		} else {
@@ -1085,7 +1086,7 @@ func (h handler) getAPIsClusterResource(w http.ResponseWriter, r *http.Request) 
 	asTable := strings.Contains(r.Header.Get("Accept"), "as=Table") // who needs parsing
 	setResponse := func(d runtime.Object) {
 		if asTable {
-			table, err := toTable(d, r)
+			table, err := h.toTable(d, r)
 			if err != nil {
 				log.Warn("could not convert to table: ", err)
 			} else {
@@ -1193,7 +1194,7 @@ func (h handler) getAPIsNamespaceResources(w http.ResponseWriter, r *http.Reques
 	}
 
 	if asTable {
-		table, err := toTable(decoded, r)
+		table, err := h.toTable(decoded, r)
 		if err != nil {
 			log.Warn("could not convert to table: ", err)
 		} else {
@@ -1218,7 +1219,7 @@ func (h handler) getAPIsNamespaceResource(w http.ResponseWriter, r *http.Request
 
 	setResponse := func(d runtime.Object) {
 		if asTable {
-			table, err := toTable(d, r)
+			table, err := h.toTable(d, r)
 			if err != nil {
 				log.Warn("could not convert to table: ", err)
 			} else {
@@ -1538,7 +1539,62 @@ func podToSelectableFields(pod *corev1.Pod) fields.Set {
 	return generic.MergeFieldsSets(specificFieldsSet, objectMetaFieldsSet)
 }
 
-func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
+// crdPrinterColumns returns the additionalPrinterColumns for the CRD that matches the
+// request's group/version/resource, when the bundle ships its CustomResourceDefinition.
+// Returns ok=false when no CRD matches or it declares no extra columns, so the caller
+// falls back to the built-in NAME/AGE table.
+func (h handler) crdPrinterColumns(r *http.Request) ([]extensionsv1.CustomResourceColumnDefinition, bool) {
+	group := mux.Vars(r)["group"]
+	version := mux.Vars(r)["version"]
+	resource := mux.Vars(r)["resource"]
+	if group == "" || resource == "" {
+		return nil, false
+	}
+
+	fileName := filepath.Join(
+		h.clusterData.ClusterResourcesDir,
+		fmt.Sprintf("%s.json", sbctlutil.GetSBCompatibleResourceName("customresourcedefinitions")),
+	)
+	data, err := readFileAndLog(fileName)
+	if err != nil {
+		// A bundle without any CRDs is normal; only surface real read errors.
+		if !os.IsNotExist(err) {
+			log.Warn("could not read CRD definitions: ", err)
+		}
+		return nil, false
+	}
+
+	// Only v1 CRDs carry per-version additionalPrinterColumns; v1beta1 bundles
+	// fall through to the built-in NAME/AGE table.
+	var crdList extensionsv1.CustomResourceDefinitionList
+	if err := json.Unmarshal(data, &crdList); err != nil {
+		log.Warn("could not unmarshal CRD definitions: ", err)
+		return nil, false
+	}
+
+	for i := range crdList.Items {
+		crd := &crdList.Items[i]
+		if crd.Spec.Group != group {
+			continue
+		}
+		if crd.Spec.Names.Plural != resource && crd.Spec.Names.Singular != resource {
+			continue
+		}
+		for j := range crd.Spec.Versions {
+			v := &crd.Spec.Versions[j]
+			if v.Name != version {
+				continue
+			}
+			if len(v.AdditionalPrinterColumns) == 0 {
+				return nil, false
+			}
+			return v.AdditionalPrinterColumns, true
+		}
+	}
+	return nil, false
+}
+
+func (h handler) toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 	switch o := object.(type) {
 	case *corev1.PodList:
 		converted := &apicore.PodList{}
@@ -1740,12 +1796,37 @@ func toTable(object runtime.Object, r *http.Request) (runtime.Object, error) {
 
 	ctx := context.TODO()
 	tableOptions := &metav1.TableOptions{}
-	tableConvertor := printerstorage.TableConvertor{
-		TableGenerator: printers.NewTableGenerator().With(printersinternal.AddHandlers),
+
+	var table *metav1.Table
+	var err error
+
+	// Custom resources arrive as unstructured objects, which the built-in table
+	// generator renders with only NAME/AGE. When the bundle ships the matching CRD
+	// definition, render with its additionalPrinterColumns so `kubectl get <cr> -o wide`
+	// shows the same columns a live apiserver would.
+	switch object.(type) {
+	case *unstructured.Unstructured, *unstructured.UnstructuredList:
+		if cols, ok := h.crdPrinterColumns(r); ok {
+			if conv, cerr := tableconvertor.New(cols); cerr == nil {
+				table, err = conv.ConvertToTable(ctx, object, tableOptions)
+				if err != nil {
+					log.Warn("could not convert custom resource to table via CRD columns: ", err)
+					table = nil
+				}
+			} else {
+				log.Warn("could not build CRD table convertor: ", cerr)
+			}
+		}
 	}
-	table, err := tableConvertor.ConvertToTable(ctx, object, tableOptions)
-	if err != nil {
-		return nil, err
+
+	if table == nil {
+		tableConvertor := printerstorage.TableConvertor{
+			TableGenerator: printers.NewTableGenerator().With(printersinternal.AddHandlers),
+		}
+		table, err = tableConvertor.ConvertToTable(ctx, object, tableOptions)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// TODO: github.com/golang/gddo is no longer maintained. We should
