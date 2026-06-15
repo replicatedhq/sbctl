@@ -8,8 +8,8 @@ require (
 	github.com/golang/gddo v0.0.0-20210115222349-20d68f94ee1f
 	github.com/gorilla/handlers v1.5.2
 	github.com/gorilla/mux v1.8.1
-	github.com/onsi/ginkgo/v2 v2.30.0
-	github.com/onsi/gomega v1.41.0
+	github.com/onsi/ginkgo/v2 v2.31.0
+	github.com/onsi/gomega v1.42.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/cobra v1.10.2
@@ -18,7 +18,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v0.35.4
 	k8s.io/apiextensions-apiserver v0.35.4
-	k8s.io/apimachinery v0.36.1
+	k8s.io/apimachinery v0.36.2
 	k8s.io/apiserver v0.35.4
 	k8s.io/client-go v0.35.4
 	k8s.io/kubectl v0.35.4
