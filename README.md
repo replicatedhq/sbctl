@@ -57,7 +57,7 @@ export SBCTL_TOKEN=<token>
 Now launch the shell
 ```
 sbctl shell https://vendor.replicated.com/troubleshoot/analyze/2024-08-02@00:01
-API server logs will be written to /var/folders/19/bp6c9chj0sgcpcxmxxl69s040000gn/T/sbctl-server-logs-1413638036
+SBCTL logs will be written to ~/sbctl-server.log
 Downloading bundle
 Bundle extracted to /var/folders/19/bp6c9chj0sgcpcxmxxl69s040000gn/T/sbctl-2353785059
 Starting new shell with KUBECONFIG. Press Ctl-D when done to end the shell and the sbctl server
@@ -267,4 +267,21 @@ sbctl shell --enable-auth ~/Downloads/support-bundle-2024-XX-XX
 
 Authentication is enabled
 Starting new shell with KUBECONFIG. Press Ctl-D when done to exit from the shell and stop sbctl server
+```
+
+## Logging
+
+The `shell` command writes API server logs to `sbctl-server.log` in the user's home directory by default.
+
+Override the path with the `--log-file` flag:
+
+```bash
+sbctl shell --log-file /tmp/my-sbctl.log ~/Downloads/support-bundle-2024-XX-XX
+```
+
+Or set the `SBCTL_LOG_FILE` environment variable:
+
+```bash
+export SBCTL_LOG_FILE=/tmp/my-sbctl.log
+sbctl shell ~/Downloads/support-bundle-2024-XX-XX
 ```

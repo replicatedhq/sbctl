@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"path/filepath"
 	"strings"
 	"syscall"
 
@@ -37,14 +38,6 @@ func ShellCmd() *cobra.Command {
 			deleteBundleDir := false
 
 			logOutput := os.Stderr
-			logFile, err := os.CreateTemp("", "sbctl-server-*.log")
-			if err == nil {
-				defer logFile.Close()
-				defer os.RemoveAll(logFile.Name())
-				fmt.Printf("SBCTL logs will be written to %s\n", logFile.Name())
-				log.SetOutput(logFile)
-				logOutput = logFile
-			}
 
 			cleanup := func() {
 				if kubeConfig != "" {
@@ -70,6 +63,23 @@ func ShellCmd() *cobra.Command {
 			}()
 
 			v := viper.GetViper()
+
+			logPath := v.GetString("log-file")
+			if logPath == "" {
+				homeDir, err := os.UserHomeDir()
+				if err == nil {
+					logPath = filepath.Join(homeDir, "sbctl-server.log")
+				}
+			}
+			if logPath != "" {
+				logFile, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+				if err == nil {
+					defer logFile.Close()
+					fmt.Printf("SBCTL logs will be written to %s\n", logPath)
+					log.SetOutput(logFile)
+					logOutput = logFile
+				}
+			}
 
 			// This only works with generated config, so let's make sure we don't mess up user's real files.
 			bundleLocation := v.GetString("support-bundle-location")
@@ -181,6 +191,7 @@ func ShellCmd() *cobra.Command {
 	cmd.Flags().Bool("cd-bundle", false, "Change directory to the support bundle path after starting the shell")
 	cmd.Flags().Bool("debug", false, "enable debug logging. This will include HTTP response bodies in logs.")
 	cmd.Flags().StringP("command", "c", "", "Run a command in the shell instead of starting an interactive session")
+	cmd.Flags().String("log-file", "", "path to log file (default: ~/sbctl-server.log, env: SBCTL_LOG_FILE)")
 	return cmd
 }
 
