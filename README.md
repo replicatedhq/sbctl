@@ -216,3 +216,55 @@ troubleshoot-demo-003   Ready    <none>                 2d21h   v1.23.5
 bash-5.0$ exit
 exit
 ```
+
+## Authentication
+
+sbctl supports optional token-based authentication to secure kubectl commands connecting to the local API server.
+
+**Note:** Enabling authentication automatically enables HTTPS with self-signed certificates. This is required because kubectl refuses to send credentials over unencrypted HTTP connections.
+
+### Runtime Authentication
+
+Enable authentication at runtime using the `--enable-auth` flag:
+
+```bash
+sbctl serve --enable-auth ~/Downloads/support-bundle-2024-XX-XX
+
+Server is running
+
+Authentication is enabled
+
+export KUBECONFIG=/var/folders/.../T/local-kubeconfig-XXXXX
+```
+
+The generated token and TLS certificate are automatically included in the kubeconfig file, so kubectl commands will work seamlessly.
+
+### Compile-Time Authentication Enforcement
+
+For environments requiring mandatory authentication, build sbctl with the `auth_required` build tag:
+
+```bash
+go build -tags auth_required -o sbctl sbctl.go
+```
+
+When built with this tag, authentication is always enabled regardless of the `--enable-auth` flag.
+
+### Security Features
+
+- **HTTPS with TLS**: Self-signed certificates auto-generated for each session (24-hour validity)
+- **256-bit tokens**: Cryptographically secure random tokens using `crypto/rand`
+- **Bearer token standard**: Compatible with OAuth 2.0 conventions
+- **Constant-time comparison**: Prevents timing attacks during token validation
+- **Localhost-only**: Server binds to 127.0.0.1 for additional security
+- **All endpoints protected**: No exemptions - every API endpoint requires authentication
+
+### Authentication with Shell Mode
+
+The `shell` command also supports the `--enable-auth` flag:
+
+```bash
+sbctl shell --enable-auth ~/Downloads/support-bundle-2024-XX-XX
+
+Authentication is enabled
+Starting new shell with KUBECONFIG. Press Ctl-D when done to exit from the shell and stop sbctl server
+```
