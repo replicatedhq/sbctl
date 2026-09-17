@@ -58,9 +58,12 @@ endif
 install-golangci-lint:
 	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 
+# Keep in sync with grype-version in .github/workflows/build-checks.yaml
+GRYPE_VERSION = v0.118.0
+
 .PHONY: get-grype
 get-grype:
-	@command -v grype >/dev/null 2>&1 || curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b $(shell go env GOPATH)/bin
+	@command -v grype >/dev/null 2>&1 || curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b $(shell go env GOPATH)/bin $(GRYPE_VERSION)
 
 .PHONY: scan
 scan: get-grype
