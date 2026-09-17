@@ -34,3 +34,15 @@ archives:
       - README*
       - changelog*
       - CHANGELOG*
+
+brews:
+  - name: sbctl
+    ids: [sbctl]
+    homepage: https://github.com/replicatedhq/sbctl
+    description: "Explore a Kubernetes support bundle with kubectl."
+    repository:
+      owner: replicatedhq
+      name: homebrew-replicated
+      branch: main
+    directory: HomebrewFormula
+    install: bin.install "sbctl"
