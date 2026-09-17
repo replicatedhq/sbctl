@@ -58,11 +58,11 @@ endif
 install-golangci-lint:
 	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 
+.PHONY: get-grype
+get-grype:
+	@command -v grype >/dev/null 2>&1 || curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b $(shell go env GOPATH)/bin
+
 .PHONY: scan
-scan:
-	trivy fs \
-		--scanners vuln \
-		--exit-code=1 \
-		--severity="HIGH,CRITICAL" \
-		--ignore-unfixed \
-		./
+scan: get-grype
+	grype db update
+	grype dir:. --only-fixed --fail-on high -o template -t .grype.tmpl
