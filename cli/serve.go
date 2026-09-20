@@ -102,14 +102,31 @@ func ServeCmd() *cobra.Command {
 				return nil
 			}
 
-			kubeConfig, err = api.StartAPIServer(clusterData, os.Stderr)
+			// Generate auth token and TLS certificate if required or enabled
+			var authToken string
+			var tlsCert *api.TLSCertificate
+			if api.AuthRequired || v.GetBool("enable-auth") {
+				authToken, err = api.GenerateToken()
+				if err != nil {
+					return errors.Wrap(err, "failed to generate auth token")
+				}
+
+				tlsCert, err = api.GenerateSelfSignedCert()
+				if err != nil {
+					return errors.Wrap(err, "failed to generate TLS certificate")
+				}
+			}
+
+			kubeConfig, err = api.StartAPIServer(clusterData, os.Stderr, authToken, tlsCert)
 			if err != nil {
 				return errors.Wrap(err, "failed to create api server")
-
 			}
 			defer os.RemoveAll(kubeConfig)
 
 			fmt.Printf("Server is running\n\n")
+			if authToken != "" {
+				fmt.Printf("Authentication is enabled\n\n")
+			}
 			fmt.Printf("export KUBECONFIG=%s\n\n", kubeConfig)
 
 			<-make(chan struct{})
@@ -120,6 +137,7 @@ func ServeCmd() *cobra.Command {
 
 	cmd.Flags().StringP("support-bundle-location", "s", "", "path to support bundle archive, directory, or URL")
 	cmd.Flags().StringP("token", "t", "", "API token for authentication when fetching on-line bundles")
+	cmd.Flags().Bool("enable-auth", false, "enable token-based authentication for kubectl commands")
 	cmd.Flags().Bool("debug", false, "enable debug logging. This will include HTTP response bodies in logs.")
 	return cmd
 }
