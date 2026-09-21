@@ -23,7 +23,7 @@ func dumpRequestResponse(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if viper.GetBool("debug") {
 			// Request headers may contain bearer tokens, cookies, and other credentials.
-			logObject("Request headers", redactedHeaders(r.Header))
+			log.Printf("Request headers: [REDACTED]")
 			// Request
 			reqBody := []byte{}
 			if r.Body != nil { // Read
@@ -65,16 +65,6 @@ func (w *requestResponseDumper) Flush() {
 
 func (w *requestResponseDumper) Hijack() (net.Conn, *bufio.ReadWriter, error) {
 	return w.ResponseWriter.(http.Hijacker).Hijack()
-}
-
-func redactedHeaders(headers http.Header) http.Header {
-	result := headers.Clone()
-	for _, name := range []string{"Authorization", "Cookie", "Proxy-Authorization", "Set-Cookie", "X-Api-Key"} {
-		if result.Get(name) != "" {
-			result.Set(name, "[REDACTED]")
-		}
-	}
-	return result
 }
 
 func logObject(prefix string, o interface{}) {
