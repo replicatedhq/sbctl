@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -44,7 +45,15 @@ func ExtractBundle(filename string, outDir string) error {
 		}
 
 		err = func() error {
-			outFilename := filepath.Join(outDir, header.Name) // nolint: gosec // ignore decompression bombs
+			outDirAbs, err := filepath.Abs(outDir)
+			if err != nil {
+				return errors.Wrap(err, "failed to resolve output directory")
+			}
+			outFilename := filepath.Join(outDirAbs, filepath.Clean(header.Name))
+			relativePath, err := filepath.Rel(outDirAbs, outFilename)
+			if err != nil || relativePath == ".." || strings.HasPrefix(relativePath, ".."+string(filepath.Separator)) || filepath.IsAbs(relativePath) {
+				return errors.Errorf("archive entry %q escapes output directory", header.Name)
+			}
 			outPath := filepath.Dir(outFilename)
 			err = os.MkdirAll(outPath, 0755)
 			if err != nil {
