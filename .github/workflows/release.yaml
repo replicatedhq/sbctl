@@ -1,5 +1,8 @@
 name: deploy
 on:
+
+permissions:
+  contents: read
   push:
     tags:
       - "v*.*.*"
