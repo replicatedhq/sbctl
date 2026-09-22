@@ -43,6 +43,7 @@ brews:
     repository:
       owner: replicatedhq
       name: homebrew-replicated
+      token: "{{ .Env.HOMEBREW_GITHUB_TOKEN }}"
       branch: main
     directory: HomebrewFormula
     install: bin.install "sbctl"
