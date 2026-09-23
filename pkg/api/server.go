@@ -78,10 +78,14 @@ type errorResponse struct {
 	Error string `json:"error"`
 }
 
+func isValidPathParameter(value string) bool {
+	return !strings.ContainsAny(value, `/\\`) && value != ".."
+}
+
 func validatePathParameters(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for _, value := range mux.Vars(r) {
-			if strings.ContainsAny(value, `/\\`) || value == ".." {
+			if !isValidPathParameter(value) {
 				http.Error(w, "invalid path parameter", http.StatusBadRequest)
 				return
 			}

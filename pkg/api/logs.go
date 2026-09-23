@@ -18,6 +18,10 @@ func (h handler) getAPIV1NamespaceResourceLog(w http.ResponseWriter, r *http.Req
 	resource := mux.Vars(r)["resource"]
 	name := mux.Vars(r)["name"]
 	container := r.URL.Query().Get("container")
+	if !isValidPathParameter(container) {
+		http.Error(w, "invalid path parameter", http.StatusBadRequest)
+		return
+	}
 	previous, _ := strconv.ParseBool(r.URL.Query().Get("previous"))
 
 	logFileName := fmt.Sprintf("%s.log", container)
