@@ -22,8 +22,8 @@ type requestResponseDumper struct {
 func dumpRequestResponse(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if viper.GetBool("debug") {
-			// Request header
-			logObject("Request headers", r.Header)
+			// Request headers may contain bearer tokens, cookies, and other credentials.
+			log.Printf("Request headers: [REDACTED]")
 			// Request
 			reqBody := []byte{}
 			if r.Body != nil { // Read
