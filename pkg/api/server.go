@@ -78,6 +78,22 @@ type errorResponse struct {
 	Error string `json:"error"`
 }
 
+func isValidPathParameter(value string) bool {
+	return !strings.ContainsAny(value, `/\\`) && value != ".."
+}
+
+func validatePathParameters(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		for _, value := range mux.Vars(r) {
+			if !isValidPathParameter(value) {
+				http.Error(w, "invalid path parameter", http.StatusBadRequest)
+				return
+			}
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string, error) {
 	h := handler{
 		clusterData: clusterData,
@@ -85,6 +101,7 @@ func StartAPIServer(clusterData sbctl.ClusterData, logOutput io.Writer) (string,
 
 	r := mux.NewRouter()
 	r.Use(dumpRequestResponse)
+	r.Use(validatePathParameters)
 
 	r.HandleFunc("/api", h.getAPI)
 	apiRouter := r.PathPrefix("/api").Subrouter()
