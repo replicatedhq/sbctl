@@ -5,13 +5,17 @@ on:
   - cron: "0 */6 * * *" # every 6 hours
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   list-prs:
     runs-on: ubuntu-latest
     outputs:
       prs: ${{ steps.list-prs.outputs.prs }}
     env:
-      GH_TOKEN: ${{ secrets.REPLICATED_GH_PAT }}
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -35,6 +39,12 @@ jobs:
 
   process-prs:
     needs: list-prs
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: write
+      checks: read
     runs-on: ubuntu-latest
     if: needs.list-prs.outputs.prs != '[]'
     strategy:
