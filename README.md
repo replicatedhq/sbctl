@@ -1,6 +1,21 @@
 # Command line tool for examining K8s resources in Troubleshoot's support bundles
 
-### How to install (Mac):
+### How to install:
+
+Install with Homebrew:
+
+```
+brew tap replicatedhq/replicated
+brew install sbctl
+```
+
+Alternatively, install directly without adding the tap first:
+
+```
+brew install replicatedhq/replicated/sbctl
+```
+
+### Manual install (Mac):
 
 Download the release binary and untar it to a directory in your `PATH` (you'll need to enter your `sudo` password for the last `mv`):
 
