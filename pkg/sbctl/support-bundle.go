@@ -28,6 +28,14 @@ func ExtractBundle(filename string, outDir string) error {
 	}
 
 	tarReader := tar.NewReader(gzf)
+	if err := os.MkdirAll(outDir, 0755); err != nil {
+		return errors.Wrap(err, "failed to create output directory")
+	}
+	outputRoot, err := os.OpenRoot(outDir)
+	if err != nil {
+		return errors.Wrap(err, "failed to open output directory")
+	}
+	defer outputRoot.Close()
 
 	for {
 		header, err := tarReader.Next()
@@ -45,27 +53,20 @@ func ExtractBundle(filename string, outDir string) error {
 		}
 		// Archive paths must be local before joining them to the output directory.
 		// This rejects absolute paths and paths that escape via parent components.
-		if !filepath.IsLocal(header.Name) {
+		if !filepath.IsLocal(header.Name) || strings.Contains(header.Name, `\`) {
 			return errors.Errorf("archive entry %q is not a local path", header.Name)
 		}
 
 		err = func() error {
-			outDirAbs, err := filepath.Abs(outDir)
-			if err != nil {
-				return errors.Wrap(err, "failed to resolve output directory")
-			}
-			outFilename := filepath.Join(outDirAbs, filepath.Clean(header.Name))
-			relativePath, err := filepath.Rel(outDirAbs, outFilename)
-			if err != nil || relativePath == ".." || strings.HasPrefix(relativePath, ".."+string(filepath.Separator)) || filepath.IsAbs(relativePath) {
-				return errors.Errorf("archive entry %q escapes output directory", header.Name)
-			}
-			outPath := filepath.Dir(outFilename)
-			err = os.MkdirAll(outPath, 0755)
+			entryPath := filepath.Clean(header.Name)
+			err := outputRoot.MkdirAll(filepath.Dir(entryPath), 0755)
 			if err != nil {
 				return errors.Wrap(err, "failed to create file path")
 			}
 
-			outFile, err := os.Create(outFilename)
+			// Root-scoped operations prevent archive entries from escaping through
+			// symlinked directories as well as through lexical path traversal.
+			outFile, err := outputRoot.OpenFile(entryPath, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666)
 			if err != nil {
 				return errors.Wrap(err, "failed to create output file")
 			}
