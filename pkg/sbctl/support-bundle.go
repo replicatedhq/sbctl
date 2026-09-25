@@ -43,6 +43,11 @@ func ExtractBundle(filename string, outDir string) error {
 		if header.Typeflag != tar.TypeReg {
 			continue
 		}
+		// Archive paths must be local before joining them to the output directory.
+		// This rejects absolute paths and paths that escape via parent components.
+		if !filepath.IsLocal(header.Name) {
+			return errors.Errorf("archive entry %q is not a local path", header.Name)
+		}
 
 		err = func() error {
 			outDirAbs, err := filepath.Abs(outDir)
