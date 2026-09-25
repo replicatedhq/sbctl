@@ -79,7 +79,7 @@ type errorResponse struct {
 }
 
 func isValidPathParameter(value string) bool {
-	return !strings.ContainsAny(value, `/\\`) && value != ".."
+	return filepath.IsLocal(value) && !strings.ContainsAny(value, `/\\`) && value != "."
 }
 
 func validatePathParameters(next http.Handler) http.Handler {

@@ -19,6 +19,8 @@ func TestValidatePathParameters(t *testing.T) {
 	}{
 		{name: "valid", value: "pods", code: http.StatusOK},
 		{name: "parent directory", value: "..", code: http.StatusBadRequest},
+		{name: "current directory", value: ".", code: http.StatusBadRequest},
+		{name: "empty", value: "", code: http.StatusBadRequest},
 		{name: "slash", value: "pods/logs", code: http.StatusBadRequest},
 		{name: "backslash", value: `pods\\logs`, code: http.StatusBadRequest},
 	}
@@ -28,12 +30,17 @@ func TestValidatePathParameters(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, "/", nil)
 			req = mux.SetURLVars(req, map[string]string{"resource": tt.value})
 			recorder := httptest.NewRecorder()
+			nextCalled := false
 			next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				nextCalled = true
 				w.WriteHeader(http.StatusOK)
 			})
 
 			validatePathParameters(next).ServeHTTP(recorder, req)
 
+			if nextCalled != (tt.code == http.StatusOK) {
+				t.Fatalf("next handler called = %t, want %t", nextCalled, tt.code == http.StatusOK)
+			}
 			if recorder.Code != tt.code {
 				t.Fatalf("status = %d, want %d", recorder.Code, tt.code)
 			}
