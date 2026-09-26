@@ -60,6 +60,11 @@ func TestExtractBundleRejectsPathsOutsideOutputDirectory(t *testing.T) {
 			entryName: filepath.Join(root, "absolute.txt"),
 			outside:   filepath.Join(root, "absolute.txt"),
 		},
+		{
+			name:      "backslash traversal",
+			entryName: `..\\outside-backslash.txt`,
+			outside:   filepath.Join(outputDir, `..\outside-backslash.txt`),
+		},
 	}
 
 	for _, tt := range tests {
@@ -96,5 +101,30 @@ func TestExtractBundleExtractsLocalPath(t *testing.T) {
 	}
 	if string(got) != "bundle data" {
 		t.Fatalf("extracted contents = %q, want %q", got, "bundle data")
+	}
+}
+
+func TestExtractBundleDoesNotFollowSymlinkedOutputDirectories(t *testing.T) {
+	root := t.TempDir()
+	outputDir := filepath.Join(root, "out")
+	if err := os.Mkdir(outputDir, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	outsideDir := filepath.Join(root, "outside")
+	if err := os.Mkdir(outsideDir, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(outsideDir, filepath.Join(outputDir, "link")); err != nil {
+		t.Fatal(err)
+	}
+
+	archive := filepath.Join(root, "bundle-symlink.tgz")
+	writeTarGz(t, archive, "link/outside.txt", "malicious content")
+
+	if err := ExtractBundle(archive, outputDir); err == nil {
+		t.Fatal("ExtractBundle() succeeded, want an error for a symlinked output path")
+	}
+	if _, err := os.Stat(filepath.Join(outsideDir, "outside.txt")); !os.IsNotExist(err) {
+		t.Fatalf("outside file stat error = %v, want file not to exist", err)
 	}
 }
