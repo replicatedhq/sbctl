@@ -19,6 +19,8 @@ func TestValidatePathParameters(t *testing.T) {
 	}{
 		{name: "valid", value: "pods", code: http.StatusOK},
 		{name: "parent directory", value: "..", code: http.StatusBadRequest},
+		{name: "current directory", value: ".", code: http.StatusBadRequest},
+		{name: "empty", value: "", code: http.StatusBadRequest},
 		{name: "slash", value: "pods/logs", code: http.StatusBadRequest},
 		{name: "backslash", value: `pods\\logs`, code: http.StatusBadRequest},
 	}
